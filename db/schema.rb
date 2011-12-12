@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111212154006) do
+ActiveRecord::Schema.define(:version => 20111212155702) do
 
   create_table "tenants", :force => true do |t|
     t.string   "name"
@@ -22,5 +22,18 @@ ActiveRecord::Schema.define(:version => 20111212154006) do
 
   add_index "tenants", ["host"], :name => "index_tenants_on_host", :unique => true
   add_index "tenants", ["name"], :name => "index_tenants_on_name", :unique => true
+
+  create_table "users", :force => true do |t|
+    t.integer  "tenant_id",       :null => false
+    t.string   "name"
+    t.string   "email"
+    t.string   "password_digest"
+    t.boolean  "is_owner"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["tenant_id"], :name => "index_users_on_tenant_id"
 
 end
