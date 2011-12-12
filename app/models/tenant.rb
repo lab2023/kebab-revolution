@@ -1,20 +1,23 @@
 class Tenant < ActiveRecord::Base
+
   validates :name, :presence => {:on => :create},
                    :uniqueness => true,
                    :length => {:in => 4..255}
 
   validates :host, :presence => {:on => :create},
                    :uniqueness => true,
-                   :exclusion => {:in => %w(www lab2023)},
+                   :exclusion => {:in => %w(www help support api apps status blog lab2023 coninja)},
                    :length => {:in => 4..255}
 
   class << self
     def current
-      Thread.current[:current_tenant]
+      Thread.current[:tenant]
     end
 
     def current=(tenant)
-      Thread.current[:current_tenant] = tenant
+      Thread.current[:tenant] = tenant
     end
   end
+
+  validates :name, :host, presence: true
 end

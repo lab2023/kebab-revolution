@@ -1,23 +1,21 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  before_filter :check_tenant
+
   @@response = {:success => true}
 
-  before_filter do
-     check_tenant
-  end
-
   protected
+    attr_reader :current_tenant
 
     def check_tenant
-        unless %w{www}.include?(request.subdomain)
-          if Tenant.find_by_host(request.host) != nil
-            @tenant = Tenant.current = Tenant.find_by_host!(request.host)
-          else
-            @@response[:success] = false
-            render json: @@response
-          end
-        end
+      if Tenant.find_by_host(request.host) != nil
+        @tenant = Tenant.current = Tenant.find_by_host!(request.host)
+      else
+        @@response[:success] = false
+        add_notice 'ERR', 'Invalid tenant'
+        render json: @@response
+      end
     end
 
     def add_notice type, message
