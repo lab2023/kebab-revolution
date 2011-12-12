@@ -3,7 +3,22 @@ class ApplicationController < ActionController::Base
 
   @@response = {:success => true}
 
+  before_filter do
+     check_tenant
+  end
+
   protected
+
+    def check_tenant
+        unless %w{www}.include?(request.subdomain)
+          if Tenant.find_by_host(request.host) != nil
+            @tenant = Tenant.current = Tenant.find_by_host!(request.host)
+          else
+            @@response[:success] = false
+            render json: @@response
+          end
+        end
+    end
 
     def add_notice type, message
       notice = [:type => type, :message => message]
