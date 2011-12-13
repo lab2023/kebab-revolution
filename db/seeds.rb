@@ -1,7 +1,5 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+# Tenant for test and development
+tenant = Tenant.create([
+  {name: 'Tenant 1', host: 'tenant1.kebab-server-ror.local'},
+  {name: 'Tenant 2', host: 'tenant2.kebab-server-ror.local'}
+])
