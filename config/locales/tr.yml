@@ -1,0 +1,17 @@
+tr:
+  activerecord:
+    models:
+      tenant: Kiracı
+      user: Kullanıcı
+    attribures:
+      tenant:
+        name: "isim"
+        host: "adres"
+      user:
+        tenant: "kiracı"
+        email: "elektronik posta"
+        password: "şifre"
+        password_confirmation: "şifre onayı"
+        name: "isim"
+  notice:
+    invalid_tenant: "Geçersiz malik"

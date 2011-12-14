@@ -1,7 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :check_tenant
+  before_filter do
+    set_i18n_locale
+    check_tenant
+  end
 
   @@response = {:success => true}
 
@@ -13,7 +16,7 @@ class ApplicationController < ActionController::Base
         @tenant = Tenant.current = Tenant.find_by_host!(request.host)
       else
         @@response[:success] = false
-        add_notice 'ERR', 'Invalid tenant'
+        add_notice 'ERR', I18n.t('notice.invalid_tenant')
         render json: @@response
       end
     end
@@ -34,6 +37,34 @@ class ApplicationController < ActionController::Base
         @@response[:error] += error
       else
         @@response[:error] = error
+      end
+    end
+
+    def set_i18n_locale
+      I18n.locale = set_i18n_locale_from_param || set_i18n_locale_from_session || set_i18n_locale_from_accept_language_header || I18n.default_locale
+    end
+
+    def set_i18n_locale_from_param
+      if params[:locale]
+        if I18n.available_locales.include?(params[:locale].to_sym)
+          params[:locale]
+        end
+      end
+    end
+
+    def set_i18n_locale_from_session
+      if session[:locale]
+        if I18n.available_locales.include?(session[:locale].to_sym)
+          session[:locale]
+        end
+      end
+    end
+
+    def set_i18n_locale_from_accept_language_header
+      accept_language_header = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+      if I18n.available_locales.include?(accept_language_header.to_sym)
+        accept_language_header = 'en' if accept_language_header == 'en'
+        accept_language_header
       end
     end
 end

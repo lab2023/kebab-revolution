@@ -1,0 +1,6 @@
+ru:
+  activerecord:
+    errors:
+      messages:
+        taken: "уже существует"
+        record_invalid: "Возникли ошибки: %{errors}"

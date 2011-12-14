@@ -1,0 +1,17 @@
+ru:
+  activerecord:
+    models:
+      tenant: Aрендатор
+      user: пользователь
+    attribures:
+      tenant:
+        name: "имя"
+        host: "хозяин"
+      user:
+        tenant: "aрендатор"
+        email: "электронная почта"
+        password: "пароль"
+        password_confirmation: "подтверждение пароля"
+        name: "имя"
+  notice:
+    invalid_tenant: "недействительным арендатора"

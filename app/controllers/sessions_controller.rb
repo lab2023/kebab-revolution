@@ -4,4 +4,13 @@ class SessionsController < ApplicationController
     @@response['tenant'] = Tenant.select('id, host').find_by_host!(request.host)
     render json: @@response, callback: params[:callback]
   end
+
+  def test
+    I18n.locale = 'ru'
+
+    u = User.new
+    u.save
+
+    render json: u.errors.to_json
+  end
 end

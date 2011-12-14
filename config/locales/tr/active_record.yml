@@ -1,0 +1,6 @@
+tr:
+  activerecord:
+    errors:
+      messages:
+        taken: "hali hazırda kullanılmakta"
+        record_invalid: "Doğrulama başarısız oldu: %{errors}"
