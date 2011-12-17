@@ -1,6 +1,6 @@
 Factory.define :tenant do |f|
   f.sequence(:name) { |n| "name-#{n}" }
-  f.sequence(:host) { |n| "name-#{n}.kebab-server-ror.com" }
+  f.sequence(:host) { |n| "name-#{n}.server-ror.dev" }
 end
 
 Factory.define :user do |f|
