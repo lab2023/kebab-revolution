@@ -1,5 +1,6 @@
 class Tenant < ActiveRecord::Base
   has_many :users
+  has_many :roles
 
   validates :name, :presence => {:on => :create},
                    :uniqueness => true,

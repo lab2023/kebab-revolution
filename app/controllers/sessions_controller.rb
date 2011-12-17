@@ -6,11 +6,7 @@ class SessionsController < ApplicationController
   end
 
   def test
-    I18n.locale = 'ru'
-
-    u = User.new
-    u.save
-
+    I18n.locale = 'en'
     render json: u.errors.to_json
   end
 end

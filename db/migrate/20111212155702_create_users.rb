@@ -16,7 +16,7 @@ class CreateUsers < ActiveRecord::Migration
       # add foreign key and make tenant_id not null
       execute <<-SQL
         ALTER TABLE  `users`
-          ADD CONSTRAINT fk_tenant_id
+          ADD CONSTRAINT fk_tenant_users_id
           FOREIGN KEY (  `tenant_id` ) REFERENCES  `tenants` ( `id` )
           ON DELETE RESTRICT ON UPDATE RESTRICT
       SQL

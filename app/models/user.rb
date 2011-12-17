@@ -12,6 +12,4 @@ class User < TenantScopedModel
   validates :password_confirmation, :presence => true
 
   validates :name, :presence => true
-
-  validates :tenant, :presence => true
 end

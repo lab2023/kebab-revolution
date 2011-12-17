@@ -27,6 +27,7 @@ class TenantScopedModel < ActiveRecord::Base
   self.abstract_class = true
 
   belongs_to :tenant
+  validates  :tenant, :presence => true
 
   default_scope do |model|
     model.where(:tenant_id => Tenant.current)
