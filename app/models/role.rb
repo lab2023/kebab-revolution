@@ -1,4 +1,4 @@
 class Role < TenantScopedModel
-  translates  :name
+  translates  :name, :fallbacks_for_empty_translations => true
   validates   :name, :presence => true
 end
