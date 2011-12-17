@@ -7,7 +7,7 @@ class Tenant < ActiveRecord::Base
 
   validates :host, :presence => {:on => :create},
                    :uniqueness => true,
-                   :exclusion => {:in => %w(www help support api apps status blog lab2023 coninja)},
+                   :exclusion => {:in => %w(www help support api apps status blog lab2023)},
                    :length => {:in => 4..255}
 
   class << self
