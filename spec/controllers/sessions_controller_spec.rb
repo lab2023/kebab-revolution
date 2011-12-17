@@ -1,9 +1,15 @@
 require 'spec_helper'
 
 describe SessionsController do
+
   describe "Register valid client" do
+
+    before(:each) do
+      @valid_tenant = Factory.create(:tenant)
+    end
+
     it "should eql to expected_response_json" do
-      get "/sessions/register", {}, {"HTTP_HOST" => "#{valid_tenant_host}"}
+      get "/sessions/register", {}, {"HTTP_HOST" => "#{@valid_tenant.host}"}
 
       body_parsed = JSON.parse(last_response.body)
       expected_response_json = {"success" => true}
@@ -14,12 +20,13 @@ describe SessionsController do
     end
 
     it "status should be eql 200" do
-      get "/sessions/register", {}, {"HTTP_HOST" => "#{valid_tenant_host}"}
+      get "/sessions/register", {}, {"HTTP_HOST" => "#{@valid_tenant.host}"}
       last_response.status.should eql(200)
     end
   end
 
   describe "Register invalid client" do
+
     it "should eql to expected_response_json" do
       get "/sessions/register", {}, {"HTTP_HOST" => "#{invalid_tenant_host}"}
 
