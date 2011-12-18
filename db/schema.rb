@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20111218110356) do
   create_table "tenants", :force => true do |t|
     t.string   "name"
     t.string   "host"
+    t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -79,7 +80,6 @@ ActiveRecord::Schema.define(:version => 20111218110356) do
     t.string   "name"
     t.string   "email"
     t.string   "password_digest"
-    t.boolean  "is_owner"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

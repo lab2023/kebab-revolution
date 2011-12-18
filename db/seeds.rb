@@ -1,24 +1,24 @@
 # Tenant for test and development
-tenant = Tenant.create([
-                           {name: 'Apple Inc.', host: 'apple.server-ror.dev'},
-                           {name: 'lab2023 Inc.', host: 'lab2023.server-ror.dev'}
-                       ])
+Tenant.create([
+                  {name: 'Apple Inc.', host: 'apple.server-ror.dev', owner_id: 1},
+                  {name: 'lab2023 Inc.', host: 'lab2023.server-ror.dev', owner_id: 3}
+              ])
 
-role = Role.create([
-                       {name: 'Ceo',  tenant_id: 1},
-                       {name: 'Manager',  tenant_id: 1},
-                       {name: 'Engineer', tenant_id: 1},
-                       {name: 'Ceo', tenant_id: 2},
-                       {name: 'Backend Developer',  tenant_id: 2},
-                       {name: 'Frontend Developer',  tenant_id: 2}
-                   ])
+Role.create([
+                {name: 'Ceo',  tenant_id: 1},
+                {name: 'Manager',  tenant_id: 1},
+                {name: 'Engineer', tenant_id: 1},
+                {name: 'Ceo', tenant_id: 2},
+                {name: 'Backend Developer',  tenant_id: 2},
+                {name: 'Frontend Developer',  tenant_id: 2}
+            ])
 
-user = User.create([
-                       {name: 'Steve Jobs', email: 'steve@jobs.com', password: '123456', password_confirmation: '123456', tenant_id: 1},
-                       {name: 'Steve Wozniak', email: 'steve@wozniak.com', password: '123456', password_confirmation: '123456', tenant_id: 1},
-                       {name: 'Onur Ozgur OZKAN', email: 'onur@ozgur.com', password: '123456', password_confirmation: '123456', tenant_id: 2},
-                       {name: 'Tayfun Ozis ERIKAN', email: 'tayfun@ozis.com', password: '123456', password_confirmation: '123456', tenant_id: 2}
-                   ])
+User.create([
+                {name: 'Steve Jobs', email: 'steve@jobs.com', password: '123456', password_confirmation: '123456',  tenant_id: 1},
+                {name: 'Steve Wozniak', email: 'steve@wozniak.com', password: '123456', password_confirmation: '123456',  tenant_id: 1},
+                {name: 'Onur Ozgur OZKAN', email: 'onur@ozgur.com', password: '123456', password_confirmation: '123456', tenant_id: 2},
+                {name: 'Tayfun Ozis ERIKAN', email: 'tayfun@ozis.com', password: '123456', password_confirmation: '123456', tenant_id: 2}
+            ])
 
 Tenant.current = Tenant.find_by_host('apple.server-ror.dev')
 steve = User.find_by_name('Steve Jobs')
