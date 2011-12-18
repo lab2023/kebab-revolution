@@ -25,6 +25,7 @@ describe Role do
       @role.tenant = Tenant.create(:name => 'Test', :host => 'test.server-ror.local')
       I18n.locale = :tr
       @role.name.should eql('Admin')
+      I18n.locale = :en
     end
   end
 

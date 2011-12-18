@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111217164335) do
+ActiveRecord::Schema.define(:version => 20111217194427) do
 
   create_table "role_translations", :force => true do |t|
     t.integer  "role_id",    :null => false
@@ -30,6 +30,14 @@ ActiveRecord::Schema.define(:version => 20111217164335) do
   end
 
   add_index "roles", ["tenant_id"], :name => "index_roles_on_tenant_id"
+
+  create_table "roles_users", :id => false, :force => true do |t|
+    t.integer "role_id", :null => false
+    t.integer "user_id", :null => false
+  end
+
+  add_index "roles_users", ["role_id", "user_id"], :name => "index_roles_users_on_role_id_and_user_id", :unique => true
+  add_index "roles_users", ["user_id"], :name => "fk_users_roles_users_id"
 
   create_table "tenants", :force => true do |t|
     t.string   "name"
