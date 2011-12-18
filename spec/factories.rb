@@ -10,3 +10,9 @@ Factory.define :user do |f|
   f.sequence(:name) { |n|  "Name#{n} Surname#{n}" }
   f.tenant {|a| a.association(:tenant) }
 end
+
+Factory.define :privilege do |f|
+  f.sys_name 'addNewUser'
+  f.name     'Add New User'
+  f.info     'Can add a new user'
+end
