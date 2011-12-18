@@ -24,7 +24,7 @@ class CreateUsers < ActiveRecord::Migration
       execute <<-SQL
         ALTER TABLE  `users` CHANGE  `tenant_id`  `tenant_id` INT( 11 ) NOT NULL
       SQL
-    end
+  end
 
     def down
       execute <<-SQL
