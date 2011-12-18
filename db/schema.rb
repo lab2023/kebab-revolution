@@ -11,7 +11,32 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111217194427) do
+ActiveRecord::Schema.define(:version => 20111218110356) do
+
+  create_table "privilege_translations", :force => true do |t|
+    t.integer  "privilege_id", :null => false
+    t.string   "locale"
+    t.string   "name"
+    t.text     "info"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "privilege_translations", ["privilege_id"], :name => "index_privilege_translations_on_privilege_id"
+
+  create_table "privileges", :force => true do |t|
+    t.string   "sys_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "privileges_roles", :id => false, :force => true do |t|
+    t.integer "privilege_id", :null => false
+    t.integer "role_id",      :null => false
+  end
+
+  add_index "privileges_roles", ["privilege_id", "role_id"], :name => "index_privileges_roles_on_privilege_id_and_role_id", :unique => true
+  add_index "privileges_roles", ["role_id"], :name => "fk_roles_privileges_roles_id"
 
   create_table "role_translations", :force => true do |t|
     t.integer  "role_id",    :null => false
