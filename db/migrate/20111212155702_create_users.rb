@@ -5,7 +5,6 @@ class CreateUsers < ActiveRecord::Migration
         t.string :name
         t.string :email
         t.string :password_digest
-        t.boolean :is_owner
 
         t.timestamps
       end
@@ -16,7 +15,7 @@ class CreateUsers < ActiveRecord::Migration
       # add foreign key and make tenant_id not null
       execute <<-SQL
         ALTER TABLE  `users`
-          ADD CONSTRAINT fk_tenant_users_id
+          ADD CONSTRAINT fk_tenants_users_id
           FOREIGN KEY (  `tenant_id` ) REFERENCES  `tenants` ( `id` )
           ON DELETE RESTRICT ON UPDATE RESTRICT
       SQL
@@ -29,7 +28,7 @@ class CreateUsers < ActiveRecord::Migration
 
     def down
       execute <<-SQL
-        ALTER TABLE `users` DROP FOREIGN KEY fk_tenant_id
+        ALTER TABLE `users` DROP FOREIGN KEY fk_tenants_users_id
       SQL
 
       drop_table :users

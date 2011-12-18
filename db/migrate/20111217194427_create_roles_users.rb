@@ -11,14 +11,14 @@ class CreateRolesUsers < ActiveRecord::Migration
 
     execute <<-SQL
       ALTER TABLE  `roles_users`
-        ADD CONSTRAINT fk_roles_roles_users_id
+        ADD CONSTRAINT `fk_roles_roles_users_id`
         FOREIGN KEY (  `role_id` ) REFERENCES  `roles` ( `id` )
         ON DELETE RESTRICT ON UPDATE RESTRICT
     SQL
 
     execute <<-SQL
       ALTER TABLE  `roles_users`
-      ADD CONSTRAINT fk_users_roles_users_id
+      ADD CONSTRAINT `fk_users_roles_users_id`
       FOREIGN KEY (  `user_id` ) REFERENCES  `users` ( `id` )
       ON DELETE RESTRICT ON UPDATE RESTRICT
     SQL
@@ -34,8 +34,11 @@ class CreateRolesUsers < ActiveRecord::Migration
 
   def down
     execute <<-SQL
-      ALTER TABLE `roles_users` DROP FOREIGN KEY fk_role_roles_users_id
-      ALTER TABLE `roles_users` DROP FOREIGN KEY fk_user_roles_users_id
+      ALTER TABLE `roles_users` DROP FOREIGN KEY `fk_roles_roles_users_id`
+    SQL
+
+    execute <<-SQL
+      ALTER TABLE `roles_users` DROP FOREIGN KEY `fk_users_roles_users_id`
     SQL
 
     remove_index :roles_users, :column => [:role_id, :user_id]

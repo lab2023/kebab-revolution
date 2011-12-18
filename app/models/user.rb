@@ -7,10 +7,11 @@ class User < TenantScopedModel
                         :uniqueness => true,
                         :format => {:with => EMAIL_REGEX}
 
+  validates :name,      :presence => true
+
   validates :password,  :presence => {:on => :create},
                         :confirmation => true
 
   validates :password_confirmation, :presence => true
 
-  validates :name, :presence => true
 end

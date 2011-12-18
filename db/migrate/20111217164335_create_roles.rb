@@ -13,7 +13,7 @@ class CreateRoles < ActiveRecord::Migration
     # add foreign key and make tenant_id not null
     execute <<-SQL
       ALTER TABLE  `roles`
-        ADD CONSTRAINT fk_tenant_roles_id
+        ADD CONSTRAINT fk_tenants_roles_id
         FOREIGN KEY (  `tenant_id` ) REFERENCES  `tenants` ( `id` )
         ON DELETE RESTRICT ON UPDATE RESTRICT
     SQL
@@ -46,7 +46,7 @@ class CreateRoles < ActiveRecord::Migration
 
     # drop foreign key tenant_id
     execute <<-SQL
-      ALTER TABLE `roles` DROP FOREIGN KEY fk_tenant_roles_id
+      ALTER TABLE `roles` DROP FOREIGN KEY fk_tenants_roles_id
     SQL
 
     Role.drop_translation_table!
