@@ -6,7 +6,7 @@ describe User do
     @new_user = User.new
   end
   
-  it "can be instance of User" do
+  it "should be instance of User" do
     @user.should be_an_instance_of(User)
   end
   
