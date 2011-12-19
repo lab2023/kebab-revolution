@@ -3,6 +3,10 @@ tr:
     models:
       tenant: Kiracı
       user: Kullanıcı
+      role: Rol
+      privilege: Yetki
+      app: Uygulama
+      service: Servis
     attribures:
       tenant:
         name: "isim"
@@ -13,5 +17,21 @@ tr:
         password: "şifre"
         password_confirmation: "şifre onayı"
         name: "isim"
+      role:
+        tenant: "kiracı"
+        name: "isim"
+      privilege:
+        apps: "uygulamalar"
+        services: "servisler"
+        roles: "roller"
+        sys_name: "sistem ismi"
+      app:
+        privileges: "yetkiler"
+        sys_name: "sistem ismi"
+        department: "departman"
+      service:
+        privilege: "yetki"
+        controller: "kontrol"
+        action: "method"
   notice:
     invalid_tenant: "Geçersiz malik"

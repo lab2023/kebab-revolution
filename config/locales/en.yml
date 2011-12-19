@@ -3,6 +3,10 @@ en:
     models:
       tenant: Tenant
       user: User
+      role: Role
+      privilege: Privilege
+      app: Application
+      service: Service
     attributes:
       tenant:
         name: "name"
@@ -13,5 +17,22 @@ en:
         password: "password"
         password_confirmation: "password confirmation"
         name: "name"
+      role:
+        tenant: "tenant"
+        name: "name"
+      privilege:
+        apps: "applications"
+        services: "services"
+        roles: "roles"
+        sys_name: "system name"
+      app:
+        privileges: "privileges"
+        sys_name: "system name"
+        department: "department"
+      service:
+        privilege: "privilege"
+        controller: "controller"
+        action: "action"
+
   notice:
     invalid_tenant: "Invalid tenant"

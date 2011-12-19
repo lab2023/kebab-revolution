@@ -3,6 +3,10 @@ ru:
     models:
       tenant: Aрендатор
       user: пользователь
+      role: роль
+      privilege: привилегия
+      app: применение
+      service: обслуживание
     attribures:
       tenant:
         name: "имя"
@@ -13,5 +17,21 @@ ru:
         password: "пароль"
         password_confirmation: "подтверждение пароля"
         name: "имя"
+      role:
+        tenant: "Aрендатор"
+        name: "имя"
+      privilege:
+        apps: "применения"
+        services: "услуги"
+        roles: "ролей"
+        sys_name: "имя системы"
+      app:
+        privileges: "привилегий"
+        sys_name: "имя системы"
+        department: "отдел"
+      service:
+        privilege: "привилегия"
+        controller: "контроллер"
+        action: "действие"
   notice:
     invalid_tenant: "недействительным арендатора"
