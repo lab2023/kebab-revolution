@@ -41,4 +41,9 @@ describe SessionsController do
       last_response.status.should eql(404)
     end
   end
+
+  describe "Login" do
+    it "should be done alpha4"
+  end
+
 end

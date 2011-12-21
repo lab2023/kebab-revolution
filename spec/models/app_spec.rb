@@ -3,7 +3,7 @@ require 'spec_helper'
 describe App do
   before(:each) do
     @new_app = App.new
-    @app = App.create(:sys_name => 'aboutMe', :department => 'system')
+    @app = App.create(:sys_name => 'aboutMe', :sys_department => 'system')
   end
 
   it "can be instance of App" do
@@ -24,10 +24,14 @@ describe App do
 
   end
 
-  describe "department" do
+  describe "sys_department" do
     it "should be presence" do
       @new_app.should be_invalid
-      @new_app.errors[:department].should include("can't be blank")
+      @new_app.errors[:sys_department].should include("can't be blank")
     end
+  end
+
+  describe "name" do
+    it "should be presence"
   end
 end
