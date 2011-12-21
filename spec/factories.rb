@@ -7,6 +7,7 @@ Factory.define :user do |f|
   f.sequence(:email) { |n| "test-#{n}@test.com" }
   f.password 'password'
   f.password_confirmation 'password'
+  f.locale 'tr'
   f.sequence(:name) { |n|  "Name#{n} Surname#{n}" }
   f.tenant {|a| a.association(:tenant) }
 end

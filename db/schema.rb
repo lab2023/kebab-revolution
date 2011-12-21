@@ -13,9 +13,19 @@
 
 ActiveRecord::Schema.define(:version => 20111218213041) do
 
+  create_table "app_translations", :force => true do |t|
+    t.integer  "app_id",     :null => false
+    t.string   "locale"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "app_translations", ["app_id"], :name => "index_app_translations_on_app_id"
+
   create_table "apps", :force => true do |t|
     t.string "sys_name"
-    t.string "department"
+    t.string "sys_department"
   end
 
   create_table "apps_privileges", :id => false, :force => true do |t|

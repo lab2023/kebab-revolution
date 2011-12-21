@@ -46,7 +46,7 @@ describe User do
   describe "password confirmation" do
     it "should be same value with password" do
       @new_user.password = 'password'
-      @new_user.password_confirmation = 'diffrent_password'
+      @new_user.password_confirmation = 'different_password'
       @new_user.should be_invalid
       @new_user.errors[:password].should include("doesn't match confirmation")
     end
@@ -57,5 +57,17 @@ describe User do
       @new_user.should be_invalid
       @new_user.errors[:name].should include("can't be blank")
     end    
+  end
+
+  describe "locale" do
+    it "should be presence" do
+      @new_user.should be_invalid
+      @new_user.errors[:locale].should include("can't be blank")
+    end
+
+    it "should be include en tr ru"
+
+    it "is length should be 2"
+
   end
 end
