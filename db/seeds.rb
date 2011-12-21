@@ -1,4 +1,3 @@
-# Tenant for test and development
 Tenant.create([
                   {name: 'Apple Inc.', host: 'apple.server-ror.dev', owner_id: 1},
                   {name: 'lab2023 Inc.', host: 'lab2023.server-ror.dev', owner_id: 3}
@@ -20,23 +19,70 @@ User.create([
                 {name: 'Tayfun Ozis ERIKAN', email: 'tayfun@ozis.com', password: '123456', password_confirmation: '123456', tenant_id: 2}
             ])
 
+Privilege.create([
+                     {sys_name: 'changePassword', name: 'Change Password'},
+                     {sys_name: 'cancelAccount', name: 'Cancel Account'}
+                 ])
+cancel_account = Privilege.find_by_sys_name('cancelAccount')
+change_password = Privilege.find_by_sys_name('changePassword')
+
 Tenant.current = Tenant.find_by_host('apple.server-ror.dev')
+
+ceo = Role.find_by_name('Ceo')
+manager = Role.find_by_name('Manager')
+engineer = Role.find_by_name('Engineer')
+
 steve = User.find_by_name('Steve Jobs')
-steve.roles << Role.find_by_name('Ceo')
-steve.roles << Role.find_by_name('Manager')
+steve.roles << ceo
+steve.roles << manager
 steve.save
 
 wozniak = User.find_by_name('Steve Wozniak')
-wozniak.roles << Role.find_by_name('Engineer')
+wozniak.roles << engineer
 wozniak.save
 
+ceo.privileges << cancel_account
+ceo.privileges << change_password
+manager.privileges << change_password
+engineer.privileges << change_password
+
+ceo.save
+manager.save
+engineer.save
+
 Tenant.current = Tenant.find_by_host('lab2023.server-ror.dev')
+ceo = Role.find_by_name('Ceo')
+backend = Role.find_by_name('Backend Developer')
+frontend = Role.find_by_name('Frontend Developer')
+
 onur = User.find_by_name('Onur Ozgur OZKAN')
-onur.roles << Role.find_by_name('Ceo')
-onur.roles << Role.find_by_name('Backend Developer')
+onur.roles << ceo
+onur.roles << backend
 onur.save
 
 tayfun = User.find_by_name('Tayfun Ozis ERIKAN')
-tayfun.roles << Role.find_by_name('Ceo')
-tayfun.roles << Role.find_by_name('Frontend Developer')
+tayfun.roles << ceo
+tayfun.roles << frontend
 tayfun.save
+
+ceo.privileges << cancel_account
+ceo.privileges << change_password
+backend.privileges << change_password
+frontend.privileges << change_password
+
+ceo.save
+backend.save
+frontend.save
+
+App.create([
+               {sys_name: 'profile', sys_department: 'system', name: 'Profile'},
+               {sys_name: 'accountManager', sys_department: 'system',  name: 'Account Manager'}
+           ])
+
+profile = App.find_by_sys_name('profile')
+profile.privileges << change_password
+profile.save
+
+account_manager = App.find_by_sys_name('accountManager')
+account_manager.privileges << cancel_account
+account_manager.save
