@@ -1,6 +1,6 @@
 Tenant.create([
-                  {name: 'Apple Inc.', host: 'apple.server-ror.dev', owner_id: 1},
-                  {name: 'lab2023 Inc.', host: 'lab2023.server-ror.dev', owner_id: 3}
+                  {name: 'Apple Inc.', host: 'apple.kebab.local', owner_id: 1},
+                  {name: 'lab2023 Inc.', host: 'lab2023.kebab.local', owner_id: 3}
               ])
 
 Role.create([
@@ -23,10 +23,11 @@ Privilege.create([
                      {sys_name: 'changePassword', name: 'Change Password'},
                      {sys_name: 'cancelAccount', name: 'Cancel Account'}
                  ])
+
 cancel_account = Privilege.find_by_sys_name('cancelAccount')
 change_password = Privilege.find_by_sys_name('changePassword')
 
-Tenant.current = Tenant.find_by_host('apple.server-ror.dev')
+Tenant.current = Tenant.find_by_host('apple.kebab.local')
 
 ceo = Role.find_by_name('Ceo')
 manager = Role.find_by_name('Manager')
@@ -50,7 +51,7 @@ ceo.save
 manager.save
 engineer.save
 
-Tenant.current = Tenant.find_by_host('lab2023.server-ror.dev')
+Tenant.current = Tenant.find_by_host('lab2023.kebab.local')
 ceo = Role.find_by_name('Ceo')
 backend = Role.find_by_name('Backend Developer')
 frontend = Role.find_by_name('Frontend Developer')
