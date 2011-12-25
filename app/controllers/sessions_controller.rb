@@ -1,38 +1,23 @@
-class SessionsController < ApplicationController
+class SessionsController < Devise::TenantsController
+  prepend_before_filter :require_no_authentication, :only => [ :new, :create ]
+  prepend_before_filter :allow_params_authentication!, :only => :create
+  include Devise::Controllers::InternalHelpers
+
   def create
-    user = User.find_by_email(params[:email])
-    if user && user.authenticate(params[:password])
+    resource = warden.authenticate!(scope: resource_name)
 
-      user = User.select('id, name, email').find_by_email(params[:email])
+    user = User.select('id, email, name, locale').find(resource.id)
+    user[:privileges] = user.privileges
+    user[:apps] = user.apps
 
-      @@response[:user] = user
+    @@response[:user] = [user]
 
-      apps = Array.new
-      user.get_apps.each do |a|
-        apps += [:sys_name => a.sys_name, :department => a.sys_department]
-      end
-      @@response[:user][:apps] = apps
-
-      privileges = Array.new
-      user.get_privileges.each do |p|
-        privileges += [p.sys_name]
-      end
-      @@response[:user][:privileges] = privileges
-
-    else
-      @@response[:success] = false
-    end
-
-    render json:  @@response, callback: params[:callback]
+    render json: @@response
   end
 
   def destroy
-    render :json => session[:user_id]
-  end
-
-  def register
-    @@response[request_forgery_protection_token] = form_authenticity_token
-    @@response['tenant'] = Tenant.select('id, host').find_by_host!(request.host)
-    render json: @@response, callback: params[:callback]
+    signed_in = signed_in?(resource_name)
+    Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
+    render json: @@response
   end
 end

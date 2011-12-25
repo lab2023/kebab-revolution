@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SessionsController do
+describe TenantsController do
 
   describe "Register valid client" do
 
