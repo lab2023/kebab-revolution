@@ -1,4 +1,4 @@
-class PasswordsController < Devise::SessionsController
+class PasswordsController < Devise::PasswordsController
   prepend_before_filter :require_no_authentication
   include Devise::Controllers::InternalHelpers
 
