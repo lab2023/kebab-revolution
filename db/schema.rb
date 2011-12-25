@@ -107,10 +107,26 @@ ActiveRecord::Schema.define(:version => 20111221001329) do
   add_index "tenants", ["name"], :name => "index_tenants_on_name", :unique => true
 
   create_table "users", :force => true do |t|
-    t.integer  "tenant_id",       :null => false
+    t.integer  "tenant_id",                              :null => false
     t.string   "name"
-    t.string   "email"
-    t.string   "password_digest"
+    t.string   "email",                  :default => "", :null => false
+    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
+    t.integer  "failed_attempts",        :default => 0
+    t.string   "unlock_token"
+    t.datetime "locked_at"
+    t.string   "authentication_token"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "locale"

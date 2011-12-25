@@ -1,8 +1,5 @@
 KebabServerRor::Application.routes.draw do
-  get "sessions/register"
-  get "sessions/test"
-
-  resources :sessions
+  get "tenants/register"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -53,11 +50,14 @@ KebabServerRor::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'sessions#register'
+  root :to => 'tenants#register'
 
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
+
+  # Devise Routing
+  devise_for :users, :controllers => {sessions: 'sessions'}
 end
