@@ -59,5 +59,5 @@ KebabServerRor::Application.routes.draw do
   # match ':controller(/:action(/:id(.:format)))'
 
   # Devise Routing
-  devise_for :users, :controllers => {sessions: 'sessions', passwords: 'passwords', confirmations: 'confirmations'}
+  devise_for :users, :controllers => {sessions: 'sessions', passwords: 'passwords', confirmations: 'confirmations', unlocks: 'unlocks'}
 end
