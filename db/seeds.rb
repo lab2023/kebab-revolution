@@ -13,10 +13,10 @@ Role.create([
             ])
 
 User.create([
-                {name: 'Steve Jobs', email: 'steve@jobs.com', password: '123456', password_confirmation: '123456',  tenant_id: 1},
-                {name: 'Steve Wozniak', email: 'steve@wozniak.com', password: '123456', password_confirmation: '123456',  tenant_id: 1},
-                {name: 'Onur Ozgur OZKAN', email: 'onur@ozgur.com', password: '123456', password_confirmation: '123456', tenant_id: 2},
-                {name: 'Tayfun Ozis ERIKAN', email: 'tayfun@ozis.com', password: '123456', password_confirmation: '123456', tenant_id: 2}
+                {name: 'Steve Jobs', email: 'steve@jobs.com', password: '123456', password_confirmation: '123456', locale: 'tr', tenant_id: 1},
+                {name: 'Steve Wozniak', email: 'steve@wozniak.com', password: '123456', password_confirmation: '123456', locale: 'tr',  tenant_id: 1},
+                {name: 'Onur Ozgur OZKAN', email: 'onur@ozgur.com', password: '123456', password_confirmation: '123456',  locale: 'tr', tenant_id: 2},
+                {name: 'Tayfun Ozis ERIKAN', email: 'tayfun@ozis.com', password: '123456', password_confirmation: '123456', locale: 'tr', tenant_id: 2}
             ])
 
 Privilege.create([
