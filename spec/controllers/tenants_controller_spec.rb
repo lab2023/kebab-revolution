@@ -9,7 +9,7 @@ describe TenantsController do
     end
 
     it "should eql to expected_response_json" do
-      get "/sessions/register", {}, {"HTTP_HOST" => "#{@valid_tenant.host}"}
+      get "/tenants/register", {}, {"HTTP_HOST" => "#{@valid_tenant.host}"}
 
       body_parsed = JSON.parse(last_response.body)
       expected_response_json = {"success" => true}
@@ -20,7 +20,7 @@ describe TenantsController do
     end
 
     it "status should be eql 200" do
-      get "/sessions/register", {}, {"HTTP_HOST" => "#{@valid_tenant.host}"}
+      get "/tenants/register", {}, {"HTTP_HOST" => "#{@valid_tenant.host}"}
       last_response.status.should eql(200)
     end
   end
@@ -28,7 +28,7 @@ describe TenantsController do
   describe "Register invalid client" do
 
     it "should eql to expected_response_json" do
-      get "/sessions/register", {}, {"HTTP_HOST" => "#{invalid_tenant_host}"}
+      get "/tenants/register", {}, {"HTTP_HOST" => "#{invalid_tenant_host}"}
 
       expected_response_json = {"success" => false}
       expected_response_json["notice"] = ["type" => 'ERR', "message" => "Invalid tenant"]
@@ -37,13 +37,9 @@ describe TenantsController do
     end
 
     it "status should be eql 404" do
-      get "/sessions/register", {}, {"HTTP_HOST" => "#{invalid_tenant_host}"}
+      get "/tenants/register", {}, {"HTTP_HOST" => "#{invalid_tenant_host}"}
       last_response.status.should eql(404)
     end
-  end
-
-  describe "Login" do
-    it "should be done alpha4"
   end
 
 end
