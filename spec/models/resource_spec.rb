@@ -1,17 +1,12 @@
 require 'spec_helper'
 
-describe Service do
+describe Resource do
   before(:each) do
-    @new_service = Service.new
+    @new_service = Resource.new
   end
 
   it "should be instance of Service" do
-    @new_service.should be_instance_of(Service)
-  end
-
-  it "references to Privilege" do
-    @new_service.should be_invalid
-    @new_service.errors[:privilege].should include("can't be blank")
+    @new_service.should be_instance_of(Resource)
   end
 
   describe "controller" do

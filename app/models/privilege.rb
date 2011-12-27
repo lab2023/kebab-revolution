@@ -1,7 +1,7 @@
 class Privilege < ActiveRecord::Base
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :apps
-  has_many                :services
+  has_many                :resources
 
   validates   :sys_name,  :presence => true, :uniqueness => true
   validates   :name,      :presence => true
