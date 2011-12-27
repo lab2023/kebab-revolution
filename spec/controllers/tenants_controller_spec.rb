@@ -14,7 +14,7 @@ describe TenantsController do
       body_parsed = JSON.parse(last_response.body)
       expected_response_json = {"success" => true}
       expected_response_json["authenticity_token"] = body_parsed['authenticity_token']
-      expected_response_json["tenant"] = Tenant.select('id, host').find_by_host!(last_request.host)
+      expected_response_json["tenant"] = Tenant.select('id, host, name').find_by_host!(last_request.host)
 
       last_response.body.should eql(expected_response_json.to_json)
     end
