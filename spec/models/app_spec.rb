@@ -34,7 +34,7 @@ describe App do
   describe "name" do
     it "should be presence" do
       @new_app.should be_invalid
-      @new_app.errors[:name].should include("can't be blank")
+      @new_app.errors[:sys_name].should include("can't be blank")
     end
   end
 end

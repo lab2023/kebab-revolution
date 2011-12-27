@@ -17,3 +17,7 @@ Factory.define :privilege do |f|
   f.name     'Add New User'
   f.info     'Can add a new user'
 end
+
+Factory.define :resource do |f|
+  f.sequence(:sys_name) { |n| "controller#{n}.action#{n}" }
+end

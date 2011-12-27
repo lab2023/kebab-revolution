@@ -3,7 +3,7 @@ class CreateResources < ActiveRecord::Migration
     create_table :resources do |t|
       t.string :sys_name
     end
-    add_index :resources, :name
+    add_index :resources, :sys_name
   end
 
   def down

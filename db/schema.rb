@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111218213041) do
+ActiveRecord::Schema.define(:version => 20111227113516) do
 
   create_table "app_translations", :force => true do |t|
     t.integer  "app_id",     :null => false
@@ -62,10 +62,18 @@ ActiveRecord::Schema.define(:version => 20111218213041) do
   add_index "privileges_roles", ["role_id"], :name => "fk_roles_privileges_roles_id"
 
   create_table "resources", :force => true do |t|
-    t.string "name"
+    t.string "sys_name"
   end
 
-  add_index "resources", ["name"], :name => "index_resources_on_name"
+  add_index "resources", ["sys_name"], :name => "index_resources_on_sys_name"
+
+  create_table "resources_privileges", :id => false, :force => true do |t|
+    t.integer "resource_id",  :null => false
+    t.integer "privilege_id", :null => false
+  end
+
+  add_index "resources_privileges", ["privilege_id"], :name => "fk_privileges_resources_privileges"
+  add_index "resources_privileges", ["resource_id", "privilege_id"], :name => "index_resources_privileges_on_resource_id_and_privilege_id", :unique => true
 
   create_table "role_translations", :force => true do |t|
     t.integer  "role_id",    :null => false
