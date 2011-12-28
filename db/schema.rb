@@ -11,7 +11,95 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111212154006) do
+ActiveRecord::Schema.define(:version => 20111227113516) do
+
+  create_table "app_translations", :force => true do |t|
+    t.integer  "app_id",     :null => false
+    t.string   "locale"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "app_translations", ["app_id"], :name => "index_app_translations_on_app_id"
+
+  create_table "apps", :force => true do |t|
+    t.string "sys_name"
+    t.string "sys_department"
+  end
+
+  create_table "apps_privileges", :id => false, :force => true do |t|
+    t.integer "app_id",       :null => false
+    t.integer "privilege_id", :null => false
+  end
+
+  add_index "apps_privileges", ["app_id", "privilege_id"], :name => "index_apps_privileges_on_app_id_and_privilege_id", :unique => true
+  add_index "apps_privileges", ["privilege_id"], :name => "fk_privileges_apps_privileges"
+
+  create_table "privilege_translations", :force => true do |t|
+    t.integer  "privilege_id", :null => false
+    t.string   "locale"
+    t.string   "name"
+    t.text     "info"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "privilege_translations", ["privilege_id"], :name => "index_privilege_translations_on_privilege_id"
+
+  create_table "privileges", :force => true do |t|
+    t.string   "sys_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "privileges_roles", :id => false, :force => true do |t|
+    t.integer "privilege_id", :null => false
+    t.integer "role_id",      :null => false
+  end
+
+  add_index "privileges_roles", ["privilege_id", "role_id"], :name => "index_privileges_roles_on_privilege_id_and_role_id", :unique => true
+  add_index "privileges_roles", ["role_id"], :name => "fk_roles_privileges_roles_id"
+
+  create_table "resources", :force => true do |t|
+    t.string "sys_name"
+  end
+
+  add_index "resources", ["sys_name"], :name => "index_resources_on_sys_name"
+
+  create_table "resources_privileges", :id => false, :force => true do |t|
+    t.integer "resource_id",  :null => false
+    t.integer "privilege_id", :null => false
+  end
+
+  add_index "resources_privileges", ["privilege_id"], :name => "fk_privileges_resources_privileges"
+  add_index "resources_privileges", ["resource_id", "privilege_id"], :name => "index_resources_privileges_on_resource_id_and_privilege_id", :unique => true
+
+  create_table "role_translations", :force => true do |t|
+    t.integer  "role_id",    :null => false
+    t.string   "locale"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "role_translations", ["role_id"], :name => "index_role_translations_on_role_id"
+
+  create_table "roles", :force => true do |t|
+    t.integer  "tenant_id",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "roles", ["tenant_id"], :name => "index_roles_on_tenant_id"
+
+  create_table "roles_users", :id => false, :force => true do |t|
+    t.integer "role_id", :null => false
+    t.integer "user_id", :null => false
+  end
+
+  add_index "roles_users", ["role_id", "user_id"], :name => "index_roles_users_on_role_id_and_user_id", :unique => true
+  add_index "roles_users", ["user_id"], :name => "fk_users_roles_users_id"
 
   create_table "tenants", :force => true do |t|
     t.string   "name"
@@ -23,5 +111,18 @@ ActiveRecord::Schema.define(:version => 20111212154006) do
 
   add_index "tenants", ["host"], :name => "index_tenants_on_host", :unique => true
   add_index "tenants", ["name"], :name => "index_tenants_on_name", :unique => true
+
+  create_table "users", :force => true do |t|
+    t.integer  "tenant_id",       :null => false
+    t.string   "name"
+    t.string   "email"
+    t.string   "password_digest"
+    t.string   "locale"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["tenant_id"], :name => "index_users_on_tenant_id"
 
 end

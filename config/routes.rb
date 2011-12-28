@@ -1,6 +1,8 @@
 KebabServerRor::Application.routes.draw do
-  get "tenants/register"
-  get "tenants/test"
+  get    "tenants/register"
+  get    "tenants/test"
+
+  resource :sessions
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
