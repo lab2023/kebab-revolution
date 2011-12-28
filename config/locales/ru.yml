@@ -17,6 +17,7 @@ ru:
         password: "пароль"
         password_confirmation: "подтверждение пароля"
         name: "имя"
+        locale: "язык"
       role:
         tenant: "Aрендатор"
         name: "имя"
@@ -34,4 +35,4 @@ ru:
         controller: "контроллер"
         action: "действие"
   notice:
-    invalid_tenant: "недействительным арендатора"
+    invalid_tenant: "Неверный счет"
