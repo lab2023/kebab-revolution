@@ -1,12 +1,18 @@
 class PasswordsController < ApplicationController
   def create
-    user = User.find_by_email(params[:email])
+    @user = User.find_by_email(params[:email])
     new_password = rand(10000000000000).floor.to_s(36)
-    user.password = new_password
-    user.password_confirmation = new_password
-    user.save
+    @user.password = new_password
+    @user.password_confirmation = new_password
+    if @user.save
+      UserMailer.forget_password(@user).deliver
+      status = :ok
+    else
+      @@response[:success] = false
+      status = :unprocessable_entity
+    end
 
-    render json: new_password
+    render json: @user, status: status
   end
 
 end
