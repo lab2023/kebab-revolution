@@ -1,16 +1,17 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :authorize
+  before_filter :tenant
+  before_filter :authenticate
+  #before_filter :authorize
   before_filter :i18n_locale
-  before_filter :check_tenant
 
   @@response = {:success => true}
 
   protected
     attr_reader :current_tenant
 
-    def check_tenant
+    def tenant
       if Tenant.find_by_host(request.host) != nil
         @tenant = Tenant.current = Tenant.find_by_host!(request.host)
       else
@@ -18,6 +19,10 @@ class ApplicationController < ActionController::Base
         add_notice 'ERR', I18n.t('notice.invalid_tenant')
         render json: @@response, status: :not_found
       end
+    end
+
+    def authenticate
+      render json: {success: false}, status: 403 unless session[:user_id]
     end
 
     def add_notice type, message

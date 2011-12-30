@@ -1,5 +1,5 @@
 class TenantsController < ApplicationController
-  skip_before_filter :check_authorize, only: [:bootstrap]
+  skip_before_filter :authenticate, only: [:bootstrap]
 
   def bootstrap
     @@response[request_forgery_protection_token] = form_authenticity_token
