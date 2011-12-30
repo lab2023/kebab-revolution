@@ -76,8 +76,8 @@ backend.save
 frontend.save
 
 App.create([
-               {sys_name: 'profile', sys_department: 'system', name: 'Profile'},
-               {sys_name: 'accountManager', sys_department: 'system',  name: 'Account Manager'}
+               {sys_name: 'profile', sys_department: 'system'},
+               {sys_name: 'accountManager', sys_department: 'system'}
            ])
 
 profile = App.find_by_sys_name('profile')
