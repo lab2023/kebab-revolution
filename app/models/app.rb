@@ -3,5 +3,4 @@ class App < ActiveRecord::Base
 
   validates  :sys_name,       :presence => true, :uniqueness => true
   validates  :sys_department, :presence => true
-  translates :name, :fallbacks_for_empty_translations => true
 end
