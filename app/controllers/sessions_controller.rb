@@ -3,17 +3,17 @@ class SessionsController < ApplicationController
     user = User.find_by_email(params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      status = 200
+      session[:acl] = acl
     else
       @@response[:success] = false
-      status = 401
     end
 
-    render json: @@response, status: status
+    render json: @@response
   end
 
   def destroy
     session[:user_id] = nil
+    session[:acl] = nil
     render json: @@response
   end
 end

@@ -42,4 +42,17 @@ class User < TenantScopedModel
     apps
   end
 
+  def get_resources
+    resources = Array.new
+
+    self.get_privileges.each do |p|
+      p.resources.each do |a|
+        resources << a unless resources.include?(a)
+      end
+    end
+
+    resources
+  end
+
+
 end
