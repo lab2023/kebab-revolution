@@ -25,6 +25,10 @@ class ApplicationController < ActionController::Base
       render json: {success: false}, status: 403 unless session[:user_id]
     end
 
+    def authorize
+      render json: {success: false}, status: 401 unless session[:acl].include?(request.method.to_s + request.path.to_s)
+    end
+
     def add_notice type, message
       notice = [:type => type, :message => message]
       if @@response.has_key?(:notice)
@@ -62,10 +66,6 @@ class ApplicationController < ActionController::Base
           session[:locale]
         end
       end
-    end
-
-    def authorize
-      render json: {success: false}, status: 401 unless session[:acl].include?(request.method.to_s + request.path.to_s)
     end
 
     # Return user acl hash POST/sessions => sessions/create
