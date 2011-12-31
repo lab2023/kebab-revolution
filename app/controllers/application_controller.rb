@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
       if request.xhr?
         render json: @@response, status: :not_found
       else
-        render :file => "#{Rails.root}/public/404.html", :status => :not_found
+        render file: "#{Rails.root}/public/404.html", status: 404
       end
 
     end
@@ -56,7 +56,14 @@ class ApplicationController < ActionController::Base
   #
   # Returns void, Json
   def authenticate
-    render json: {success: false}, status: 403 unless session[:user_id]
+    # KBBTODO add logging
+    unless session[:user_id]
+      if request.xhr?
+        render json: {success: false}, status: 403
+      else
+        render file: "#{Rails.root}/public/403.html", status: 403
+      end
+    end
   end
 
   # Protected: Check user authorize
@@ -69,7 +76,14 @@ class ApplicationController < ActionController::Base
   #
   # Returns void, Json
   def authorize
-    render json: {success: false}, status: 401 unless session[:acl].include?(request.method.to_s + request.path.to_s)
+    # KBBTODO add logging
+    unless session[:acl].include?(request.method.to_s + request.path.to_s)
+      if request.xhr?
+        render json: {success: false}, status: 401
+      else
+        render file: "#{Rails.root}/public/401.html", status: 401
+      end
+    end
   end
 
   # Protected: Add a notice at @@response
