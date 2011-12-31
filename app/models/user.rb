@@ -1,7 +1,15 @@
+# Kebab 2.0 - Server Ror
+#
+# Author::    Onur Özgür ÖZKAN <onur.ozgur.ozkan@lab2023.com>
+# Copyright:: Copyright (c) 2011 lab2023 - internet technologies
+# License::   Distributes under MIT
+
+# User Model
 class User < TenantScopedModel
   has_secure_password
   has_and_belongs_to_many :roles
 
+  # Email regex standard
   EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
   validates :email,     :presence => {:on => :create},
                         :uniqueness => true,
@@ -18,6 +26,7 @@ class User < TenantScopedModel
 
   validates :password_confirmation, :presence => true
 
+  # Pubic: Return users privileges hash
   def get_privileges
     privileges = Array.new
 
@@ -30,6 +39,7 @@ class User < TenantScopedModel
     privileges
   end
 
+  # Public: Return users apps hash
   def get_apps
     apps = Array.new
 
@@ -41,5 +51,19 @@ class User < TenantScopedModel
 
     apps
   end
+
+  # Public: Return users resources hash
+  def get_resources
+    resources = Array.new
+
+    self.get_privileges.each do |p|
+      p.resources.each do |a|
+        resources << a unless resources.include?(a)
+      end
+    end
+
+    resources
+  end
+
 
 end

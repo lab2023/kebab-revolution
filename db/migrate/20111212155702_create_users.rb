@@ -5,6 +5,7 @@ class CreateUsers < ActiveRecord::Migration
         t.string :name
         t.string :email
         t.string :password_digest
+        t.string :locale
 
         t.timestamps
       end
@@ -26,11 +27,11 @@ class CreateUsers < ActiveRecord::Migration
       SQL
   end
 
-    def down
-      execute <<-SQL
-        ALTER TABLE `users` DROP FOREIGN KEY fk_tenants_users_id
-      SQL
+  def down
+    execute <<-SQL
+      ALTER TABLE `users` DROP FOREIGN KEY fk_tenants_users_id
+    SQL
 
-      drop_table :users
-    end
+    drop_table :users
+  end
 end

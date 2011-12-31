@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111221001329) do
+ActiveRecord::Schema.define(:version => 20111227113516) do
 
   create_table "app_translations", :force => true do |t|
     t.integer  "app_id",     :null => false
@@ -53,6 +53,14 @@ ActiveRecord::Schema.define(:version => 20111221001329) do
     t.datetime "updated_at"
   end
 
+  create_table "privileges_resources", :id => false, :force => true do |t|
+    t.integer "resource_id",  :null => false
+    t.integer "privilege_id", :null => false
+  end
+
+  add_index "privileges_resources", ["privilege_id"], :name => "fk_privileges_privileges_resources"
+  add_index "privileges_resources", ["resource_id", "privilege_id"], :name => "index_privileges_resources_on_resource_id_and_privilege_id", :unique => true
+
   create_table "privileges_roles", :id => false, :force => true do |t|
     t.integer "privilege_id", :null => false
     t.integer "role_id",      :null => false
@@ -60,6 +68,14 @@ ActiveRecord::Schema.define(:version => 20111221001329) do
 
   add_index "privileges_roles", ["privilege_id", "role_id"], :name => "index_privileges_roles_on_privilege_id_and_role_id", :unique => true
   add_index "privileges_roles", ["role_id"], :name => "fk_roles_privileges_roles_id"
+
+  create_table "resources", :force => true do |t|
+    t.string "sys_path"
+    t.string "sys_name"
+  end
+
+  add_index "resources", ["sys_name"], :name => "index_resources_on_sys_name"
+  add_index "resources", ["sys_path"], :name => "index_resources_on_sys_path"
 
   create_table "role_translations", :force => true do |t|
     t.integer  "role_id",    :null => false
@@ -87,14 +103,6 @@ ActiveRecord::Schema.define(:version => 20111221001329) do
   add_index "roles_users", ["role_id", "user_id"], :name => "index_roles_users_on_role_id_and_user_id", :unique => true
   add_index "roles_users", ["user_id"], :name => "fk_users_roles_users_id"
 
-  create_table "services", :force => true do |t|
-    t.integer "privilege_id", :null => false
-    t.string  "controller"
-    t.string  "action"
-  end
-
-  add_index "services", ["privilege_id"], :name => "index_services_on_privilege_id"
-
   create_table "tenants", :force => true do |t|
     t.string   "name"
     t.string   "host"
@@ -111,9 +119,9 @@ ActiveRecord::Schema.define(:version => 20111221001329) do
     t.string   "name"
     t.string   "email"
     t.string   "password_digest"
+    t.string   "locale"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "locale"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

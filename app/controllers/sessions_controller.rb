@@ -1,38 +1,31 @@
+# Kebab 2.0 - Server Ror
+#
+# Author::    Onur Özgür ÖZKAN <onur.ozgur.ozkan@lab2023.com>
+# Copyright:: Copyright (c) 2011 lab2023 - internet technologies
+# License::   Distributes under MIT
+
+# Sessions Controller
 class SessionsController < ApplicationController
+  skip_before_filter :authenticate, only: [:create]
+  skip_before_filter :authorize
+
+  # POST/sessions
   def create
     user = User.find_by_email(params[:email])
     if user && user.authenticate(params[:password])
-
-      user = User.select('id, name, email').find_by_email(params[:email])
-
-      @@response[:user] = user
-
-      apps = Array.new
-      user.get_apps.each do |a|
-        apps += [:sys_name => a.sys_name, :department => a.sys_department]
-      end
-      @@response[:user][:apps] = apps
-
-      privileges = Array.new
-      user.get_privileges.each do |p|
-        privileges += [p.sys_name]
-      end
-      @@response[:user][:privileges] = privileges
-
+      session[:user_id] = user.id
+      session[:acl] = acl
     else
       @@response[:success] = false
     end
 
-    render json:  @@response, callback: params[:callback]
+    render json: @@response
   end
 
+  # DELETE/sessions
   def destroy
-    render :json => session[:user_id]
-  end
-
-  def register
-    @@response[request_forgery_protection_token] = form_authenticity_token
-    @@response['tenant'] = Tenant.select('id, host').find_by_host!(request.host)
-    render json: @@response, callback: params[:callback]
+    session[:user_id] = nil
+    session[:acl] = nil
+    render json: @@response
   end
 end

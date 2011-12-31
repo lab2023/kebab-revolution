@@ -65,9 +65,17 @@ describe User do
       @new_user.errors[:locale].should include("can't be blank")
     end
 
-    it "should be equal to each of en tr ru"
+    it "should be equal to each of en tr ru" do
+      @new_user.should be_invalid
+      @new_user.locale = 'invalid'
+      @new_user.errors[:locale].should include("is not included in the list")
+    end
 
-    it "is length should be two"
+    it "is length should be two" do
+      @new_user.should be_invalid
+      @new_user.locale = 'invalid'
+      @new_user.errors[:locale].should include("is the wrong length (should be 2 characters)")
+    end
 
   end
 end

@@ -17,6 +17,7 @@ tr:
         password: "şifre"
         password_confirmation: "şifre onayı"
         name: "isim"
+        locale: "dil"
       role:
         tenant: "kiracı"
         name: "isim"
@@ -34,4 +35,4 @@ tr:
         controller: "kontrol"
         action: "method"
   notice:
-    invalid_tenant: "Geçersiz malik"
+    invalid_tenant: "Geçersiz hesap"

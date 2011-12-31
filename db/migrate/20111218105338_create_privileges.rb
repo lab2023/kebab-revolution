@@ -2,8 +2,6 @@ class CreatePrivileges < ActiveRecord::Migration
   def up
     create_table :privileges do |t|
       t.string :sys_name
-
-      t.timestamps
     end
 
     Privilege.create_translation_table! :name => :string, :info => :text

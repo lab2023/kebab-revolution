@@ -1,6 +1,6 @@
 Tenant.create([
-                  {name: 'Apple Inc.', host: 'apple.server-ror.dev', owner_id: 1},
-                  {name: 'lab2023 Inc.', host: 'lab2023.server-ror.dev', owner_id: 3}
+                  {name: 'Apple Inc.', host: 'apple.kebab.local', owner_id: 1},
+                  {name: 'lab2023 Inc.', host: 'lab2023.kebab.local', owner_id: 3}
               ])
 
 Role.create([
@@ -13,20 +13,21 @@ Role.create([
             ])
 
 User.create([
-                {name: 'Steve Jobs', email: 'steve@jobs.com', password: '123456', password_confirmation: '123456',  tenant_id: 1},
-                {name: 'Steve Wozniak', email: 'steve@wozniak.com', password: '123456', password_confirmation: '123456',  tenant_id: 1},
-                {name: 'Onur Ozgur OZKAN', email: 'onur@ozgur.com', password: '123456', password_confirmation: '123456', tenant_id: 2},
-                {name: 'Tayfun Ozis ERIKAN', email: 'tayfun@ozis.com', password: '123456', password_confirmation: '123456', tenant_id: 2}
+                {name: 'Steve Jobs', email: 'steve@jobs.com', password: '123456', password_confirmation: '123456', locale: 'tr', tenant_id: 1},
+                {name: 'Steve Wozniak', email: 'steve@wozniak.com', password: '123456', password_confirmation: '123456', locale: 'tr',  tenant_id: 1},
+                {name: 'Onur Ozgur OZKAN', email: 'onur@ozgur.com', password: '123456', password_confirmation: '123456',  locale: 'tr', tenant_id: 2},
+                {name: 'Tayfun Ozis ERIKAN', email: 'tayfun@ozis.com', password: '123456', password_confirmation: '123456', locale: 'tr', tenant_id: 2}
             ])
 
 Privilege.create([
                      {sys_name: 'changePassword', name: 'Change Password'},
                      {sys_name: 'cancelAccount', name: 'Cancel Account'}
                  ])
+
 cancel_account = Privilege.find_by_sys_name('cancelAccount')
 change_password = Privilege.find_by_sys_name('changePassword')
 
-Tenant.current = Tenant.find_by_host('apple.server-ror.dev')
+Tenant.current = Tenant.find_by_host('apple.kebab.local')
 
 ceo = Role.find_by_name('Ceo')
 manager = Role.find_by_name('Manager')
@@ -50,7 +51,7 @@ ceo.save
 manager.save
 engineer.save
 
-Tenant.current = Tenant.find_by_host('lab2023.server-ror.dev')
+Tenant.current = Tenant.find_by_host('lab2023.kebab.local')
 ceo = Role.find_by_name('Ceo')
 backend = Role.find_by_name('Backend Developer')
 frontend = Role.find_by_name('Frontend Developer')
@@ -75,8 +76,8 @@ backend.save
 frontend.save
 
 App.create([
-               {sys_name: 'profile', sys_department: 'system', name: 'Profile'},
-               {sys_name: 'accountManager', sys_department: 'system',  name: 'Account Manager'}
+               {sys_name: 'profile', sys_department: 'system'},
+               {sys_name: 'accountManager', sys_department: 'system'}
            ])
 
 profile = App.find_by_sys_name('profile')
@@ -86,3 +87,12 @@ profile.save
 account_manager = App.find_by_sys_name('accountManager')
 account_manager.privileges << cancel_account
 account_manager.save
+
+Resource.create([
+               {sys_path: 'POST/passwords',  sys_name: 'passwords/create'},
+               {sys_path: 'POST/sessions',   sys_name: 'sessions/create'},
+               {sys_path: 'DELETE/sessions', sys_name: 'sessions/destroy'}
+           ])
+
+change_password.resources << Resource.find_by_sys_name('passwords/create')
+change_password.save

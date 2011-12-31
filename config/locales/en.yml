@@ -17,6 +17,7 @@ en:
         password: "password"
         password_confirmation: "password confirmation"
         name: "name"
+        locale: "language"
       role:
         tenant: "tenant"
         name: "name"
@@ -35,4 +36,4 @@ en:
         action: "action"
 
   notice:
-    invalid_tenant: "Invalid tenant"
+    invalid_tenant: "Invalid account"

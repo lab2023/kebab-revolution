@@ -1,14 +1,23 @@
+<!--
+ Kebab Project 2.0.0 (Kebab Revolution)
+ http://kebab-project.com
+ Copyright (c) 2011-2012 lab2023 - internet technologies TURKEY Inc.
+ http://www.lab2023.com
+-->
 <!DOCTYPE html>
 <html>
 <head>
-  <title>KebabServerRor</title>
-  <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+    <meta charset="utf-8">
+    <title>Kebab Web OS</title>
+
+    <!-- include js and css files here -->
+    <link rel="stylesheet" type="text/css" href="http://static.kebab.local/vendors/ext-4.0.7-gpl/resources/css/ext-all-gray.css" />
+    <script type="text/javascript" src="http://static.kebab.local/vendors/ext-4.0.7-gpl/bootstrap.js"></script>
+    <script type="text/javascript" src="http://static.kebab.local/kebab/bootstrap.js"></script>
+
+    <%= csrf_meta_tags %>
 </head>
 <body>
-
 <%= yield %>
-
 </body>
 </html>
