@@ -1,7 +1,15 @@
+# Kebab 2.0 - Server Ror
+#
+# Author::    Onur Özgür ÖZKAN <onur.ozgur.ozkan@lab2023.com>
+# Copyright:: Copyright (c) 2011 lab2023 - internet technologies
+# License::   Distributes under MIT
+
+# Tenants Controller
 class TenantsController < ApplicationController
   skip_before_filter :authenticate, only: [:bootstrap]
   skip_before_filter :authorize
 
+  # GET/tenants/bootstrap
   def bootstrap
     @@response[request_forgery_protection_token] = form_authenticity_token
     @@response['tenant'] = Tenant.select('id, host, name').find_by_host!(request.host)
