@@ -1,4 +1,4 @@
-# Welcome to Kebab 
+# Welcome to Kebab
 
 # Kebab Revolution Resource
 
@@ -8,13 +8,30 @@
 
 # Changelog
 
+## 2.0.0.alpha5 -
+
+* Subscription Model
+* Subscription Payments Model
+* Paypal integration
+* Notification for account owners
+
 ## 2.0.0.alpha4 -
 
-* Integrate Devise
-* Integrate Kebab ACL System
-* Add GET users/id method
-* Add PUT users/id method
-* Add user#forget_password method
+* Tenant register
+* Subscription Plan Model
+* Subscription limit controller
+* User invite
+* User profile
+* Feedback
+
+## 2.0.0.alpha4 - 2012.01.01
+
+* DONE - Create authentication system
+* DONE - Create authorization system
+* DONE - Improve xhr? request for 401, 403, 404 status
+* DONE - Add all ruby doc
+* DONE - User forget password
+* DONE - Create desktop and login pages
 
 ## 2.0.0.alpha3 - 2011.12.21
 
