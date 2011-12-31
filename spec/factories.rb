@@ -19,5 +19,6 @@ Factory.define :privilege do |f|
 end
 
 Factory.define :resource do |f|
+  f.sequence(:sys_path) { |n| "GET/controller#{n}/action#{n}" }
   f.sequence(:sys_name) { |n| "controller#{n}.action#{n}" }
 end
