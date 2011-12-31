@@ -8,14 +8,14 @@
 
 # Changelog
 
-## 2.0.0.alpha5 -
+## 2.0.0.alpha6 -
 
 * Subscription Model
 * Subscription Payments Model
 * Paypal integration
 * Notification for account owners
 
-## 2.0.0.alpha4 -
+## 2.0.0.alpha5 -
 
 * Tenant register
 * Subscription Plan Model
