@@ -11,6 +11,7 @@ class SessionsController < ApplicationController
 
   # POST/sessions
   def create
+    # KBBTODO status code
     user = User.find_by_email(params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
