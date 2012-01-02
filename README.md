@@ -10,19 +10,19 @@
 
 ## 2.0.0.alpha6 -
 
-* Subscription Model
-* Subscription Payments Model
-* Paypal integration
 * Notification for account owners
-
-## 2.0.0.alpha5 -
-
-* Tenant register
-* Subscription Plan Model
 * Subscription limit controller
 * User invite
 * User profile
 * Feedback
+
+## 2.0.0.alpha5 -
+
+* Tenant register
+* DO - Plan Model
+* Subscription Model
+* Payments Model
+* Paypal integration
 
 ## 2.0.0.alpha4 - 2012.01.01
 
