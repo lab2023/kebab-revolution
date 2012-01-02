@@ -23,7 +23,7 @@ class PasswordsController < ApplicationController
       status = :unprocessable_entity
     end
 
-    render json: @user, status: status
+    render json: @@response, status: status
   end
 
 end
