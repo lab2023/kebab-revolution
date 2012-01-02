@@ -11,17 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111227113516) do
-
-  create_table "app_translations", :force => true do |t|
-    t.integer  "app_id",     :null => false
-    t.string   "locale"
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "app_translations", ["app_id"], :name => "index_app_translations_on_app_id"
+ActiveRecord::Schema.define(:version => 20120101015713) do
 
   create_table "apps", :force => true do |t|
     t.string "sys_name"
@@ -36,6 +26,13 @@ ActiveRecord::Schema.define(:version => 20111227113516) do
   add_index "apps_privileges", ["app_id", "privilege_id"], :name => "index_apps_privileges_on_app_id_and_privilege_id", :unique => true
   add_index "apps_privileges", ["privilege_id"], :name => "fk_privileges_apps_privileges"
 
+  create_table "plans", :force => true do |t|
+    t.string  "name"
+    t.decimal "price",       :precision => 10, :scale => 0
+    t.integer "user_limit"
+    t.boolean "recommended",                                :default => false
+  end
+
   create_table "privilege_translations", :force => true do |t|
     t.integer  "privilege_id", :null => false
     t.string   "locale"
@@ -48,9 +45,7 @@ ActiveRecord::Schema.define(:version => 20111227113516) do
   add_index "privilege_translations", ["privilege_id"], :name => "index_privilege_translations_on_privilege_id"
 
   create_table "privileges", :force => true do |t|
-    t.string   "sys_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string "sys_name"
   end
 
   create_table "privileges_resources", :id => false, :force => true do |t|
