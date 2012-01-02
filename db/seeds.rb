@@ -89,10 +89,10 @@ account_manager.privileges << cancel_account
 account_manager.save
 
 Resource.create([
-               {sys_path: 'POST/passwords',  sys_name: 'passwords/create'},
-               {sys_path: 'POST/sessions',   sys_name: 'sessions/create'},
-               {sys_path: 'DELETE/sessions', sys_name: 'sessions/destroy'}
-           ])
+                    {sys_path: 'POST/passwords',  sys_name: 'passwords/create'},
+                    {sys_path: 'POST/sessions',   sys_name: 'sessions/create'},
+                    {sys_path: 'DELETE/sessions', sys_name: 'sessions/destroy'}
+                ])
 
 change_password.resources << Resource.find_by_sys_name('passwords/create')
 change_password.save
