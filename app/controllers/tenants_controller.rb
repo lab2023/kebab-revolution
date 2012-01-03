@@ -38,10 +38,11 @@ class TenantsController < ApplicationController
 
   # GET/tenants/valid_host?host=host_name
   def valid_host
-     if Tenant.find_by_host(params[:host])
-       render json: {success: false}
-     else
-       render json: @@response
-     end
+    # KBBTODO set invalid tenant from one place
+    if Tenant.find_by_host(:params[:host]) != nil || %w(www help support api apps status blog lab2023 static).include?(params[:host])
+      render json: {success: false}
+    else
+      render json: @@response
+    end
   end
 end
