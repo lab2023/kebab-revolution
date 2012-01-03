@@ -6,8 +6,9 @@
 
 # Tenants Controller
 class TenantsController < ApplicationController
-  skip_before_filter :authenticate, only: [:bootstrap]
-  skip_before_filter :authorize
+  skip_before_filter  :authenticate,  only: [:bootstrap, :create]
+  skip_before_filter  :tenant,        only: [:create]
+  skip_before_filter  :authorize
 
   # GET/tenants/bootstrap
   def bootstrap
@@ -21,5 +22,17 @@ class TenantsController < ApplicationController
       @@response['user'] = user
     end
     render json: @@response
+  end
+
+  # POST/tenants
+  def create
+    @tenant = Tenant.new(params[:tenant])
+    if @tenant.save
+      render json: @@response, status: :created
+    else
+      @@response[:success] = false
+      @tenant.errors.each { |a, m| add_error a, m}
+      render json: @@response, status: :unprocessable_entity
+    end
   end
 end
