@@ -3,6 +3,7 @@ KebabServerRor::Application.routes.draw do
   match 'login' => 'pages#login'
 
   get    "tenants/bootstrap"
+  get    "tenants/valid_host"
   get    "tenants/tests"
 
   resource :sessions

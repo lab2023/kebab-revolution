@@ -6,8 +6,8 @@
 
 # Tenants Controller
 class TenantsController < ApplicationController
-  skip_before_filter  :authenticate,  only: [:bootstrap, :create]
-  skip_before_filter  :tenant,        only: [:create]
+  skip_before_filter  :authenticate,  only: [:create, :valid_host, :bootstrap]
+  skip_before_filter  :tenant,        only: [:create, :valid_host]
   skip_before_filter  :authorize
 
   # GET/tenants/bootstrap
@@ -34,5 +34,14 @@ class TenantsController < ApplicationController
       @tenant.errors.each { |a, m| add_error a, m}
       render json: @@response, status: :unprocessable_entity
     end
+  end
+
+  # GET/tenants/valid_host?host=host_name
+  def valid_host
+     if Tenant.find_by_host(params[:host])
+       render json: {success: false}
+     else
+       render json: @@response
+     end
   end
 end
