@@ -59,6 +59,7 @@ module PayPal
         :signature             => "SIGNATURE",
         :start_at              => "PROFILESTARTDATE",
         :token                 => "TOKEN",
+        :transaction_id        => "TRANSACTIONID",
         :username              => "USER",
         :version               => "VERSION",
       }

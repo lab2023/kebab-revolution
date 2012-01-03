@@ -5,6 +5,7 @@ class CreatePayments < ActiveRecord::Migration
       t.decimal     :amount
       t.datetime    :payment_date
       t.string      :paypal_recurring_payment_profile_token
+      t.string      :transaction_id
 
       t.timestamps
     end
