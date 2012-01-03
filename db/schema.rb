@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120101015713) do
+ActiveRecord::Schema.define(:version => 20120103011352) do
 
   create_table "apps", :force => true do |t|
     t.string "sys_name"
@@ -97,6 +97,21 @@ ActiveRecord::Schema.define(:version => 20120101015713) do
 
   add_index "roles_users", ["role_id", "user_id"], :name => "index_roles_users_on_role_id_and_user_id", :unique => true
   add_index "roles_users", ["user_id"], :name => "fk_users_roles_users_id"
+
+  create_table "subscriptions", :force => true do |t|
+    t.integer  "plan_id"
+    t.integer  "tenant_id"
+    t.integer  "user_id"
+    t.decimal  "amount",                                 :precision => 10, :scale => 0
+    t.integer  "billing_no"
+    t.integer  "payment_period"
+    t.datetime "next_payment_date"
+    t.string   "paypal_token"
+    t.string   "paypal_customer_token"
+    t.string   "paypal_recurring_payment_profile_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "tenants", :force => true do |t|
     t.string   "name"

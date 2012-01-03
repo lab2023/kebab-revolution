@@ -6,6 +6,7 @@
 
 # Tenant Model
 class Tenant < ActiveRecord::Base
+  has_one     :subscription
   has_many    :users
   has_many    :roles
   belongs_to  :owner, :class_name => "User", :foreign_key => :owner_id
@@ -16,7 +17,7 @@ class Tenant < ActiveRecord::Base
 
   validates :host, :presence => {:on => :create},
                    :uniqueness => true,
-                   :exclusion => {:in => %w(www help support api apps status blog lab2023)},
+                   :exclusion => {:in => %w(www help support api apps status blog lab2023 static)},
                    :length => {:in => 4..255}
 
   class << self
