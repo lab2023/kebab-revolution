@@ -3,7 +3,6 @@ class CreateTenants < ActiveRecord::Migration
     create_table :tenants do |t|
       t.string  :name
       t.string  :host
-      t.integer :owner_id
 
       t.timestamps
     end
