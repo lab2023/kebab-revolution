@@ -119,11 +119,11 @@ class ApplicationController < ActionController::Base
   # Return void
   def add_error id, message
     @@response[:success] = false
-    error = [:id => id, :message => message]
     if @@response.has_key?(:error)
-      @@response[:error] += error unless @@response[:error].include?(error) || @@response[:error] == error
+      @@response[:error][id] = @@response[:error].has_key?(id) ? ( @@response[:error][id] + ' ' + message ) : message;
     else
-      @@response[:error] = error
+      @@response[:error] = Hash.new
+      @@response[:error][id] = message
     end
   end
 
