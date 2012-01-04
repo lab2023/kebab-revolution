@@ -4,7 +4,7 @@ class CreateSubscriptions < ActiveRecord::Migration
       t.references  :plan
       t.references  :tenant
       t.references  :user
-      t.decimal     :amount
+      t.decimal     :price
       t.integer     :billing_no
       t.integer     :payment_period
       t.datetime    :next_payment_date

@@ -10,4 +10,8 @@ class Subscription < ActiveRecord::Base
   belongs_to :tenant
   belongs_to :plan
   belongs_to :user
+
+  validates  :tenant, :presence => true
+  validates  :plan,   :presence => true
+  validates  :user,   :presence => true
 end
