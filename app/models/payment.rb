@@ -7,4 +7,6 @@
 # Payment Model
 class Payment < ActiveRecord::Base
   belongs_to :subscription
+
+  validates  :subscription,   :presence => true
 end
