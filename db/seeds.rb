@@ -1,3 +1,9 @@
+Plan.create!(:name => "Free",     :price => 0,   :user_limit => 1,     :recommended => false)
+Plan.create!(:name => "Basic",    :price => 99,  :user_limit => 4,     :recommended => false)
+Plan.create!(:name => "Plus",     :price => 299, :user_limit => 12,    :recommended => true)
+Plan.create!(:name => "Premium",  :price => 499, :user_limit => 24,    :recommended => false)
+Plan.create!(:name => "Max",      :price => 999, :user_limit => 9999,  :recommended => false)
+
 Tenant.create([
                   {name: 'Apple Inc.', host: 'apple.kebab.local'},
                   {name: 'lab2023 Inc.', host: 'lab2023.kebab.local'}

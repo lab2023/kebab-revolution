@@ -16,16 +16,16 @@ describe Plan do
     end
   end
 
-  describe "amount" do
+  describe "price" do
     it "should be presence" do
       @new_subscription_plan.should be_invalid
-      @new_subscription_plan.errors[:amount].should include("can't be blank")
+      @new_subscription_plan.errors[:price].should include("can't be blank")
     end
 
     it "should be greater or equal to zero" do
-      @new_subscription_plan.amount = -1
+      @new_subscription_plan.price = -1
       @new_subscription_plan.should be_invalid
-      @new_subscription_plan.errors[:amount].should include("must be greater than or equal to 0")
+      @new_subscription_plan.errors[:price].should include("must be greater than or equal to 0")
     end
 
   end
@@ -50,13 +50,7 @@ describe Plan do
   end
 
   describe "recommended" do
-    it "should be recommended only one plan" do
-      Plan.create(:name => 'basic', :amount => 100, :user_limit => 3, :recommended => true)
-      @new_subscription_plan.recommended = 'true'
-      @new_subscription_plan.should be_invalid
-      @new_subscription_plan.errors[:recommended].should include("recommended plan is already choiced")
-    end
-
+    it "should be recommended only one plan"
   end
 
 end
