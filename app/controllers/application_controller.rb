@@ -120,7 +120,7 @@ class ApplicationController < ActionController::Base
   def add_error id, message
     @@response[:success] = false
     if @@response.has_key?(:error)
-      @@response[:error][id] = @@response[:error].has_key?(id) ? ( @@response[:error][id] + ' ' + message ) : message;
+      @@response[:error][id] = @@response[:error].has_key?(id) ? ( @@response[:error][id] + '. ' + message ) : message;
     else
       @@response[:error] = Hash.new
       @@response[:error][id] = message
