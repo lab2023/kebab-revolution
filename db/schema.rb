@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120103011352) do
+ActiveRecord::Schema.define(:version => 20120103013003) do
 
   create_table "apps", :force => true do |t|
     t.string "sys_name"
@@ -25,6 +25,16 @@ ActiveRecord::Schema.define(:version => 20120103011352) do
 
   add_index "apps_privileges", ["app_id", "privilege_id"], :name => "index_apps_privileges_on_app_id_and_privilege_id", :unique => true
   add_index "apps_privileges", ["privilege_id"], :name => "fk_privileges_apps_privileges"
+
+  create_table "payments", :force => true do |t|
+    t.integer  "subscription_id"
+    t.decimal  "amount",                                 :precision => 10, :scale => 0
+    t.datetime "payment_date"
+    t.string   "paypal_recurring_payment_profile_token"
+    t.string   "transaction_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "plans", :force => true do |t|
     t.string  "name"
@@ -116,7 +126,6 @@ ActiveRecord::Schema.define(:version => 20120103011352) do
   create_table "tenants", :force => true do |t|
     t.string   "name"
     t.string   "host"
-    t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
