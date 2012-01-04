@@ -1,6 +1,6 @@
 Tenant.create([
-                  {name: 'Apple Inc.', host: 'apple.kebab.local', owner_id: 1},
-                  {name: 'lab2023 Inc.', host: 'lab2023.kebab.local', owner_id: 3}
+                  {name: 'Apple Inc.', host: 'apple.kebab.local'},
+                  {name: 'lab2023 Inc.', host: 'lab2023.kebab.local'}
               ])
 
 Role.create([
