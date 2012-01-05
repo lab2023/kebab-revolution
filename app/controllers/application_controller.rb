@@ -184,4 +184,61 @@ class ApplicationController < ActionController::Base
 
     acl
   end
+
+  # Protected: Create a credentials
+  def paypal_credential plan
+    @plan = plan
+    ppr = PayPal::Recurring.new({
+                                    :return_url   => "http://www.kebab.local/register",
+                                    :cancel_url   => "http://www.kebab.local/paypal_cancel",
+                                    :description  => "#{@plan.name}" + " - Monthly Subscription",
+                                    :amount       => "#{@plan.price}" + ".00",
+                                    :currency     => "USD"
+                                })
+    response = ppr.checkout
+    if response.valid?
+      response.checkout_url
+    else
+      false
+    end
+  end
+
+  # Protected: Create a recurring payment
+  #
+  # Return Recurring ProfileId
+  def paypal_recurring_payment plan, reference, payer_id, token
+    @plan = plan
+    ppr = PayPal::Recurring.new({
+      :amount      => "#{@plan.price}" + ".00",
+      :currency    => "USD",
+      :description => "#{plan.name}" + " - Monthly Subscription", #plan info
+      :frequency   => 1,
+      :token       => token,                                      #profile token
+      :period      => :monthly,
+      :reference   => reference,                                  #Invoice Number
+      :payer_id    => payer_id,                                   #payer token
+      :start_at    => Time.now,
+      :failed      => 15,
+      :outstanding => :next_billing
+    })
+
+    response = ppr.create_recurring_profile
+    response.profile_id
+  end
+
+  # Protected: login
+  #
+  # user      UserModel
+  # password  String
+  #
+  # Return boolean
+  def login user, password
+    if user && user.authenticate(password)
+      session[:user_id] = user.id
+      session[:acl] = acl
+      true
+    else
+      false
+    end
+  end
 end
