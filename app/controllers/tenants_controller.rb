@@ -55,6 +55,8 @@ class TenantsController < ApplicationController
           @subscription.next_payment_date = Time.zone.now + 1.months
 
           if @subscription.save
+            # KBBTODO use delay job for sending mail in future
+            TenantMailer.create_tenant @tenant, @user, @subscription
             login @user, params[:user][:password]
             status = :created
           else
