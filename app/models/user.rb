@@ -43,7 +43,7 @@ class User < TenantScopedModel
       end
     end
 
-    apps
+    applications
   end
 
   # Public: Return users resources hash

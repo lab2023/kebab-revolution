@@ -40,17 +40,22 @@ class TenantsController < ApplicationController
         I18n.locale = params[:user][:locale]
 
         @user   = User.new(params[:user])
+        admin = Role.create(name: 'Admin')
+        admin.privileges << Privilege.all
+        admin.save
         @user.tenant = @tenant
-        @user.roles << Role.create(name: 'Admin')
+        @user.roles << admin
+        @user.save
+
 
         if @user.save
 
           # KBBTODO Refactor this ugly code
           @subscription = Subscription.new
-          @subscription.user = @user
-          @subscription.tenant = @tenant
-          @subscription.plan = @plan
-          @subscription.price = @plan.price
+          @subscription.user    = @user
+          @subscription.tenant  = @tenant
+          @subscription.plan    = @plan
+          @subscription.price   = @plan.price
           @subscription.payment_period = 0
           @subscription.next_payment_date = Time.zone.now + 1.months
 
