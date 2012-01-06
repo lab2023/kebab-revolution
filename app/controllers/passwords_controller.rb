@@ -10,6 +10,7 @@ class PasswordsController < ApplicationController
   skip_before_filter :authorize
 
   # POST/passwords
+  # KBBTODO send activation for forget password
   def create
     @user = User.find_by_email(params[:email])
     new_password = rand(10000000000000).floor.to_s(36)
@@ -17,13 +18,12 @@ class PasswordsController < ApplicationController
     @user.password_confirmation = new_password
     if @user.save
       UserMailer.forget_password(@user).deliver
-      status = :ok
     else
       @@response[:success] = false
-      status = :unprocessable_entity
+      @@status = :unprocessable_entity
     end
 
-    render json: @@response, status: status
+    render json: @@response, status: @@status
   end
 
 end

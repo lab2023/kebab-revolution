@@ -25,6 +25,7 @@ class TenantsController < ApplicationController
   end
 
   # POST/tenants
+  # KBBTODO move all delete code to tenants#delete private method
   def create
 
     Tenant.transaction do
@@ -79,28 +80,12 @@ class TenantsController < ApplicationController
   end
 
   # GET/tenants/valid_host?host=host_name
+  # KBBTODO set invalid tenant from one place
   def valid_host
-    # KBBTODO set invalid tenant from one place
     if Tenant.find_by_host(:params[:host]) != nil || %w(www help support api apps status blog lab2023 static).include?(params[:host])
       render json: {success: false}
     else
       render json: @@response
     end
   end
-
-  # GET/tenants/paypal_credentials
-  def paypal_credentials
-    if Plan.find(params[:plan][:id]) != nil && (1 < params[:plan][:id].to_i)
-      checkout_url = paypal_credential Plan.find(params[:plan][:id])
-      if checkout_url != false
-        @@response[:url] = checkout_url
-      else
-        @@response[:success] = false
-      end
-    else
-      @@response[:success] = false
-    end
-    render json: @@response
-  end
-
 end

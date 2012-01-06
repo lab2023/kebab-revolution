@@ -11,11 +11,10 @@ class SessionsController < ApplicationController
 
   # POST/sessions
   def create
-    # KBBTODO status code
     user = User.find_by_email(params[:email])
     unless login user, params[:password]
       @@response[:success] = false
-      @@status = 401
+      @@status = :unauthorized
     end
 
     render json: @@response, status: @@status
@@ -23,8 +22,7 @@ class SessionsController < ApplicationController
 
   # DELETE/sessions
   def destroy
-    session[:user_id] = nil
-    session[:acl] = nil
+    logout
     render json: @@response
   end
 end

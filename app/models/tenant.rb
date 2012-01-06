@@ -10,14 +10,8 @@ class Tenant < ActiveRecord::Base
   has_many    :users
   has_many    :roles
 
-  validates :name, :presence => {:on => :create},
-                   :uniqueness => true,
-                   :length => {:in => 4..255}
-
-  validates :host, :presence => {:on => :create},
-                   :uniqueness => true,
-                   :exclusion => {:in => %w(www help support api apps status blog lab2023 static)},
-                   :length => {:in => 4..255}
+  validates :name, :presence => {:on => :create}, :uniqueness => true, :length => {:in => 4..255}
+  validates :host, :presence => {:on => :create}, :uniqueness => true, :exclusion => {:in => %w(www help support api apps status blog lab2023 static)}, :length => {:in => 4..255}
 
   class << self
     # Public: Return current tenant

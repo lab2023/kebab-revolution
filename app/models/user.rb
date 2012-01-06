@@ -12,22 +12,14 @@ class User < TenantScopedModel
 
   # Email regex standard
   EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
-  validates :email,     :presence => {:on => :create},
-                        :uniqueness => true,
-                        :format => {:with => EMAIL_REGEX}
-
+  validates :email,     :presence => {:on => :create}, :uniqueness => true, :format => {:with => EMAIL_REGEX}
   validates :name,      :presence => true
-
-  validates :locale,    :presence => true,
-                        :inclusion => { :in => %w(en tr ru)},
-                        :length => { :is => 2 }
-
-  validates :password,  :presence => {:on => :create},
-                        :confirmation => true
-
+  validates :locale,    :presence => true, :inclusion => {:in => %w(en tr ru)}, :length => {:is => 2}  # KBBTODO move all supported language one place
+  validates :password,  :presence => {:on => :create}, :confirmation => true
   validates :password_confirmation, :presence => true
 
   # Pubic: Return users privileges hash
+  # KBBTODO refactor methods in loop
   def get_privileges
     privileges = Array.new
 
@@ -41,6 +33,7 @@ class User < TenantScopedModel
   end
 
   # Public: Return users apps hash
+  # KBBTODO refactor methods in loop
   def get_apps
     apps = Array.new
 
@@ -54,6 +47,7 @@ class User < TenantScopedModel
   end
 
   # Public: Return users resources hash
+  # KBBTODO refactor methods in loop
   def get_resources
     resources = Array.new
 

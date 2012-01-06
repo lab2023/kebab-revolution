@@ -15,6 +15,8 @@ class ApplicationController < ActionController::Base
 
   # Public: Response hash for all xhr request
   @@response = {:success => true}
+
+  # Public: Response status code for all xhr request
   @@status   = 200
 
   protected
@@ -246,5 +248,11 @@ class ApplicationController < ActionController::Base
     else
       false
     end
+  end
+
+  # Protected: logout
+  def logout
+    session[:user_id] = nil
+    session[:acl] = nil
   end
 end
