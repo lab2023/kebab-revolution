@@ -13,14 +13,12 @@ class SessionsController < ApplicationController
   def create
     # KBBTODO status code
     user = User.find_by_email(params[:email])
-    if user && user.authenticate(params[:password])
-      session[:user_id] = user.id
-      session[:acl] = acl
-    else
+    unless login user, params[:password]
       @@response[:success] = false
+      @@status = 401
     end
 
-    render json: @@response
+    render json: @@response, status: @@status
   end
 
   # DELETE/sessions
