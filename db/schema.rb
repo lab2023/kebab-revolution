@@ -13,17 +13,17 @@
 
 ActiveRecord::Schema.define(:version => 20120103013003) do
 
-  create_table "apps", :force => true do |t|
+  create_table "applications", :force => true do |t|
     t.string "sys_name"
     t.string "sys_department"
   end
 
-  create_table "apps_privileges", :id => false, :force => true do |t|
-    t.integer "app_id",       :null => false
-    t.integer "privilege_id", :null => false
+  create_table "applications_privileges", :id => false, :force => true do |t|
+    t.integer "application_id", :null => false
+    t.integer "privilege_id",   :null => false
   end
 
-  add_index "apps_privileges", ["app_id", "privilege_id"], :name => "index_apps_privileges_on_app_id_and_privilege_id", :unique => true
+  add_index "applications_privileges", ["application_id", "privilege_id"], :name => "index_applications_privileges_on_application_id_and_privilege_id", :unique => true
 
   create_table "payments", :force => true do |t|
     t.integer  "subscription_id"

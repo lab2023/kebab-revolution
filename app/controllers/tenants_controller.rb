@@ -17,9 +17,9 @@ class TenantsController < ApplicationController
     @@response['locale'] = {default_locale: I18n.locale, available_locales: I18n.available_locales}
     unless session[:user_id].nil?
       user = User.select("name, email").find(session[:user_id])
-      user[:apps] = User.find(session[:user_id]).get_apps
-      user[:privileges] = User.find(session[:user_id]).get_privileges
-      @@response['user'] = user
+      user[:applications] = User.find(session[:user_id]).get_applications
+      user[:privileges]   = User.find(session[:user_id]).get_privileges
+      @@response['user']  = user
     end
     render json: @@response
   end

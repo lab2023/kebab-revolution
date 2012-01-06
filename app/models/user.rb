@@ -34,12 +34,12 @@ class User < TenantScopedModel
 
   # Public: Return users apps hash
   # KBBTODO refactor methods in loop
-  def get_apps
-    apps = Array.new
+  def get_applications
+    applications = Array.new
 
     self.get_privileges.each do |p|
-      p.apps.each do |a|
-        apps << a unless apps.include?(a)
+      p.applications.each do |a|
+        applications << a unless applications.include?(a)
       end
     end
 

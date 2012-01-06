@@ -1,64 +1,54 @@
 # Plans
-Plan.create!(:name => "Free",     :price => 0,   :user_limit => 1,     :recommended => false)
-Plan.create!(:name => "Basic",    :price => 99,  :user_limit => 4,     :recommended => false)
-Plan.create!(:name => "Plus",     :price => 299, :user_limit => 12,    :recommended => true)
-Plan.create!(:name => "Premium",  :price => 499, :user_limit => 24,    :recommended => false)
-Plan.create!(:name => "Max",      :price => 999, :user_limit => 9999,  :recommended => false)
+free_plan     = Plan.create!(:name => "Free",    :price => 0,   :user_limit => 1,    :recommended => false)
+basic_plan    = Plan.create!(:name => "Basic",   :price => 99,  :user_limit => 4,    :recommended => false)
+plus_plan     = Plan.create!(:name => "Plus",    :price => 299, :user_limit => 12,   :recommended => true)
+premium_plan  = Plan.create!(:name => "Premium", :price => 499, :user_limit => 24,   :recommended => false)
+max_plan      = Plan.create!(:name => "Max",     :price => 999, :user_limit => 9999, :recommended => false)
 
 # Privileges
-Privilege.create!(sys_name: 'changePassword', name: 'Change Password')
-Privilege.create!(sys_name: 'cancelAccount', name: 'Cancel Account')
+cancel_account     = Privilege.create!(sys_name: 'CancelAccount',    name: 'Cancel Account')
+invite_user        = Privilege.create!(sys_name: 'InviteUser',       name: 'Invite User')
+update_user_status = Privilege.create!(sys_name: 'UpdateUserStatus', name: 'Update User Status')
 
-# Apps
-App.create!(sys_name: 'profile', sys_department: 'system')
-App.create!(sys_name: 'accountManager', sys_department: 'system')
+# Application
+account_manager = Application.create!(sys_name: 'AccountManager', sys_department: 'system')
+user_manager    = Application.create!(sys_name: 'UserManager',    sys_department: 'system')
 
 # Resources
-Resource.create!(sys_path: 'POST/passwords',  sys_name: 'passwords/create')
-Resource.create!(sys_path: 'POST/sessions',   sys_name: 'sessions/create')
-Resource.create!(sys_path: 'DELETE/sessions', sys_name: 'sessions/destroy')
+delete_tenants   = Resource.create!(sys_path: 'DELETE/tenants',  sys_name: 'tenants/destroy')
+post_users       = Resource.create!(sys_path: 'POST/users',      sys_name: 'users/create')
+put_users        = Resource.create!(sys_path: 'PUT/users',       sys_name: 'users/update')
+
+# Apps Resource Privileges Relation
+cancel_account.applications << account_manager
+cancel_account.resources << delete_tenants
+cancel_account.save
+
+invite_user.applications << user_manager
+invite_user.resources << post_users
+invite_user.save
+
+update_user_status.applications << user_manager
+update_user_status.resources << put_users
+update_user_status.save
 
 # Tenants
-Tenant.create!(name: 'lab2023 Inc.', host: 'lab2023.kebab.local')
-Tenant.current = Tenant.find_by_host('lab2023.kebab.local')
+tenant_lab2023 = Tenant.create!(name: 'lab2023 Inc.', host: 'lab2023.kebab.local')
+Tenant.current = tenant_lab2023
 
 # Roles
-Role.create!(name: 'Admin')
-Role.create!(name: 'User')
+admin_role  = Role.create!(name: 'Admin')
+user_role   = Role.create!(name: 'User')
 
 # Users
-User.create!(name: 'Onur Ozgur OZKAN',   email: 'onur@ozgur.com',  password: '123456', password_confirmation: '123456', locale: 'tr', time_zone: 'Istanbul')
-User.create!(name: 'Tayfun Ozis ERIKAN', email: 'tayfun@ozis.com', password: '123456', password_confirmation: '123456', locale: 'tr', time_zone: 'Istanbul')
+onur    = User.create!(name: 'Onur Ozgur OZKAN',   email: 'onur@ozgur.com',  password: '123456', password_confirmation: '123456', locale: 'tr', time_zone: 'Istanbul')
+tayfun  = User.create!(name: 'Tayfun Ozis ERIKAN', email: 'tayfun@ozis.com', password: '123456', password_confirmation: '123456', locale: 'tr', time_zone: 'Istanbul')
 
-cancel_account  = Privilege.find_by_sys_name('cancelAccount')
-change_password = Privilege.find_by_sys_name('changePassword')
 
-admin = Role.find_by_name('Admin')
-user = Role.find_by_name('User')
-
-onur = User.find_by_name('Onur Ozgur OZKAN')
-onur.roles << admin
-onur.roles << user
+# User Role Relation
+onur.roles << admin_role
+onur.roles << user_role
 onur.save
 
-tayfun = User.find_by_name('Tayfun Ozis ERIKAN')
-tayfun.roles << admin
+tayfun.roles << user_role
 tayfun.save
-
-admin.privileges << cancel_account
-admin.privileges << change_password
-user.privileges << change_password
-
-admin.save
-user.save
-
-profile = App.find_by_sys_name('profile')
-profile.privileges << change_password
-profile.save
-
-account_manager = App.find_by_sys_name('accountManager')
-account_manager.privileges << cancel_account
-account_manager.save
-
-change_password.resources << Resource.find_by_sys_name('passwords/create')
-change_password.save
