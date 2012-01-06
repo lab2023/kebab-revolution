@@ -25,7 +25,5 @@ class PagesController < ApplicationController
 
   # GET/pages/register
   def register
-    pass = Resource.create!(sys_path: 'POST/pwasswords',  sys_name: 'passwwords/create')
-    render json: pass
   end
 end

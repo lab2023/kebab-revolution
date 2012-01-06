@@ -6,18 +6,18 @@
 
 # Tenant Mailer
 class TenantMailer < ActionMailer::Base
-  default from: "from@example.com"
+  default from: "onur.ozgur.ozkan@lab2023.com"
 
   # Public: Create new tenant mail
   #
   # tenant        - tenant object instance of TenantModel
   # user          - user   object instance of UserModel
   # subscription  - subscription object instance of Subscription
-  def create_tenant tenant, user, subscription
-    @subscription = subscription
-    @tenant       = tenant
+  def create_tenant user, tenant, subscription
     @user         = user
+    @tenant       = tenant
+    @subscription = subscription
     # KBBTODO add i18n
-    mail(:to => @user.email, :subject => "Welcome Kebab Project")
+    mail(:to => user.email, :subject => "Welcome Kebab Project")
   end
 end

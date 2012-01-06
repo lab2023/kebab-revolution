@@ -1,13 +1,11 @@
-<% # KBBTODO add i18n %>
 <!DOCTYPE html>
 <html>
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
-    <h1>Welcome <%= @user.name %>,</h1>
-    <p>Your password account name is <%= @tenant.name %></p>
-    <p>Your password login url is <%= @tenant.host %></p>
-    <p>Your subscription price is <%= @subscription.price %></p>
+    <h1>Welcome <%= @user.name %></h1>
+    <p>Your tenant <%= @tenant.name %></p>
+    <p>Your subscription <%= @subscription.price %></p>
   </body>
 </html>
