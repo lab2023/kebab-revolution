@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
 
   # Public: Response hash for all xhr request
   @@response = {:success => true}
+  @@status   = 200
 
   protected
 
@@ -74,6 +75,7 @@ class ApplicationController < ActionController::Base
   #   # => {success: false} # status 401
   #   # => nil
   #
+  # KBBTODO add logging
   # Returns void, Json
   def authorize
     # KBBTODO add logging
@@ -236,6 +238,10 @@ class ApplicationController < ActionController::Base
     if user && user.authenticate(password)
       session[:user_id] = user.id
       session[:acl] = acl
+
+      I18n.locale = user.locale
+      Time.zone   = user.time_zone
+
       true
     else
       false
