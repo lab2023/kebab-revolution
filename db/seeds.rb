@@ -23,18 +23,18 @@ Tenant.create!(name: 'lab2023 Inc.', host: 'lab2023.kebab.local')
 Tenant.current = Tenant.find_by_host('lab2023.kebab.local')
 
 # Roles
-Role.create!(name: 'admin')
-Role.create!(name: 'user')
+Role.create!(name: 'Admin')
+Role.create!(name: 'User')
 
 # Users
-User.create!(name: 'Onur Ozgur OZKAN', email: 'onur@ozgur.com', password: '123456', password_confirmation: '123456',  locale: 'tr')
-User.create!(name: 'Tayfun Ozis ERIKAN', email: 'tayfun@ozis.com', password: '123456', password_confirmation: '123456', locale: 'tr')
+User.create!(name: 'Onur Ozgur OZKAN',   email: 'onur@ozgur.com',  password: '123456', password_confirmation: '123456', locale: 'tr', time_zone: 'Istanbul')
+User.create!(name: 'Tayfun Ozis ERIKAN', email: 'tayfun@ozis.com', password: '123456', password_confirmation: '123456', locale: 'tr', time_zone: 'Istanbul')
 
 cancel_account  = Privilege.find_by_sys_name('cancelAccount')
 change_password = Privilege.find_by_sys_name('changePassword')
 
-admin = Role.find_by_name('admin')
-user = Role.find_by_name('user')
+admin = Role.find_by_name('Admin')
+user = Role.find_by_name('User')
 
 onur = User.find_by_name('Onur Ozgur OZKAN')
 onur.roles << admin
