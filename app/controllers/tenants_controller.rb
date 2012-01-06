@@ -33,13 +33,18 @@ class TenantsController < ApplicationController
       @tenant = Tenant.new(params[:tenant])
 
       if @tenant.save
+
         Tenant.current = @tenant
+        Time.zone = params[:user][:time_zone]
+        I18n.locale = params[:user][:locale]
 
         @user   = User.new(params[:user])
         @user.tenant = @tenant
-        @user.roles << tenant_initial_data(params[:user][:locale])
+        @user.roles << Role.create(name: 'Admin')
 
         if @user.save
+
+          # KBBTODO Refactor this ugly code
           @subscription = Subscription.new
           @subscription.user = @user
           @subscription.tenant = @tenant
@@ -55,18 +60,18 @@ class TenantsController < ApplicationController
             @tenant.delete
             @user.delete
             @subscription.valid?
-            @@response[:sub_errors] = @subscription.errors
+            @subscription.errors.each { |a, m| add_error a, m}
             status = :unprocessable_entity
           end
 
         else
           @tenant.delete
           @user.delete
-          @@response[:user_error] = @user.errors
+          @user.errors.each { |a, m| add_error a, m}
           status = :unprocessable_entity
         end
       else
-        @@response[:success] = false
+        @tenant.errors.each { |a, m| add_error a, m}
         status = :unprocessable_entity
       end
     end
