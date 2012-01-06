@@ -11,9 +11,10 @@ class UserMailer < ActionMailer::Base
   # Public: Send forget password mail
   #
   # user - user object instance of UserModel
-  def forget_password(user)
+  def forget_password user
     @user = user
     @new_password = user.password
+    # KBBTODO add i18n
     mail(:to => @user.email, :subject => "Forget Password")
   end
 end
