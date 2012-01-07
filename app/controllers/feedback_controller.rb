@@ -14,7 +14,7 @@ class FeedbackController < ApplicationController
     body    = params[:body]
     user    = User.find(session[:user_id])
     UserMailer.send_feedback(user, subject, body).deliver
-    render json: session
+    render json: @@response
   end
 
 end
