@@ -15,6 +15,17 @@ class UserMailer < ActionMailer::Base
     @user = user
     @new_password = user.password
     # KBBTODO add i18n
-    mail(:to => @user.email, :subject => "Forget Password")
+    mail(to: @user.email, subject: "Forget Password")
+  end
+
+  # Public: Send feedback
+  #
+  # subject - string
+  # body    - text
+  # user    - object - User Model
+  def send_feedback  user, subject, message
+    @user   = user
+    @message = message
+    mail(to: "onur.ozgur.ozkan@lab2023.com", subject: "#{@user.name}" + " " + subject)
   end
 end

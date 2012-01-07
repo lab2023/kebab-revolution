@@ -6,7 +6,7 @@
 
 # Application Controller
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+  #protect_from_forgery
 
   before_filter :tenant
   before_filter :authenticate
