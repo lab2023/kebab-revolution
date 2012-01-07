@@ -26,4 +26,15 @@ class PasswordsController < ApplicationController
     render json: @@response, status: @@status
   end
 
+  # PUT/passwords
+  def update
+    @user = User.find(session[:user_id])
+    if @user.authenticate(params[:old_password]) \
+       && @user.update_attributes({password: params[:new_password], password_confirmation: params[:new_password_confirmation]})
+      render json: @@response
+    else
+      render json: {success: false}
+    end
+  end
+
 end
