@@ -5,8 +5,10 @@ ru:
       user: пользователь
       role: роль
       privilege: привилегия
-      app: применение
-      service: обслуживание
+      application: применение
+      subscription: Subscription
+      plan: Plan
+      payment: Payment
     attribures:
       tenant:
         name: "имя"
@@ -18,6 +20,8 @@ ru:
         password_confirmation: "подтверждение пароля"
         name: "имя"
         locale: "язык"
+        time_zone: "time zone"
+        passive_at: "passive at"
       role:
         tenant: "Aрендатор"
         name: "имя"
@@ -26,13 +30,29 @@ ru:
         services: "услуги"
         roles: "ролей"
         sys_name: "имя системы"
-      app:
+      application:
         privileges: "привилегий"
         sys_name: "имя системы"
         department: "отдел"
-      service:
-        privilege: "привилегия"
-        controller: "контроллер"
-        action: "действие"
+      subscription:
+        tenant: "tenant"
+        plan: "plan"
+        user: "user"
+        price: "price"
+        payment_period: "payment period"
+        next_payment_date: "next payment date"
+        paypal_customer_token: "paypal customer id"
+        paypal_recurring_payment_profile_token: "paypal profile tokent"
+      plan:
+        name: "name"
+        price: "price"
+        user_limit: "user limit"
+        recommended: "recommended"
+      payment:
+        subscription: "subscription"
+        price: "price"
+        payment_date: "payment date"
+        invoice_no: "invoice no"
+        paypal_recurring_payment_profile_token: "paypal profile token"
   notice:
     invalid_tenant: "Неверный счет"
