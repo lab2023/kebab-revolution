@@ -11,9 +11,9 @@ class Subscription < ActiveRecord::Base
   belongs_to :plan
   belongs_to :user
 
-  validates   :tenant,            :presence => {:on => :create}
-  validates   :plan,              :presence => {:on => :create}
-  validates   :user,              :presence => {:on => :create}
-  validates   :price,             :presence => {:on => :create}
-  validates   :payment_period,    :numericality => { :greater_than => 0 }
+  validates :tenant,         :presence => {:on => :create}
+  validates :plan,           :presence => {:on => :create}
+  validates :user,           :presence => {:on => :create}
+  validates :price,          :presence => {:on => :create}
+  validates :payment_period, :numericality => { :greater_than => 0 }
 end
