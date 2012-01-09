@@ -1,6 +1,6 @@
 Factory.define :tenant do |f|
   f.sequence(:name) { |n| "name-#{n}" }
-  f.sequence(:host) { |n| "name-#{n}.server-ror.dev" }
+  f.sequence(:host) { |n| "name-#{n}.kebab.local" }
 end
 
 Factory.define :user do |f|
@@ -8,8 +8,10 @@ Factory.define :user do |f|
   f.password 'password'
   f.password_confirmation 'password'
   f.locale 'tr'
+  f.time_zone 'Istanbul'
   f.sequence(:name) { |n|  "Name#{n} Surname#{n}" }
   f.tenant {|a| a.association(:tenant) }
+  f.passive_at 'nil'
 end
 
 Factory.define :privilege do |f|

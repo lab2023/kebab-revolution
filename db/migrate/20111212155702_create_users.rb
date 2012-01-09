@@ -7,6 +7,7 @@ class CreateUsers < ActiveRecord::Migration
         t.string :password_digest
         t.string :time_zone
         t.string :locale
+        t.datetime :passive_at
 
         t.timestamps
       end
