@@ -6,11 +6,11 @@ module KebabHelper
   end
 
   def valid_tenant_host
-    'tenant1.server-ror.dev'
+    'lab2023.kebab.local'
   end
 
   def invalid_tenant_host
-    'invalid.server-ror.dev'
+    'invalid.kebab.local'
   end
 end
 
