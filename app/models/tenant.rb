@@ -25,4 +25,10 @@ class Tenant < ActiveRecord::Base
     end
   end
 
+  def with
+    previous, Tenant.current = Tenant.current, self
+    yield
+  ensure
+    Tenant.current = previous
+  end
 end

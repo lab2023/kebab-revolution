@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   #protect_from_forgery
 
   before_filter :tenant
+  around_filter :with_tenant
   before_filter :authenticate
   before_filter :authorize
   before_filter :i18n_locale
@@ -20,6 +21,13 @@ class ApplicationController < ActionController::Base
   @@status   = 200
 
   protected
+
+  attr_reader :current_tenant
+
+  def with_tenant
+    @current_tenant = Tenant.find_by_host!(request.host)
+    @current_tenant.with { yield }
+  end
 
   # KBBTODO
   # Protected:
