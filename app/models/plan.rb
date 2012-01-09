@@ -8,6 +8,9 @@
 class Plan < ActiveRecord::Base
   has_many :subscriptions
 
+  scope :commercial, where("price > 0")
+  scope :free,       where("price = 0")
+
   validates :name,        :presence => true
   validates :price,       :presence => true, :numericality => {:greater_than_or_equal_to => 0}
   validates :user_limit,  :presence => true, :numericality => {:greater_than => 0, :only_integer => true}
