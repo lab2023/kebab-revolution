@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20120103013003) do
     t.decimal  "price",                                  :precision => 6, :scale => 2
     t.datetime "payment_date"
     t.string   "paypal_recurring_payment_profile_token"
+    t.string   "invoice_no"
     t.string   "transaction_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -98,7 +99,6 @@ ActiveRecord::Schema.define(:version => 20120103013003) do
     t.integer  "tenant_id"
     t.integer  "user_id"
     t.decimal  "price",                                  :precision => 6, :scale => 2
-    t.integer  "billing_no"
     t.integer  "payment_period"
     t.datetime "next_payment_date"
     t.string   "paypal_token"
@@ -125,6 +125,7 @@ ActiveRecord::Schema.define(:version => 20120103013003) do
     t.string   "password_digest"
     t.string   "time_zone"
     t.string   "locale"
+    t.datetime "passive_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
