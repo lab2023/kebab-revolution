@@ -10,20 +10,6 @@ class TenantsController < ApplicationController
   skip_before_filter  :authenticate
   skip_before_filter  :authorize
 
-  # GET/tenants/bootstrap
-  def bootstrap
-    @@response[request_forgery_protection_token] = form_authenticity_token
-    @@response['tenant'] = Tenant.select('id, host, name').find_by_host!(request.host)
-    @@response['locale'] = {default_locale: I18n.locale, available_locales: I18n.available_locales}
-    unless session[:user_id].nil?
-      user = User.select("name, email").find(session[:user_id])
-      user[:applications] = User.find(session[:user_id]).get_applications
-      user[:privileges]   = User.find(session[:user_id]).get_privileges
-      @@response['user']  = user
-    end
-    render json: @@response
-  end
-
   # POST/tenants
   # KBBTODO move all delete code to tenants#delete private method
   def create
@@ -46,7 +32,6 @@ class TenantsController < ApplicationController
         @user.tenant = @tenant
         @user.roles << admin
         @user.save
-
 
         if @user.save
 
@@ -84,6 +69,20 @@ class TenantsController < ApplicationController
       end
     end
     render json: @@response, status: status
+  end
+
+  # GET/tenants/bootstrap
+  def bootstrap
+    @@response[request_forgery_protection_token] = form_authenticity_token
+    @@response['tenant'] = Tenant.select('id, host, name').find_by_host!(request.host)
+    @@response['locale'] = {default_locale: I18n.locale, available_locales: I18n.available_locales}
+    unless session[:user_id].nil?
+      user = User.select("name, email").find(session[:user_id])
+      user[:applications] = User.find(session[:user_id]).get_applications
+      user[:privileges]   = User.find(session[:user_id]).get_privileges
+      @@response['user']  = user
+    end
+    render json: @@response
   end
 
   # GET/tenants/valid_host?host=host_name
