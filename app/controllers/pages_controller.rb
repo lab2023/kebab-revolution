@@ -6,9 +6,13 @@
 
 # Pages Controller
 class PagesController < ApplicationController
-  skip_before_filter :authenticate, only: [:register, :plan, :login]
-  skip_before_filter :tenant,       only: [:register, :plan]
+  skip_before_filter :authenticate, only: [:index, :register, :plans, :login]
+  skip_before_filter :tenant,       only: [:index, :register, :plans]
   skip_before_filter :authorize
+
+  # GET/pages/index
+  def index
+  end
 
   # GET/pages/desktop
   def desktop
@@ -18,8 +22,8 @@ class PagesController < ApplicationController
   def login
   end
 
-  # GET/pages/plan
-  def plan
+  # GET/pages/plans
+  def plans
     @plans = Plan.order("price")
   end
 

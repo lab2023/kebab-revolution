@@ -1,8 +1,9 @@
 KebabServerRor::Application.routes.draw do
 
+  match 'index'             => 'pages#index'
   match 'desktop'           => 'pages#desktop'
   match 'login'             => 'pages#login'
-  match 'plan'              => 'pages#plan'
+  match 'plans'             => 'pages#plans'
   match 'register'          => 'pages#register'
 
   get     "users/get_profile"
@@ -17,5 +18,5 @@ KebabServerRor::Application.routes.draw do
     get :tests
   end
 
-  root to: "pages#login"
+  root to: "pages#index"
 end
