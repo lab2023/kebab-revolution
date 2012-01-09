@@ -20,20 +20,28 @@ We use ExtJs 4.0 for client and Ror 3.1.3 for server.
 
 ## 2.0.0.alpha6 -
 
-* Notification for account owners
-* Subscription limit controller
-* User invite
-* User profile
-* Feedback
+* 77 - Subscription limit controller
+* 49 - User invite
+* 76 - Change user status
+* 72 - User cancel own account
+
+* 80 - Cancel account
+* 79 - See older and next payments info
+* 73 - Add SubscriptionNotifier
+* 55 - Paypal integration
+* 60 - Added options for trial period for paypal
+* 69 - Invoice no problem
+* 78 - Update plan
 
 ## 2.0.0.alpha5 -
 
-* DO - Tenant register
-* DO - Plan Model
-* DO - Subscription Model
-* DO - Payments Model
-* DO - Paypal integration
-* DO - Add time zone
+* DONE - Tenant register
+* DONE - Plan Model
+* DONE - Subscription Model
+* DONE - Payments Model
+* DONE - Add time zone
+* DONE - User profile
+* DONE - Feedback
 
 ## 2.0.0.alpha4 - 2012.01.01
 
