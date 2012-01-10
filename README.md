@@ -20,6 +20,8 @@ We use ExtJs 4.0 for client and Ror 3.1.3 for server.
 
 ## 2.0.0.alpha6 -
 
+* 82 - Implement kebab client and web os static pages.
+
 * 77 - Subscription limit controller
 * 49 - User invite
 * 76 - Change user status
@@ -42,6 +44,7 @@ We use ExtJs 4.0 for client and Ror 3.1.3 for server.
 * DONE - Add time zone
 * DONE - User profile
 * DONE - Feedback
+* DONE - Update static pages
 
 ## 2.0.0.alpha4 - 2012.01.01
 
