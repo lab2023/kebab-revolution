@@ -7,7 +7,7 @@
 # Pages Controller
 class PagesController < ApplicationController
   skip_before_filter :authenticate, only: [:index, :register, :plans, :login]
-  skip_before_filter :tenant,       only: [:index, :register, :plans]
+  skip_before_filter :tenant,       only: [:index, :register, :plans, :login]
   skip_before_filter :authorize
 
   # GET/pages/index
@@ -16,10 +16,12 @@ class PagesController < ApplicationController
 
   # GET/pages/desktop
   def desktop
+    @bootstrap = bootstrap
   end
 
   # GET/pages/login
   def login
+    @bootstrap = bootstrap
   end
 
   # GET/pages/plans
@@ -29,5 +31,6 @@ class PagesController < ApplicationController
 
   # GET/pages/register
   def register
+    @bootstrap = bootstrap false
   end
 end

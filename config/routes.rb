@@ -13,7 +13,6 @@ KebabServerRor::Application.routes.draw do
   resource :passwords
   resource :feedback
   resource :tenants do
-    get :bootstrap
     get :valid_host
     get :tests
   end

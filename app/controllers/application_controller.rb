@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   #protect_from_forgery
 
   before_filter :tenant
-  around_filter :with_tenant
+  #around_filter :with_tenant
   before_filter :authenticate
   before_filter :authorize
   before_filter :i18n_locale
@@ -262,5 +262,21 @@ class ApplicationController < ActionController::Base
   def logout
     session[:user_id] = nil
     session[:acl] = nil
+  end
+
+  # Protected: bootstrap
+  def bootstrap tenant = true
+    bootstrap_hash = Hash.new
+    bootstrap_hash['root'] = 'http://static.kebab.local'
+    bootstrap_hash[request_forgery_protection_token] = form_authenticity_token
+    bootstrap_hash['tenant'] = Tenant.select('id, host, name').find_by_host!(request.host) if tenant
+    bootstrap_hash['locale'] = {default_locale: I18n.locale, available_locales: I18n.available_locales}
+    unless session[:user_id].nil?
+      user = User.select("name, email").find(session[:user_id])
+      user[:applications] = User.find(session[:user_id]).get_applications
+      user[:privileges]   = User.find(session[:user_id]).get_privileges
+      bootstrap_hash['user']  = user
+    end
+    bootstrap_hash
   end
 end

@@ -1,15 +1,3 @@
 <script type="text/javascript">
-Kebab.boot('Kebab.Login', { // TODO get json data
-	root: 'http://static.kebab.local', // TODO set config
-    authenticity_token: "your_token_here",
-    tenant:{
-        "id": 1,
-        "name": "lab2023 - internet technologies",
-        "host": "lab2023.kebab.local"
-    },
-    locale :{
-        "default_locale": "en",
-        "available_locales": ["en", "tr", "ru"]
-    }
-});
+Kebab.boot('Kebab.Login', <%= @bootstrap.to_json.html_safe %>);
 </script>

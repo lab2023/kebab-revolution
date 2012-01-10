@@ -1,10 +1,3 @@
 <script type="text/javascript">
-Kebab.boot('Kebab.Register', { // TODO get json data
-	root: 'http://static.kebab.local', // TODO set config
-    authenticity_token: "your_token_here",
-    locale :{
-        "default_locale": "en",
-        "available_locales": ["en", "tr", "ru"]
-    }
-});
+Kebab.boot('Kebab.Register', <%= @bootstrap.to_json.html_safe %>);
 </script>
