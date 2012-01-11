@@ -10,6 +10,7 @@
 # * http://samuel.kadolph.com/2010/12/simple-rails-multi-tenancy/
 # * http://samuel.kadolph.com/2011/12/simple-rails-multi-tenancy-ii/
 class TenantScopedModel < ActiveRecord::Base
+
   class << self
 
     # Public Static: Built default scope

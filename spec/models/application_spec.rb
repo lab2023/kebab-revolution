@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe App do
+describe Application do
   before(:each) do
-    @new_app = App.new
-    @app = App.create(:sys_name => 'aboutMe', :sys_department => 'system')
+    @new_app = Application.new
+    @app = Application.create(:sys_name => 'aboutMe', :sys_department => 'system')
   end
 
   it "can be instance of App" do
-    @new_app.should be_instance_of(App)
+    @new_app.should be_instance_of(Application)
   end
 
   describe "sys_name" do

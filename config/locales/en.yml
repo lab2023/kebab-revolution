@@ -5,8 +5,10 @@ en:
       user: User
       role: Role
       privilege: Privilege
-      app: Application
-      service: Service
+      application: Application
+      subscription: Subscription
+      plan: Plan
+      payment: Payment
     attributes:
       tenant:
         name: "name"
@@ -18,6 +20,8 @@ en:
         password_confirmation: "password confirmation"
         name: "name"
         locale: "language"
+        time_zone: "time zone"
+        passive_at: "passive at"
       role:
         tenant: "tenant"
         name: "name"
@@ -26,14 +30,30 @@ en:
         services: "services"
         roles: "roles"
         sys_name: "system name"
-      app:
+      application:
         privileges: "privileges"
         sys_name: "system name"
         department: "department"
-      service:
-        privilege: "privilege"
-        controller: "controller"
-        action: "action"
+      subscription:
+        tenant: "tenant"
+        plan: "plan"
+        user: "user"
+        price: "price"
+        payment_period: "payment period"
+        next_payment_date: "next payment date"
+        paypal_customer_token: "paypal customer id"
+        paypal_recurring_payment_profile_token: "paypal profile tokent"
+      plan:
+        name: "name"
+        price: "price"
+        user_limit: "user limit"
+        recommended: "recommended"
+      payment:
+        subscription: "subscription"
+        price: "price"
+        payment_date: "payment date"
+        invoice_no: "invoice no"
+        paypal_recurring_payment_profile_token: "paypal profile token"
 
   notice:
     invalid_tenant: "Invalid account"

@@ -11,33 +11,40 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111227113516) do
+ActiveRecord::Schema.define(:version => 20120103013003) do
 
-  create_table "app_translations", :force => true do |t|
-    t.integer  "app_id",     :null => false
-    t.string   "locale"
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "app_translations", ["app_id"], :name => "index_app_translations_on_app_id"
-
-  create_table "apps", :force => true do |t|
+  create_table "applications", :force => true do |t|
     t.string "sys_name"
     t.string "sys_department"
   end
 
-  create_table "apps_privileges", :id => false, :force => true do |t|
-    t.integer "app_id",       :null => false
-    t.integer "privilege_id", :null => false
+  create_table "applications_privileges", :id => false, :force => true do |t|
+    t.integer "application_id", :null => false
+    t.integer "privilege_id",   :null => false
   end
 
-  add_index "apps_privileges", ["app_id", "privilege_id"], :name => "index_apps_privileges_on_app_id_and_privilege_id", :unique => true
-  add_index "apps_privileges", ["privilege_id"], :name => "fk_privileges_apps_privileges"
+  add_index "applications_privileges", ["application_id", "privilege_id"], :name => "index_applications_privileges_on_application_id_and_privilege_id", :unique => true
+
+  create_table "payments", :force => true do |t|
+    t.integer  "subscription_id"
+    t.decimal  "price",                                  :precision => 6, :scale => 2
+    t.datetime "payment_date"
+    t.string   "paypal_recurring_payment_profile_token"
+    t.string   "invoice_no"
+    t.string   "transaction_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "plans", :force => true do |t|
+    t.string  "name"
+    t.decimal "price",       :precision => 10, :scale => 0
+    t.integer "user_limit"
+    t.boolean "recommended",                                :default => false
+  end
 
   create_table "privilege_translations", :force => true do |t|
-    t.integer  "privilege_id", :null => false
+    t.integer  "privilege_id"
     t.string   "locale"
     t.string   "name"
     t.text     "info"
@@ -48,9 +55,7 @@ ActiveRecord::Schema.define(:version => 20111227113516) do
   add_index "privilege_translations", ["privilege_id"], :name => "index_privilege_translations_on_privilege_id"
 
   create_table "privileges", :force => true do |t|
-    t.string   "sys_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string "sys_name"
   end
 
   create_table "privileges_resources", :id => false, :force => true do |t|
@@ -58,7 +63,6 @@ ActiveRecord::Schema.define(:version => 20111227113516) do
     t.integer "privilege_id", :null => false
   end
 
-  add_index "privileges_resources", ["privilege_id"], :name => "fk_privileges_privileges_resources"
   add_index "privileges_resources", ["resource_id", "privilege_id"], :name => "index_privileges_resources_on_resource_id_and_privilege_id", :unique => true
 
   create_table "privileges_roles", :id => false, :force => true do |t|
@@ -67,7 +71,6 @@ ActiveRecord::Schema.define(:version => 20111227113516) do
   end
 
   add_index "privileges_roles", ["privilege_id", "role_id"], :name => "index_privileges_roles_on_privilege_id_and_role_id", :unique => true
-  add_index "privileges_roles", ["role_id"], :name => "fk_roles_privileges_roles_id"
 
   create_table "resources", :force => true do |t|
     t.string "sys_path"
@@ -77,23 +80,12 @@ ActiveRecord::Schema.define(:version => 20111227113516) do
   add_index "resources", ["sys_name"], :name => "index_resources_on_sys_name"
   add_index "resources", ["sys_path"], :name => "index_resources_on_sys_path"
 
-  create_table "role_translations", :force => true do |t|
-    t.integer  "role_id",    :null => false
-    t.string   "locale"
+  create_table "roles", :force => true do |t|
+    t.integer  "tenant_id"
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "role_translations", ["role_id"], :name => "index_role_translations_on_role_id"
-
-  create_table "roles", :force => true do |t|
-    t.integer  "tenant_id",  :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "roles", ["tenant_id"], :name => "index_roles_on_tenant_id"
 
   create_table "roles_users", :id => false, :force => true do |t|
     t.integer "role_id", :null => false
@@ -101,12 +93,24 @@ ActiveRecord::Schema.define(:version => 20111227113516) do
   end
 
   add_index "roles_users", ["role_id", "user_id"], :name => "index_roles_users_on_role_id_and_user_id", :unique => true
-  add_index "roles_users", ["user_id"], :name => "fk_users_roles_users_id"
+
+  create_table "subscriptions", :force => true do |t|
+    t.integer  "plan_id"
+    t.integer  "tenant_id"
+    t.integer  "user_id"
+    t.decimal  "price",                                  :precision => 6, :scale => 2
+    t.integer  "payment_period"
+    t.datetime "next_payment_date"
+    t.string   "paypal_token"
+    t.string   "paypal_customer_token"
+    t.string   "paypal_recurring_payment_profile_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "tenants", :force => true do |t|
     t.string   "name"
     t.string   "host"
-    t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -115,11 +119,13 @@ ActiveRecord::Schema.define(:version => 20111227113516) do
   add_index "tenants", ["name"], :name => "index_tenants_on_name", :unique => true
 
   create_table "users", :force => true do |t|
-    t.integer  "tenant_id",       :null => false
+    t.integer  "tenant_id"
     t.string   "name"
     t.string   "email"
     t.string   "password_digest"
+    t.string   "time_zone"
     t.string   "locale"
+    t.datetime "passive_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

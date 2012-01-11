@@ -12,20 +12,17 @@ class SessionsController < ApplicationController
   # POST/sessions
   def create
     user = User.find_by_email(params[:email])
-    if user && user.authenticate(params[:password])
-      session[:user_id] = user.id
-      session[:acl] = acl
-    else
+    unless login user, params[:password]
       @@response[:success] = false
+      @@status = :unauthorized
     end
 
-    render json: @@response
+    render json: @@response, status: @@status
   end
 
   # DELETE/sessions
   def destroy
-    session[:user_id] = nil
-    session[:acl] = nil
+    logout
     render json: @@response
   end
 end

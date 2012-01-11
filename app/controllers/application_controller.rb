@@ -6,9 +6,10 @@
 
 # Application Controller
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+  #protect_from_forgery
 
   before_filter :tenant
+  #around_filter :with_tenant
   before_filter :authenticate
   before_filter :authorize
   before_filter :i18n_locale
@@ -16,7 +17,17 @@ class ApplicationController < ActionController::Base
   # Public: Response hash for all xhr request
   @@response = {:success => true}
 
+  # Public: Response status code for all xhr request
+  @@status   = 200
+
   protected
+
+  attr_reader :current_tenant
+
+  def with_tenant
+    @current_tenant = Tenant.find_by_host!(request.host)
+    @current_tenant.with { yield }
+  end
 
   # KBBTODO
   # Protected:
@@ -74,6 +85,7 @@ class ApplicationController < ActionController::Base
   #   # => {success: false} # status 401
   #   # => nil
   #
+  # KBBTODO add logging
   # Returns void, Json
   def authorize
     # KBBTODO add logging
@@ -119,11 +131,11 @@ class ApplicationController < ActionController::Base
   # Return void
   def add_error id, message
     @@response[:success] = false
-    error = [:id => id, :message => message]
     if @@response.has_key?(:error)
-      @@response[:error] += error unless @@response[:error].include?(error) || @@response[:error] == error
+      @@response[:error][id] = @@response[:error].has_key?(id) ? ( @@response[:error][id] + '. ' + message ) : message;
     else
-      @@response[:error] = error
+      @@response[:error] = Hash.new
+      @@response[:error][id] = message
     end
   end
 
@@ -183,5 +195,88 @@ class ApplicationController < ActionController::Base
     end
 
     acl
+  end
+
+  # Protected: Create a credentials
+  def paypal_credential plan
+    @plan = plan
+    ppr = PayPal::Recurring.new({
+                                    :return_url   => "http://www.kebab.local/register",
+                                    :cancel_url   => "http://www.kebab.local/paypal_cancel",
+                                    :description  => "#{@plan.name}" + " - Monthly Subscription",
+                                    :amount       => "#{@plan.price}" + ".00",
+                                    :currency     => "USD"
+                                })
+    response = ppr.checkout
+    if response.valid?
+      response.checkout_url
+    else
+      false
+    end
+  end
+
+  # Protected: Create a recurring payment
+  #
+  # Return Recurring ProfileId
+  def paypal_recurring_payment plan, reference, payer_id, token
+    @plan = plan
+    ppr = PayPal::Recurring.new({
+      :amount      => "#{@plan.price}" + ".00",
+      :currency    => "USD",
+      :description => "#{plan.name}" + " - Monthly Subscription", #plan info
+      :frequency   => 1,
+      :token       => token,                                      #profile token
+      :period      => :monthly,
+      :reference   => reference,                                  #Invoice Number
+      :payer_id    => payer_id,                                   #payer token
+      :start_at    => Time.now,
+      :failed      => 15,
+      :outstanding => :next_billing
+    })
+
+    response = ppr.create_recurring_profile
+    response.profile_id
+  end
+
+  # Protected: login
+  #
+  # user      UserModel
+  # password  String
+  #
+  # Return boolean
+  def login user, password
+    if user && user.authenticate(password)
+      session[:user_id] = user.id
+      session[:acl] = acl
+
+      I18n.locale = user.locale
+      Time.zone   = user.time_zone
+
+      true
+    else
+      false
+    end
+  end
+
+  # Protected: logout
+  def logout
+    session[:user_id] = nil
+    session[:acl] = nil
+  end
+
+  # Protected: bootstrap
+  def bootstrap tenant = true
+    bootstrap_hash = Hash.new
+    bootstrap_hash['root'] = 'http://static.kebab.local'
+    bootstrap_hash[request_forgery_protection_token] = form_authenticity_token
+    bootstrap_hash['tenant'] = Tenant.select('id, host, name').find_by_host!(request.host) if tenant
+    bootstrap_hash['locale'] = {default_locale: I18n.locale, available_locales: I18n.available_locales}
+    unless session[:user_id].nil?
+      user = User.select("name, email").find(session[:user_id])
+      user[:applications] = User.find(session[:user_id]).get_applications
+      user[:privileges]   = User.find(session[:user_id]).get_privileges
+      bootstrap_hash['user']  = user
+    end
+    bootstrap_hash
   end
 end

@@ -1,98 +1,54 @@
-Tenant.create([
-                  {name: 'Apple Inc.', host: 'apple.kebab.local', owner_id: 1},
-                  {name: 'lab2023 Inc.', host: 'lab2023.kebab.local', owner_id: 3}
-              ])
+# Plans
+free_plan     = Plan.create!(:name => "Free",    :price => 0,   :user_limit => 1,    :recommended => false)
+basic_plan    = Plan.create!(:name => "Basic",   :price => 99,  :user_limit => 4,    :recommended => false)
+plus_plan     = Plan.create!(:name => "Plus",    :price => 299, :user_limit => 12,   :recommended => true)
+premium_plan  = Plan.create!(:name => "Premium", :price => 499, :user_limit => 24,   :recommended => false)
+max_plan      = Plan.create!(:name => "Max",     :price => 999, :user_limit => 9999, :recommended => false)
 
-Role.create([
-                {name: 'Ceo',  tenant_id: 1},
-                {name: 'Manager',  tenant_id: 1},
-                {name: 'Engineer', tenant_id: 1},
-                {name: 'Ceo', tenant_id: 2},
-                {name: 'Backend Developer',  tenant_id: 2},
-                {name: 'Frontend Developer',  tenant_id: 2}
-            ])
+# Privileges
+cancel_account     = Privilege.create!(sys_name: 'CancelAccount',    name: 'Cancel Account')
+invite_user        = Privilege.create!(sys_name: 'InviteUser',       name: 'Invite User')
+update_user_status = Privilege.create!(sys_name: 'UpdateUserStatus', name: 'Update User Status')
 
-User.create([
-                {name: 'Steve Jobs', email: 'steve@jobs.com', password: '123456', password_confirmation: '123456', locale: 'tr', tenant_id: 1},
-                {name: 'Steve Wozniak', email: 'steve@wozniak.com', password: '123456', password_confirmation: '123456', locale: 'tr',  tenant_id: 1},
-                {name: 'Onur Ozgur OZKAN', email: 'onur@ozgur.com', password: '123456', password_confirmation: '123456',  locale: 'tr', tenant_id: 2},
-                {name: 'Tayfun Ozis ERIKAN', email: 'tayfun@ozis.com', password: '123456', password_confirmation: '123456', locale: 'tr', tenant_id: 2}
-            ])
+# Application
+account_manager = Application.create!(sys_name: 'AccountManager', sys_department: 'system')
+user_manager    = Application.create!(sys_name: 'UserManager',    sys_department: 'system')
 
-Privilege.create([
-                     {sys_name: 'changePassword', name: 'Change Password'},
-                     {sys_name: 'cancelAccount', name: 'Cancel Account'}
-                 ])
+# Resources
+delete_tenants   = Resource.create!(sys_path: 'DELETE/tenants',  sys_name: 'tenants/destroy')
+post_users       = Resource.create!(sys_path: 'POST/users',      sys_name: 'users/create')
+put_users        = Resource.create!(sys_path: 'PUT/users',       sys_name: 'users/update')
 
-cancel_account = Privilege.find_by_sys_name('cancelAccount')
-change_password = Privilege.find_by_sys_name('changePassword')
+# Apps Resource Privileges Relation
+cancel_account.applications << account_manager
+cancel_account.resources << delete_tenants
+cancel_account.save
 
-Tenant.current = Tenant.find_by_host('apple.kebab.local')
+invite_user.applications << user_manager
+invite_user.resources << post_users
+invite_user.save
 
-ceo = Role.find_by_name('Ceo')
-manager = Role.find_by_name('Manager')
-engineer = Role.find_by_name('Engineer')
+update_user_status.applications << user_manager
+update_user_status.resources << put_users
+update_user_status.save
 
-steve = User.find_by_name('Steve Jobs')
-steve.roles << ceo
-steve.roles << manager
-steve.save
+# Tenants
+tenant_lab2023 = Tenant.create!(name: 'lab2023 Inc.', host: 'lab2023.kebab.local')
+Tenant.current = tenant_lab2023
 
-wozniak = User.find_by_name('Steve Wozniak')
-wozniak.roles << engineer
-wozniak.save
+# Roles
+admin_role  = Role.create!(name: 'Admin')
+user_role   = Role.create!(name: 'User')
 
-ceo.privileges << cancel_account
-ceo.privileges << change_password
-manager.privileges << change_password
-engineer.privileges << change_password
+# Users
+onur    = User.create!(name: 'Onur Ozgur OZKAN',   email: 'onur@ozgur.com',  password: '123456', password_confirmation: '123456', locale: 'tr', time_zone: 'Istanbul')
+tayfun  = User.create!(name: 'Tayfun Ozis ERIKAN', email: 'tayfun@ozis.com', password: '123456', password_confirmation: '123456', locale: 'tr', time_zone: 'Istanbul')
 
-ceo.save
-manager.save
-engineer.save
 
-Tenant.current = Tenant.find_by_host('lab2023.kebab.local')
-ceo = Role.find_by_name('Ceo')
-backend = Role.find_by_name('Backend Developer')
-frontend = Role.find_by_name('Frontend Developer')
-
-onur = User.find_by_name('Onur Ozgur OZKAN')
-onur.roles << ceo
-onur.roles << backend
+# User Role Relation
+onur.roles << admin_role
+onur.roles << user_role
 onur.save
 
-tayfun = User.find_by_name('Tayfun Ozis ERIKAN')
-tayfun.roles << ceo
-tayfun.roles << frontend
+tayfun.roles << user_role
 tayfun.save
-
-ceo.privileges << cancel_account
-ceo.privileges << change_password
-backend.privileges << change_password
-frontend.privileges << change_password
-
-ceo.save
-backend.save
-frontend.save
-
-App.create([
-               {sys_name: 'profile', sys_department: 'system'},
-               {sys_name: 'accountManager', sys_department: 'system'}
-           ])
-
-profile = App.find_by_sys_name('profile')
-profile.privileges << change_password
-profile.save
-
-account_manager = App.find_by_sys_name('accountManager')
-account_manager.privileges << cancel_account
-account_manager.save
-
-Resource.create([
-               {sys_path: 'POST/passwords',  sys_name: 'passwords/create'},
-               {sys_path: 'POST/sessions',   sys_name: 'sessions/create'},
-               {sys_path: 'DELETE/sessions', sys_name: 'sessions/destroy'}
-           ])
-
-change_password.resources << Resource.find_by_sys_name('passwords/create')
-change_password.save

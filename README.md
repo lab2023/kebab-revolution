@@ -1,5 +1,15 @@
 # Welcome to Kebab
 
+Kebab Revolution is a saas system which support
+
+* Multitenant
+* Paypal Recurring Payments
+* Authentication
+* Authorization with Role Base
+* Subscription
+
+We use ExtJs 4.0 for client and Ror 3.1.3 for server.
+
 # Kebab Revolution Resource
 
 * [Web Site](http://www.kebab-project.com)
@@ -10,19 +20,29 @@
 
 ## 2.0.0.alpha6 -
 
-* Subscription Model
-* Subscription Payments Model
-* Paypal integration
-* Notification for account owners
+* 77 - Subscription limit controller
+* 49 - User invite
+* 76 - Change user status
+* 72 - User cancel own account
+* 81 - Change server local
+* 80 - Cancel account
+* 79 - See older and next payments info
+* 73 - Add SubscriptionNotifier
+* 55 - Paypal integration
+* 60 - Added options for trial period for paypal
+* 69 - Invoice no problem
+* 78 - Update plan
 
-## 2.0.0.alpha5 -
+## 2.0.0.alpha5 - 2012.01.11
 
-* Tenant register
-* Subscription Plan Model
-* Subscription limit controller
-* User invite
-* User profile
-* Feedback
+* DONE - Tenant register
+* DONE - Plan Model
+* DONE - Subscription Model
+* DONE - Payments Model
+* DONE - Add time zone
+* DONE - User profile
+* DONE - Feedback
+* DONE - Update static pages
 
 ## 2.0.0.alpha4 - 2012.01.01
 

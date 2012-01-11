@@ -5,7 +5,7 @@
 # License::   Distributes under MIT
 
 # App Model
-class App < ActiveRecord::Base
+class Application < ActiveRecord::Base
   has_and_belongs_to_many :privileges
 
   validates  :sys_name,       :presence => true, :uniqueness => true
