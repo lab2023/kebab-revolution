@@ -9,7 +9,12 @@ KebabServerRor::Application.routes.draw do
   resources :sessions
   resources :passwords
   resources :feedback
-  resources :users
+  resources :users do
+    collection do
+      post 'active'
+      post 'passive'
+    end
+  end
   resources :tenants do
     get :valid_host
     get :tests

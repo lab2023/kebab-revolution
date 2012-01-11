@@ -6,20 +6,32 @@ premium_plan  = Plan.create!(:name => "Premium", :price => 499, :user_limit => 2
 max_plan      = Plan.create!(:name => "Max",     :price => 999, :user_limit => 9999, :recommended => false)
 
 # Privileges
-invite_user     = Privilege.create!(sys_name: 'InviteUser',       name: 'Invite User')
+invite_user      = Privilege.create!(sys_name: 'InviteUser',        name: 'Invite User')
+passive_user     = Privilege.create!(sys_name: 'PassiveUser',       name: 'Passive User')
+active_user      = Privilege.create!(sys_name: 'ActiveUser',        name: 'Active User')
 
 # Application
 user_manager    = Application.create!(sys_name: 'UserManager',    sys_department: 'system')
 
 # Resources
-post_users      = Resource.create!(sys_path: 'POST/users',  sys_name: 'users/create')
-get_users       = Resource.create!(sys_path: 'GET/users',   sys_name: 'users/index')
+post_users      = Resource.create!(sys_path: 'POST/users',          sys_name: 'users/create')
+get_users       = Resource.create!(sys_path: 'GET/users',           sys_name: 'users/index')
+passive_users   = Resource.create!(sys_path: 'POST/users/passive',  sys_name: 'users/passive')
+active_users    = Resource.create!(sys_path: 'POST/users/active',   sys_name: 'users/active')
 
 # Apps Resource Privileges Relation
 invite_user.applications << user_manager
 invite_user.resources << post_users
 invite_user.resources << get_users
 invite_user.save
+
+passive_user.applications << user_manager
+passive_user.resources << passive_users
+passive_user.save
+
+active_user.applications << user_manager
+active_user.resources << active_users
+active_user.save
 
 # Tenants
 tenant_lab2023 = Tenant.create!(name: 'lab2023 Inc.', host: 'lab2023.kebab.local')
@@ -45,3 +57,6 @@ onur.save
 
 tayfun.roles << user_role
 tayfun.save
+
+# Subscription
+subscription_lab2023 = Subscription.create!(plan_id: 1, tenant_id: 1, user_id: 1, price: 0, payment_period: 1, next_payment_date: Time.zone.now + 1.months)

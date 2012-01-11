@@ -8,8 +8,8 @@
 class ApplicationController < ActionController::Base
   #protect_from_forgery
 
-  before_filter :tenant
   around_filter :with_tenant
+  before_filter :tenant
   before_filter :authenticate
   before_filter :authorize
   before_filter :i18n_locale
@@ -280,5 +280,14 @@ class ApplicationController < ActionController::Base
       bootstrap_hash['user']  = user
     end
     bootstrap_hash
+  end
+
+  # Protected: is_owner
+  #
+  # id    Integer
+  #
+  # Return boolean
+  def is_owner id
+    return id == current_tenant.subscription.user_id
   end
 end

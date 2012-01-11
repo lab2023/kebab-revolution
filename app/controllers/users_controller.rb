@@ -8,6 +8,19 @@
 class UsersController < ApplicationController
   skip_before_filter :authorize, :except => [:create]
 
+  # GET/users
+  def index
+    owner_id =  User.find(current_tenant.subscription.user_id)
+    @@response[:data] = User.select("id, email, name, locale, time_zone, passive_at").where("id != ?", owner_id).all
+    render json: @@response
+  end
+
+  # GET/users/:id
+  def show
+    @@response[:data] = User.select("id, email, name, locale, time_zone, passive_at").find(params[:id])
+    render json: @@response
+  end
+
   #POST/users
   def create
     user_hash = Hash.new
@@ -53,15 +66,24 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET/users/:id
-  def show
-    @@response[:data] = User.select("email, name, locale, time_zone, passive_at").find(params[:id])
-    render json: @@response
+  #POST/users/active
+  def active
+    @user = User.find(params[:id])
+    if is_owner params[:id] && @user.update_attribute(:passive_at, nil)
+      render json: @@response
+    else
+      render json: {success: false}
+    end
   end
 
-  # GET/users
-  def index
-    @@response[:data] = User.select("email, name, locale, time_zone, passive_at").all
-    render json: @@response
+
+  #POST/users/passive
+  def passive
+    @user = User.find(params[:id])
+    if is_owner params[:id] && @user.update_attribute(:passive_at, Time.zone.now)
+      render json: @@response
+    else
+      render json: {success: false}
+    end
   end
 end
