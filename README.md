@@ -20,13 +20,11 @@ We use ExtJs 4.0 for client and Ror 3.1.3 for server.
 
 ## 2.0.0.alpha6 -
 
-* 82 - Implement kebab client and web os static pages.
-
 * 77 - Subscription limit controller
 * 49 - User invite
 * 76 - Change user status
 * 72 - User cancel own account
-
+* 81 - Change server local
 * 80 - Cancel account
 * 79 - See older and next payments info
 * 73 - Add SubscriptionNotifier
@@ -35,7 +33,7 @@ We use ExtJs 4.0 for client and Ror 3.1.3 for server.
 * 69 - Invoice no problem
 * 78 - Update plan
 
-## 2.0.0.alpha5 -
+## 2.0.0.alpha5 - 2012.01.11
 
 * DONE - Tenant register
 * DONE - Plan Model
