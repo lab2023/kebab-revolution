@@ -6,13 +6,11 @@ KebabServerRor::Application.routes.draw do
   match 'plans'             => 'pages#plans'
   match 'register'          => 'pages#register'
 
-  get     "users/get_profile"
-  post    "users/update_profile"
-
-  resource :sessions
-  resource :passwords
-  resource :feedback
-  resource :tenants do
+  resources :sessions
+  resources :passwords
+  resources :feedback
+  resources :users
+  resources :tenants do
     get :valid_host
     get :tests
   end

@@ -24,7 +24,7 @@ We use ExtJs 4.0 for client and Ror 3.1.3 for server.
 * 49 - User invite
 * 76 - Change user status
 * 72 - User cancel own account
-* 81 - Change server local
+* 81 - DONE - Change server local
 * 80 - Cancel account
 * 79 - See older and next payments info
 * 73 - Add SubscriptionNotifier

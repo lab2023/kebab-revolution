@@ -8,10 +8,17 @@
 class UsersController < ApplicationController
   skip_before_filter :authorize
 
-  # POST/users/update_profile
-  def update_profile
+  # PUT/users/
+  def update
+    user = Hash.new
+    user[:email]     = params[:email]     if params[:email]
+    user[:name]      = params[:name]      if params[:name]
+    user[:locale]    = params[:locale]    if params[:locale]
+    user[:time_zone] = params[:time_zone] if params[:time_zone]
+
     @user = User.find(session[:user_id])
-    if @user.update_attributes({email: params[:email], name: params[:name], locale: params[:locale], time_zone: params[:time_zone]})
+    if @user.update_attributes(user)
+      session[:locale] = params[:locale] if params[:locale]
       render json: @@response
     else
       @@response[:error] = @user.errors.each { |a, m| add_error a, m}
@@ -19,9 +26,15 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET/users/get_profile
-  def get_profile
-    @@response[:data] = User.select("email, name, locale, time_zone").find(session[:user_id])
+  # GET/users/:id
+  def show
+    @@response[:data] = User.select("email, name, locale, time_zone, passive_at").find(params[:id])
+    render json: @@response
+  end
+
+  # GET/users
+  def index
+    @@response[:data] = User.select("email, name, locale, time_zone, passive_at").all
     render json: @@response
   end
 end

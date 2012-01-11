@@ -247,6 +247,7 @@ class ApplicationController < ActionController::Base
   def login user, password
     if user && user.authenticate(password)
       session[:user_id] = user.id
+      session[:locale] = user.locale
       session[:acl] = acl
 
       I18n.locale = user.locale
@@ -261,6 +262,7 @@ class ApplicationController < ActionController::Base
   # Protected: logout
   def logout
     session[:user_id] = nil
+    session[:locale] = nil
     session[:acl] = nil
   end
 
