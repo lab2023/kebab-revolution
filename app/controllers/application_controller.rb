@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   #protect_from_forgery
 
   before_filter :tenant
-  #around_filter :with_tenant
+  around_filter :with_tenant
   before_filter :authenticate
   before_filter :authorize
   before_filter :i18n_locale
@@ -187,14 +187,14 @@ class ApplicationController < ActionController::Base
   #
   # Returns Acl hash
   def acl
-    acl = Hash.new
+    acl_hash = Hash.new
 
     user_resources_raw = session[:user_id].nil? ? Hash.new : User.find(session[:user_id]).get_resources
     user_resources_raw.each do |resource|
-      acl[resource.sys_path] = resource.sys_name
+      acl_hash[resource.sys_path] = resource.sys_name
     end
 
-    acl
+    acl_hash
   end
 
   # Protected: Create a credentials

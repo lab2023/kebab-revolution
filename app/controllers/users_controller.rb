@@ -6,7 +6,34 @@
 
 # Users Controller
 class UsersController < ApplicationController
-  skip_before_filter :authorize
+  skip_before_filter :authorize, :except => [:create]
+
+  #POST/users
+  def create
+    user_hash = Hash.new
+    user_hash[:email]     = params[:email]
+    user_hash[:name]      = params[:name]
+    user_hash[:locale]    = I18n.locale.to_s
+    user_hash[:time_zone] = Time.zone.to_s.slice(12..-1)
+    new_password = rand(10000000000000).floor.to_s(36)
+    user_hash[:password]  = new_password
+    user_hash[:password_confirmation] = new_password
+
+    User.transaction do
+      @new_user = User.new(user_hash)
+      @new_user.roles << Role.find_by_name('User')
+      if @new_user.save
+        # KBBTODO delay job integration
+        UserMailer.invite(@new_user).deliver
+        @@status = :created
+      else
+        @@response[:success] = @new_user.errors
+        @@status = :unprocessable_entity
+      end
+    end
+
+    render json: @@response, status: @@status
+  end
 
   # PUT/users/
   def update

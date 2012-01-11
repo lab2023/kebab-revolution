@@ -6,31 +6,20 @@ premium_plan  = Plan.create!(:name => "Premium", :price => 499, :user_limit => 2
 max_plan      = Plan.create!(:name => "Max",     :price => 999, :user_limit => 9999, :recommended => false)
 
 # Privileges
-cancel_account     = Privilege.create!(sys_name: 'CancelAccount',    name: 'Cancel Account')
-invite_user        = Privilege.create!(sys_name: 'InviteUser',       name: 'Invite User')
-update_user_status = Privilege.create!(sys_name: 'UpdateUserStatus', name: 'Update User Status')
+invite_user     = Privilege.create!(sys_name: 'InviteUser',       name: 'Invite User')
 
 # Application
-account_manager = Application.create!(sys_name: 'AccountManager', sys_department: 'system')
 user_manager    = Application.create!(sys_name: 'UserManager',    sys_department: 'system')
 
 # Resources
-delete_tenants   = Resource.create!(sys_path: 'DELETE/tenants',  sys_name: 'tenants/destroy')
-post_users       = Resource.create!(sys_path: 'POST/users',      sys_name: 'users/create')
-put_users        = Resource.create!(sys_path: 'PUT/users',       sys_name: 'users/update')
+post_users      = Resource.create!(sys_path: 'POST/users',  sys_name: 'users/create')
+get_users       = Resource.create!(sys_path: 'GET/users',   sys_name: 'users/index')
 
 # Apps Resource Privileges Relation
-cancel_account.applications << account_manager
-cancel_account.resources << delete_tenants
-cancel_account.save
-
 invite_user.applications << user_manager
 invite_user.resources << post_users
+invite_user.resources << get_users
 invite_user.save
-
-update_user_status.applications << user_manager
-update_user_status.resources << put_users
-update_user_status.save
 
 # Tenants
 tenant_lab2023 = Tenant.create!(name: 'lab2023 Inc.', host: 'lab2023.kebab.local')
@@ -39,6 +28,10 @@ Tenant.current = tenant_lab2023
 # Roles
 admin_role  = Role.create!(name: 'Admin')
 user_role   = Role.create!(name: 'User')
+
+# Role Privileges
+admin_role.privileges << invite_user
+admin_role.save
 
 # Users
 onur    = User.create!(name: 'Onur Ozgur OZKAN',   email: 'onur@ozgur.com',  password: '123456', password_confirmation: '123456', locale: 'tr', time_zone: 'Istanbul')
