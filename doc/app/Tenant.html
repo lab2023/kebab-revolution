@@ -74,6 +74,8 @@
     
     <li><a href="#method-c-current-3D">::current=</a>
     
+    <li><a href="#method-i-with">#with</a>
+    
   </ul>
 </nav>
 
@@ -95,13 +97,47 @@
 
   <ul class="link-list">
   
-    <li><a href="./App.html">App</a>
+    <li><a href="./PayPal.html">PayPal</a>
+  
+    <li><a href="./PayPal/Recurring.html">PayPal::Recurring</a>
+  
+    <li><a href="./PayPal/Recurring/Base.html">PayPal::Recurring::Base</a>
+  
+    <li><a href="./PayPal/Recurring/Notification.html">PayPal::Recurring::Notification</a>
+  
+    <li><a href="./PayPal/Recurring/Request.html">PayPal::Recurring::Request</a>
+  
+    <li><a href="./PayPal/Recurring/Response.html">PayPal::Recurring::Response</a>
+  
+    <li><a href="./PayPal/Recurring/Response/Base.html">PayPal::Recurring::Response::Base</a>
+  
+    <li><a href="./PayPal/Recurring/Response/Checkout.html">PayPal::Recurring::Response::Checkout</a>
+  
+    <li><a href="./PayPal/Recurring/Response/Details.html">PayPal::Recurring::Response::Details</a>
+  
+    <li><a href="./PayPal/Recurring/Response/ManageProfile.html">PayPal::Recurring::Response::ManageProfile</a>
+  
+    <li><a href="./PayPal/Recurring/Response/Payment.html">PayPal::Recurring::Response::Payment</a>
+  
+    <li><a href="./PayPal/Recurring/Response/Profile.html">PayPal::Recurring::Response::Profile</a>
+  
+    <li><a href="./PayPal/Recurring/Utils.html">PayPal::Recurring::Utils</a>
+  
+    <li><a href="./PayPal/Recurring/Version.html">PayPal::Recurring::Version</a>
+  
+    <li><a href="./Application.html">Application</a>
   
     <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./FeedbackController.html">FeedbackController</a>
   
     <li><a href="./PagesController.html">PagesController</a>
   
     <li><a href="./PasswordsController.html">PasswordsController</a>
+  
+    <li><a href="./Payment.html">Payment</a>
+  
+    <li><a href="./Plan.html">Plan</a>
   
     <li><a href="./Privilege.html">Privilege</a>
   
@@ -111,7 +147,11 @@
   
     <li><a href="./SessionsController.html">SessionsController</a>
   
+    <li><a href="./Subscription.html">Subscription</a>
+  
     <li><a href="./Tenant.html">Tenant</a>
+  
+    <li><a href="./TenantMailer.html">TenantMailer</a>
   
     <li><a href="./TenantScopedModel.html">TenantScopedModel</a>
   
@@ -120,6 +160,8 @@
     <li><a href="./User.html">User</a>
   
     <li><a href="./UserMailer.html">UserMailer</a>
+  
+    <li><a href="./UsersController.html">UsersController</a>
   
   </ul>
 </nav>
@@ -170,7 +212,7 @@
 
           
           <div class="method-source-code" id="current-source">
-            <pre><span class="ruby-comment"># File app/models/tenant.rb, line 24</span>
+            <pre><span class="ruby-comment"># File app/models/tenant.rb, line 18</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">current</span>
   <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-value">:tenant</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -200,7 +242,7 @@
 
           
           <div class="method-source-code" id="current-3D-source">
-            <pre><span class="ruby-comment"># File app/models/tenant.rb, line 29</span>
+            <pre><span class="ruby-comment"># File app/models/tenant.rb, line 23</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">current=</span>(<span class="ruby-identifier">tenant</span>)
   <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-value">:tenant</span>] = <span class="ruby-identifier">tenant</span>
 <span class="ruby-keyword">end</span></pre>
@@ -215,6 +257,45 @@
 
     
     </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-with" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">with</span><span
+            class="method-args">() { || ... }</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="with-source">
+            <pre><span class="ruby-comment"># File app/models/tenant.rb, line 28</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">with</span>
+  <span class="ruby-identifier">previous</span>, <span class="ruby-constant">Tenant</span>.<span class="ruby-identifier">current</span> = <span class="ruby-constant">Tenant</span>.<span class="ruby-identifier">current</span>, <span class="ruby-keyword">self</span>
+  <span class="ruby-keyword">yield</span>
+<span class="ruby-keyword">ensure</span>
+  <span class="ruby-constant">Tenant</span>.<span class="ruby-identifier">current</span> = <span class="ruby-identifier">previous</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- with-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- with-method -->
+
+    
+    </section><!-- public-instance-method-details -->
   
   </section><!-- 5Buntitled-5D -->
 

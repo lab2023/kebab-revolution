@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
-<title>Class: User</title>
+<title>Class: UsersController</title>
 
 <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
@@ -47,7 +47,7 @@
     <nav id="file-list-section" class="section">
   <h3 class="section-header">Defined In</h3>
   <ul>
-    <li>app/models/user.rb
+    <li>app/controllers/users_controller.rb
   </ul>
 </nav>
 
@@ -59,7 +59,7 @@
     <nav id="parent-class-section" class="section">
   <h3 class="section-header">Parent</h3>
   
-  <p class="link"><a href="TenantScopedModel.html">TenantScopedModel</a>
+  <p class="link"><a href="ApplicationController.html">ApplicationController</a>
   
 </nav>
 
@@ -70,11 +70,9 @@
 
   <ul class="link-list">
     
-    <li><a href="#method-i-get_applications">#get_applications</a>
+    <li><a href="#method-i-get_profile">#get_profile</a>
     
-    <li><a href="#method-i-get_privileges">#get_privileges</a>
-    
-    <li><a href="#method-i-get_resources">#get_resources</a>
+    <li><a href="#method-i-update_profile">#update_profile</a>
     
   </ul>
 </nav>
@@ -170,11 +168,11 @@
 </nav>
 
 <div id="documentation">
-  <h1 class="class">class User</h1>
+  <h1 class="class">class UsersController</h1>
 
   <div id="description" class="description">
     
-<p><a href="User.html">User</a> Model</p>
+<p>Users Controller</p>
 
   </div><!-- description -->
 
@@ -187,19 +185,6 @@
     
 
     
-    <!-- Constants -->
-    <section id="constants-list" class="section">
-      <h3 class="section-header">Constants</h3>
-      <dl>
-      
-        <dt id="EMAIL_REGEX">EMAIL_REGEX
-        
-        <dd class="description"><p>Email regex standard</p>
-        
-      
-      </dl>
-    </section>
-    
 
     
 
@@ -209,10 +194,10 @@
       <h3 class="section-header">Public Instance Methods</h3>
 
     
-      <div id="method-i-get_applications" class="method-detail ">
+      <div id="method-i-get_profile" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">get_applications</span><span
+          <span class="method-name">get_profile</span><span
             class="method-args">()</span>
           <span class="method-click-advice">click to toggle source</span>
         </div>
@@ -220,37 +205,30 @@
 
         <div class="method-description">
           
-          <p>Public: Return users apps hash KBBTODO refactor methods in loop</p>
+          <p>GET/users/get_profile</p>
           
 
           
-          <div class="method-source-code" id="get_applications-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 41</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_applications</span>
-  <span class="ruby-identifier">applications</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
-
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_privileges</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">p</span>.<span class="ruby-identifier">applications</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">applications</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">a</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">applications</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">a</span>)
-    <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">end</span>
-
-  <span class="ruby-identifier">applications</span>
+          <div class="method-source-code" id="get_profile-source">
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 23</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_profile</span>
+  <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:data</span>] = <span class="ruby-constant">User</span>.<span class="ruby-identifier">select</span>(<span class="ruby-string">&quot;email, name, locale, time_zone&quot;</span>).<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>])
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- get_applications-source -->
+          </div><!-- get_profile-source -->
           
         </div>
 
         
 
         
-      </div><!-- get_applications-method -->
+      </div><!-- get_profile-method -->
 
     
-      <div id="method-i-get_privileges" class="method-detail ">
+      <div id="method-i-update_profile" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">get_privileges</span><span
+          <span class="method-name">update_profile</span><span
             class="method-args">()</span>
           <span class="method-click-advice">click to toggle source</span>
         </div>
@@ -258,69 +236,29 @@
 
         <div class="method-description">
           
-          <p>Pubic: Return users privileges hash KBBTODO refactor methods in loop</p>
+          <p>POST/users/update_profile</p>
           
 
           
-          <div class="method-source-code" id="get_privileges-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 27</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_privileges</span>
-  <span class="ruby-identifier">privileges</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
-
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">roles</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span>
-   <span class="ruby-identifier">r</span>.<span class="ruby-identifier">privileges</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
-     <span class="ruby-identifier">privileges</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">privileges</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">p</span>)
-   <span class="ruby-keyword">end</span>
+          <div class="method-source-code" id="update_profile-source">
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">update_profile</span>
+  <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>])
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">update_attributes</span>({<span class="ruby-identifier">email</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:email</span>], <span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:name</span>], <span class="ruby-identifier">locale</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:locale</span>], <span class="ruby-identifier">time_zone</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:time_zone</span>]})
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:error</span>] = <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span>, <span class="ruby-identifier">m</span><span class="ruby-operator">|</span> <span class="ruby-identifier">add_error</span> <span class="ruby-identifier">a</span>, <span class="ruby-identifier">m</span>}
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>
   <span class="ruby-keyword">end</span>
-
-  <span class="ruby-identifier">privileges</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- get_privileges-source -->
+          </div><!-- update_profile-source -->
           
         </div>
 
         
 
         
-      </div><!-- get_privileges-method -->
-
-    
-      <div id="method-i-get_resources" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">get_resources</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Public: Return users resources hash KBBTODO refactor methods in loop</p>
-          
-
-          
-          <div class="method-source-code" id="get_resources-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 55</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_resources</span>
-  <span class="ruby-identifier">resources</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
-
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_privileges</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">p</span>.<span class="ruby-identifier">resources</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">resources</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">a</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">resources</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">a</span>)
-    <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">end</span>
-
-  <span class="ruby-identifier">resources</span>
-<span class="ruby-keyword">end</span></pre>
-          </div><!-- get_resources-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- get_resources-method -->
+      </div><!-- update_profile-method -->
 
     
     </section><!-- public-instance-method-details -->

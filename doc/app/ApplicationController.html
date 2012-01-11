@@ -80,13 +80,25 @@
     
     <li><a href="#method-i-authorize">#authorize</a>
     
+    <li><a href="#method-i-bootstrap">#bootstrap</a>
+    
     <li><a href="#method-i-i18n_locale">#i18n_locale</a>
     
     <li><a href="#method-i-i18n_locale_from_param">#i18n_locale_from_param</a>
     
     <li><a href="#method-i-i18n_locale_from_session">#i18n_locale_from_session</a>
     
+    <li><a href="#method-i-login">#login</a>
+    
+    <li><a href="#method-i-logout">#logout</a>
+    
+    <li><a href="#method-i-paypal_credential">#paypal_credential</a>
+    
+    <li><a href="#method-i-paypal_recurring_payment">#paypal_recurring_payment</a>
+    
     <li><a href="#method-i-tenant">#tenant</a>
+    
+    <li><a href="#method-i-with_tenant">#with_tenant</a>
     
   </ul>
 </nav>
@@ -109,13 +121,47 @@
 
   <ul class="link-list">
   
-    <li><a href="./App.html">App</a>
+    <li><a href="./PayPal.html">PayPal</a>
+  
+    <li><a href="./PayPal/Recurring.html">PayPal::Recurring</a>
+  
+    <li><a href="./PayPal/Recurring/Base.html">PayPal::Recurring::Base</a>
+  
+    <li><a href="./PayPal/Recurring/Notification.html">PayPal::Recurring::Notification</a>
+  
+    <li><a href="./PayPal/Recurring/Request.html">PayPal::Recurring::Request</a>
+  
+    <li><a href="./PayPal/Recurring/Response.html">PayPal::Recurring::Response</a>
+  
+    <li><a href="./PayPal/Recurring/Response/Base.html">PayPal::Recurring::Response::Base</a>
+  
+    <li><a href="./PayPal/Recurring/Response/Checkout.html">PayPal::Recurring::Response::Checkout</a>
+  
+    <li><a href="./PayPal/Recurring/Response/Details.html">PayPal::Recurring::Response::Details</a>
+  
+    <li><a href="./PayPal/Recurring/Response/ManageProfile.html">PayPal::Recurring::Response::ManageProfile</a>
+  
+    <li><a href="./PayPal/Recurring/Response/Payment.html">PayPal::Recurring::Response::Payment</a>
+  
+    <li><a href="./PayPal/Recurring/Response/Profile.html">PayPal::Recurring::Response::Profile</a>
+  
+    <li><a href="./PayPal/Recurring/Utils.html">PayPal::Recurring::Utils</a>
+  
+    <li><a href="./PayPal/Recurring/Version.html">PayPal::Recurring::Version</a>
+  
+    <li><a href="./Application.html">Application</a>
   
     <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./FeedbackController.html">FeedbackController</a>
   
     <li><a href="./PagesController.html">PagesController</a>
   
     <li><a href="./PasswordsController.html">PasswordsController</a>
+  
+    <li><a href="./Payment.html">Payment</a>
+  
+    <li><a href="./Plan.html">Plan</a>
   
     <li><a href="./Privilege.html">Privilege</a>
   
@@ -125,7 +171,11 @@
   
     <li><a href="./SessionsController.html">SessionsController</a>
   
+    <li><a href="./Subscription.html">Subscription</a>
+  
     <li><a href="./Tenant.html">Tenant</a>
+  
+    <li><a href="./TenantMailer.html">TenantMailer</a>
   
     <li><a href="./TenantScopedModel.html">TenantScopedModel</a>
   
@@ -134,6 +184,8 @@
     <li><a href="./User.html">User</a>
   
     <li><a href="./UserMailer.html">UserMailer</a>
+  
+    <li><a href="./UsersController.html">UsersController</a>
   
   </ul>
 </nav>
@@ -146,7 +198,7 @@
 
   <div id="description" class="description">
     
-<p>Application Controller</p>
+<p><a href="Application.html">Application</a> Controller</p>
 
   </div><!-- description -->
 
@@ -160,6 +212,26 @@
 
     
 
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-current_tenant" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">current_tenant</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
     
 
     <!-- Methods -->
@@ -195,7 +267,7 @@
 
           
           <div class="method-source-code" id="acl-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 177</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 189</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">acl</span>
   <span class="ruby-identifier">acl</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
 
@@ -242,14 +314,14 @@ add_error 'email', I18n.t(errors.email.invalid_format)</pre>
 
           
           <div class="method-source-code" id="add_error-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 120</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 132</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">add_error</span> <span class="ruby-identifier">id</span>, <span class="ruby-identifier">message</span>
   <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:success</span>] = <span class="ruby-keyword">false</span>
-  <span class="ruby-identifier">error</span> = [<span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">id</span>, <span class="ruby-value">:message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">message</span>]
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">@@response</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value">:error</span>)
-    <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:error</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">error</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:error</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">error</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:error</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">error</span>
+    <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:error</span>][<span class="ruby-identifier">id</span>] = <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:error</span>].<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">id</span>) <span class="ruby-operator">?</span> ( <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:error</span>][<span class="ruby-identifier">id</span>] <span class="ruby-operator">+</span> <span class="ruby-string">'. '</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">message</span> ) <span class="ruby-operator">:</span> <span class="ruby-identifier">message</span>;
   <span class="ruby-keyword">else</span>
-    <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:error</span>] = <span class="ruby-identifier">error</span>
+    <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:error</span>] = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:error</span>][<span class="ruby-identifier">id</span>] = <span class="ruby-identifier">message</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- add_error-source -->
@@ -288,7 +360,7 @@ add_notice 'ERROR', I18n.t(tenant.invalid_tenant)</pre>
 
           
           <div class="method-source-code" id="add_notice-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 100</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 112</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">add_notice</span> <span class="ruby-identifier">type</span>, <span class="ruby-identifier">message</span>
   <span class="ruby-identifier">notice</span> = [<span class="ruby-value">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">type</span>, <span class="ruby-value">:message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">message</span>]
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">@@response</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value">:notice</span>)
@@ -331,7 +403,7 @@ add_notice 'ERROR', I18n.t(tenant.invalid_tenant)</pre>
 
           
           <div class="method-source-code" id="authenticate-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 58</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 69</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">authenticate</span>
   <span class="ruby-comment"># KBBTODO add logging</span>
   <span class="ruby-keyword">unless</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>]
@@ -372,12 +444,12 @@ add_notice 'ERROR', I18n.t(tenant.invalid_tenant)</pre>
 <span class="ruby-comment"># =&gt; nil</span>
 </pre>
 
-<p>Returns void, Json</p>
+<p>KBBTODO add logging Returns void, Json</p>
           
 
           
           <div class="method-source-code" id="authorize-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 78</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 90</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">authorize</span>
   <span class="ruby-comment"># KBBTODO add logging</span>
   <span class="ruby-keyword">unless</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:acl</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">request</span>.<span class="ruby-identifier">method</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">path</span>.<span class="ruby-identifier">to_s</span>)
@@ -396,6 +468,47 @@ add_notice 'ERROR', I18n.t(tenant.invalid_tenant)</pre>
 
         
       </div><!-- authorize-method -->
+
+    
+      <div id="method-i-bootstrap" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">bootstrap</span><span
+            class="method-args">(tenant = true)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Protected: bootstrap</p>
+          
+
+          
+          <div class="method-source-code" id="bootstrap-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 268</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">bootstrap</span> <span class="ruby-identifier">tenant</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-identifier">bootstrap_hash</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">bootstrap_hash</span>[<span class="ruby-string">'root'</span>] = <span class="ruby-string">'http://static.kebab.local'</span>
+  <span class="ruby-identifier">bootstrap_hash</span>[<span class="ruby-identifier">request_forgery_protection_token</span>] = <span class="ruby-identifier">form_authenticity_token</span>
+  <span class="ruby-identifier">bootstrap_hash</span>[<span class="ruby-string">'tenant'</span>] = <span class="ruby-constant">Tenant</span>.<span class="ruby-identifier">select</span>(<span class="ruby-string">'id, host, name'</span>).<span class="ruby-identifier">find_by_host!</span>(<span class="ruby-identifier">request</span>.<span class="ruby-identifier">host</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">tenant</span>
+  <span class="ruby-identifier">bootstrap_hash</span>[<span class="ruby-string">'locale'</span>] = {<span class="ruby-identifier">default_locale</span><span class="ruby-operator">:</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">available_locales</span><span class="ruby-operator">:</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">available_locales</span>}
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>].<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">select</span>(<span class="ruby-string">&quot;name, email&quot;</span>).<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>])
+    <span class="ruby-identifier">user</span>[<span class="ruby-value">:applications</span>] = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>]).<span class="ruby-identifier">get_applications</span>
+    <span class="ruby-identifier">user</span>[<span class="ruby-value">:privileges</span>]   = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>]).<span class="ruby-identifier">get_privileges</span>
+    <span class="ruby-identifier">bootstrap_hash</span>[<span class="ruby-string">'user'</span>]  = <span class="ruby-identifier">user</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">bootstrap_hash</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- bootstrap-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- bootstrap-method -->
 
     
       <div id="method-i-i18n_locale" class="method-detail ">
@@ -424,7 +537,7 @@ add_notice 'ERROR', I18n.t(tenant.invalid_tenant)</pre>
 
           
           <div class="method-source-code" id="i18n_locale-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 140</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 152</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">i18n_locale</span>
   <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">i18n_locale_from_param</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">i18n_locale_from_session</span> <span class="ruby-operator">||</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">default_locale</span>
 <span class="ruby-keyword">end</span></pre>
@@ -456,7 +569,7 @@ add_notice 'ERROR', I18n.t(tenant.invalid_tenant)</pre>
 
           
           <div class="method-source-code" id="i18n_locale_from_param-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 147</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 159</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">i18n_locale_from_param</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:locale</span>]
     <span class="ruby-keyword">if</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">available_locales</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:locale</span>].<span class="ruby-identifier">to_sym</span>)
@@ -492,7 +605,7 @@ add_notice 'ERROR', I18n.t(tenant.invalid_tenant)</pre>
 
           
           <div class="method-source-code" id="i18n_locale_from_session-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 158</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 170</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">i18n_locale_from_session</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:locale</span>]
     <span class="ruby-keyword">if</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">available_locales</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:locale</span>].<span class="ruby-identifier">to_sym</span>)
@@ -508,6 +621,172 @@ add_notice 'ERROR', I18n.t(tenant.invalid_tenant)</pre>
 
         
       </div><!-- i18n_locale_from_session-method -->
+
+    
+      <div id="method-i-login" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">login</span><span
+            class="method-args">(user, password)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Protected: login</p>
+
+<p>user      UserModel password  String</p>
+
+<p>Return boolean</p>
+          
+
+          
+          <div class="method-source-code" id="login-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 247</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">login</span> <span class="ruby-identifier">user</span>, <span class="ruby-identifier">password</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">user</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">authenticate</span>(<span class="ruby-identifier">password</span>)
+    <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>] = <span class="ruby-identifier">user</span>.<span class="ruby-identifier">id</span>
+    <span class="ruby-identifier">session</span>[<span class="ruby-value">:acl</span>] = <span class="ruby-identifier">acl</span>
+
+    <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">user</span>.<span class="ruby-identifier">locale</span>
+    <span class="ruby-constant">Time</span>.<span class="ruby-identifier">zone</span>   = <span class="ruby-identifier">user</span>.<span class="ruby-identifier">time_zone</span>
+
+    <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- login-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- login-method -->
+
+    
+      <div id="method-i-logout" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">logout</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Protected: logout</p>
+          
+
+          
+          <div class="method-source-code" id="logout-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 262</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">logout</span>
+  <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>] = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">session</span>[<span class="ruby-value">:acl</span>] = <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- logout-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- logout-method -->
+
+    
+      <div id="method-i-paypal_credential" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">paypal_credential</span><span
+            class="method-args">(plan)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Protected: Create a credentials</p>
+          
+
+          
+          <div class="method-source-code" id="paypal_credential-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 201</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">paypal_credential</span> <span class="ruby-identifier">plan</span>
+  <span class="ruby-ivar">@plan</span> = <span class="ruby-identifier">plan</span>
+  <span class="ruby-identifier">ppr</span> = <span class="ruby-constant">PayPal</span><span class="ruby-operator">::</span><span class="ruby-constant">Recurring</span>.<span class="ruby-identifier">new</span>({
+                                  <span class="ruby-value">:return_url</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;http://www.kebab.local/register&quot;</span>,
+                                  <span class="ruby-value">:cancel_url</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;http://www.kebab.local/paypal_cancel&quot;</span>,
+                                  <span class="ruby-value">:description</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{@plan.name}&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; - Monthly Subscription&quot;</span>,
+                                  <span class="ruby-value">:amount</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{@plan.price}&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;.00&quot;</span>,
+                                  <span class="ruby-value">:currency</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;USD&quot;</span>
+                              })
+  <span class="ruby-identifier">response</span> = <span class="ruby-identifier">ppr</span>.<span class="ruby-identifier">checkout</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">valid?</span>
+    <span class="ruby-identifier">response</span>.<span class="ruby-identifier">checkout_url</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- paypal_credential-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- paypal_credential-method -->
+
+    
+      <div id="method-i-paypal_recurring_payment" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">paypal_recurring_payment</span><span
+            class="method-args">(plan, reference, payer_id, token)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Protected: Create a recurring payment</p>
+
+<p>Return Recurring ProfileId</p>
+          
+
+          
+          <div class="method-source-code" id="paypal_recurring_payment-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 221</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">paypal_recurring_payment</span> <span class="ruby-identifier">plan</span>, <span class="ruby-identifier">reference</span>, <span class="ruby-identifier">payer_id</span>, <span class="ruby-identifier">token</span>
+  <span class="ruby-ivar">@plan</span> = <span class="ruby-identifier">plan</span>
+  <span class="ruby-identifier">ppr</span> = <span class="ruby-constant">PayPal</span><span class="ruby-operator">::</span><span class="ruby-constant">Recurring</span>.<span class="ruby-identifier">new</span>({
+    <span class="ruby-value">:amount</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{@plan.price}&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;.00&quot;</span>,
+    <span class="ruby-value">:currency</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;USD&quot;</span>,
+    <span class="ruby-value">:description</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{plan.name}&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; - Monthly Subscription&quot;</span>, <span class="ruby-comment">#plan info</span>
+    <span class="ruby-value">:frequency</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>,
+    <span class="ruby-value">:token</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">token</span>,                                      <span class="ruby-comment">#profile token</span>
+    <span class="ruby-value">:period</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:monthly</span>,
+    <span class="ruby-value">:reference</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">reference</span>,                                  <span class="ruby-comment">#Invoice Number</span>
+    <span class="ruby-value">:payer_id</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">payer_id</span>,                                   <span class="ruby-comment">#payer token</span>
+    <span class="ruby-value">:start_at</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>,
+    <span class="ruby-value">:failed</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-value">15</span>,
+    <span class="ruby-value">:outstanding</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:next_billing</span>
+  })
+
+  <span class="ruby-identifier">response</span> = <span class="ruby-identifier">ppr</span>.<span class="ruby-identifier">create_recurring_profile</span>
+  <span class="ruby-identifier">response</span>.<span class="ruby-identifier">profile_id</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- paypal_recurring_payment-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- paypal_recurring_payment-method -->
 
     
       <div id="method-i-tenant" class="method-detail ">
@@ -535,7 +814,7 @@ add_notice 'ERROR', I18n.t(tenant.invalid_tenant)</pre>
 
           
           <div class="method-source-code" id="tenant-source">
-            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 34</span>
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 45</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">tenant</span>
   <span class="ruby-keyword">if</span> <span class="ruby-constant">Tenant</span>.<span class="ruby-identifier">find_by_host</span>(<span class="ruby-identifier">request</span>.<span class="ruby-identifier">host</span>) <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
     <span class="ruby-ivar">@tenant</span> = <span class="ruby-constant">Tenant</span>.<span class="ruby-identifier">current</span> = <span class="ruby-constant">Tenant</span>.<span class="ruby-identifier">find_by_host!</span>(<span class="ruby-identifier">request</span>.<span class="ruby-identifier">host</span>)
@@ -559,6 +838,37 @@ add_notice 'ERROR', I18n.t(tenant.invalid_tenant)</pre>
 
         
       </div><!-- tenant-method -->
+
+    
+      <div id="method-i-with_tenant" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">with_tenant</span><span
+            class="method-args">() { || ... }</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="with_tenant-source">
+            <pre><span class="ruby-comment"># File app/controllers/application_controller.rb, line 27</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">with_tenant</span>
+  <span class="ruby-ivar">@current_tenant</span> = <span class="ruby-constant">Tenant</span>.<span class="ruby-identifier">find_by_host!</span>(<span class="ruby-identifier">request</span>.<span class="ruby-identifier">host</span>)
+  <span class="ruby-ivar">@current_tenant</span>.<span class="ruby-identifier">with</span> { <span class="ruby-keyword">yield</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- with_tenant-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- with_tenant-method -->
 
     
     </section><!-- protected-instance-method-details -->
