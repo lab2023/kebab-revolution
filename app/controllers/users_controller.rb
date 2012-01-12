@@ -35,7 +35,7 @@ class UsersController < ApplicationController
     User.transaction do
       @new_user = User.new(user_hash)
       @new_user.roles << Role.find_by_name('User')
-      if @new_user.save
+      if !reach_user_limit? && @new_user.save
         # KBBTODO delay job integration
         UserMailer.invite(@new_user).deliver
         @@status = :created

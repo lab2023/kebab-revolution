@@ -290,4 +290,11 @@ class ApplicationController < ActionController::Base
   def is_owner id
     return id == current_tenant.subscription.user_id
   end
+
+  # Protected reach_user_limit?
+  #
+  # Return boolean
+  def reach_user_limit?
+    @current_tenant.subscription.plan.user_limit < User.active.all.count
+  end
 end
