@@ -8,8 +8,7 @@
 class ApplicationController < ActionController::Base
   #protect_from_forgery
 
-  around_filter :with_tenant
-  before_filter :tenant
+  around_filter :tenant
   before_filter :authenticate
   before_filter :authorize
   before_filter :i18n_locale
@@ -23,11 +22,6 @@ class ApplicationController < ActionController::Base
   protected
 
   attr_reader :current_tenant
-
-  def with_tenant
-    @current_tenant = Tenant.find_by_host!(request.host)
-    @current_tenant.with { yield }
-  end
 
   # KBBTODO
   # Protected:
@@ -44,7 +38,8 @@ class ApplicationController < ActionController::Base
   # Returns void, Json or render 404 page
   def tenant
     if Tenant.find_by_host(request.host) != nil
-      @tenant = Tenant.current = Tenant.find_by_host!(request.host)
+      @current_tenant = Tenant.find_by_host!(request.host)
+      @current_tenant.with { yield }
     else
       @@response = {:success => false}
       add_notice 'ERR', I18n.t('notice.invalid_tenant')
@@ -288,7 +283,7 @@ class ApplicationController < ActionController::Base
   #
   # Return boolean
   def is_owner id
-    return id == current_tenant.subscription.user_id
+    return id == @current_tenant.subscription.user_id
   end
 
   # Protected reach_user_limit?
