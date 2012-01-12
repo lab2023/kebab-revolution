@@ -37,8 +37,8 @@ class ApplicationController < ActionController::Base
   #
   # Returns void, Json or render 404 page
   def tenant
-    if Tenant.find_by_host(request.host) != nil
-      @current_tenant = Tenant.find_by_host!(request.host)
+    if Tenant.active.find_by_host(request.host) != nil
+      @current_tenant = Tenant.active.find_by_host!(request.host)
       @current_tenant.with { yield }
     else
       @@response = {:success => false}
