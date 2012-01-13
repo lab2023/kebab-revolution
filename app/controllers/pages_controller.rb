@@ -6,8 +6,8 @@
 
 # Pages Controller
 class PagesController < ApplicationController
+  skip_around_filter :tenant,       only: [:index, :register, :plans]
   skip_before_filter :authenticate, only: [:index, :register, :plans, :login]
-  skip_before_filter :tenant,       only: [:index, :register, :plans, :login]
   skip_before_filter :authorize
 
   # GET/pages/index
