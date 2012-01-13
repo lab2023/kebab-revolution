@@ -6,9 +6,9 @@
 
 # Tenants Controller
 class TenantsController < ApplicationController
-  skip_before_filter  :tenant,        only: [:create, :valid_host, :paypal_credentials]
+  skip_around_filter  :tenant,        only: [:create, :valid_host]
+  skip_before_filter  :authorize#,     only: [:create, :valid_host]
   skip_before_filter  :authenticate
-  skip_before_filter  :authorize
 
   # POST/tenants
   # KBBTODO move all delete code to tenants#delete private method
@@ -69,6 +69,20 @@ class TenantsController < ApplicationController
       end
     end
     render json: @@response, status: status
+  end
+
+  # DELETE /tenants/:id
+  def destroy
+    render json: request.method.to_s + request.path.to_s
+    #if is_owner session[:user_id]
+    #  @current_tenant.passive_at = Time.zone.now
+    #  @current_tenant.save
+    #  logout
+    #  render json: @@response
+    #else
+    #  add_notice 'ERR', 'only owner can delete the account'
+    #  render json: {success: false}
+    #end
   end
 
   # GET/tenants/valid_host?host=host_name
