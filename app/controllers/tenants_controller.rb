@@ -71,7 +71,16 @@ class TenantsController < ApplicationController
     render json: @@response, status: status
   end
 
-  # DELETE /tenants/:id
+  # GET/tenant/1
+  def show
+    @@response[:data] = Hash.new
+    @@response[:data][:current] = @current_tenant.subscription
+    @@response[:data][:older]   = @current_tenant.subscription.payments
+
+    render json: @@response
+  end
+
+  # DELETE/tenants/:id
   def destroy
     if is_owner session[:user_id]
       @current_tenant.passive_at = Time.zone.now
