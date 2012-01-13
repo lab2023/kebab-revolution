@@ -27,6 +27,12 @@ module PayPal
         :yearly  => "Year"
       }
 
+      TRIAL_PERIOD = {
+        :daily    => "Day",
+        :monthly  => "Month",
+        :yearly   => "Year"
+      }
+
       OUTSTANDING = {
         :next_billing => "AddToNextBilling",
         :no_auto      => "NoAutoBill"
@@ -59,9 +65,12 @@ module PayPal
         :signature             => "SIGNATURE",
         :start_at              => "PROFILESTARTDATE",
         :token                 => "TOKEN",
+        :trial_frequency       => "TRIALBILLINGFREQUENCY",
+        :trial_length          => "TRIALTOTALBILLINGCYCLES",
+        :trial_period          => "TRIALBILLINGPERIOD",
         :transaction_id        => "TRANSACTIONID",
         :username              => "USER",
-        :version               => "VERSION",
+        :version               => "VERSION"
       }
 
       CA_FILE = File.dirname(__FILE__) + "/cacert.pem"
@@ -148,6 +157,10 @@ module PayPal
 
       def build_period(value) # :nodoc:
         PERIOD.fetch(value.to_sym, value) if value
+      end
+
+      def build_trial_period(value)
+        TRIAL_PERIOD.fetch(value.to_sym, value) if value
       end
 
       def build_start_at(value) # :nodoc:
