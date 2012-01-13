@@ -10,28 +10,37 @@ invite_user      = Privilege.create!(sys_name: 'InviteUser',        name: 'Invit
 passive_user     = Privilege.create!(sys_name: 'PassiveUser',       name: 'Passive User')
 active_user      = Privilege.create!(sys_name: 'ActiveUser',        name: 'Active User')
 
+delete_account   = Privilege.create!(sys_name: 'DeleteAccount',     name: 'Delete Account')
+
 # Application
-user_manager    = Application.create!(sys_name: 'UserManager',    sys_department: 'system')
+user_manager    = Application.create!(sys_name: 'UserManager',      sys_department: 'system')
+account_manager = Application.create!(sys_name: 'AccountManager',   sys_department: 'system')
 
 # Resources
-post_users      = Resource.create!(sys_path: 'POST/users',          sys_name: 'users/create')
-get_users       = Resource.create!(sys_path: 'GET/users',           sys_name: 'users/index')
-passive_users   = Resource.create!(sys_path: 'POST/users/passive',  sys_name: 'users/passive')
-active_users    = Resource.create!(sys_path: 'POST/users/active',   sys_name: 'users/active')
+users_post      = Resource.create!(sys_path: 'POST/users',          sys_name: 'users/create')
+users_get       = Resource.create!(sys_path: 'GET/users',           sys_name: 'users/index')
+users_passive   = Resource.create!(sys_path: 'POST/users/passive',  sys_name: 'users/passive')
+users_active    = Resource.create!(sys_path: 'POST/users/active',   sys_name: 'users/active')
 
-# Apps Resource Privileges Relation
+accounts_delete = Resource.create!(sys_path: 'DELETE/tenants',      sys_name: 'tenants/destroy')
+
+# Privileges Applications Resources Relation
 invite_user.applications << user_manager
-invite_user.resources << post_users
-invite_user.resources << get_users
+invite_user.resources    << users_post
+invite_user.resources    << users_get
 invite_user.save
 
 passive_user.applications << user_manager
-passive_user.resources << passive_users
+passive_user.resources    << users_passive
 passive_user.save
 
 active_user.applications << user_manager
-active_user.resources << active_users
+active_user.resources    << users_active
 active_user.save
+
+delete_account.applications << account_manager
+delete_account.resources    << accounts_delete
+delete_account.save
 
 # Tenants
 tenant_lab2023 = Tenant.create!(name: 'lab2023 Inc.', host: 'lab2023.kebab.local')
@@ -43,6 +52,7 @@ user_role   = Role.create!(name: 'User')
 
 # Role Privileges
 admin_role.privileges << invite_user
+admin_role.privileges << delete_account
 admin_role.save
 
 # Users
