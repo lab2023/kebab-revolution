@@ -74,8 +74,8 @@ class TenantsController < ApplicationController
   # GET/tenant/1
   def show
     @@response[:data] = Hash.new
-    @@response[:data][:current] = @current_tenant.subscription
-    @@response[:data][:older]   = @current_tenant.subscription.payments
+    @@response[:data][:next] = @current_tenant.subscription
+    @@response[:data][:older] = @current_tenant.subscription.payments
 
     render json: @@response
   end
