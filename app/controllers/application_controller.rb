@@ -240,7 +240,7 @@ class ApplicationController < ActionController::Base
   #
   # Return boolean
   def login user, password
-    if user && user.authenticate(password)
+    if user && user.passive_at == nil && user.authenticate(password)
       session[:user_id] = user.id
       session[:locale] = user.locale
       session[:acl] = acl
