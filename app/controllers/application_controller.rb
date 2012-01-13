@@ -84,7 +84,7 @@ class ApplicationController < ActionController::Base
   # Returns void, Json
   def authorize
     # KBBTODO add logging
-    unless session[:acl].include?(request.method.to_s + request.path.to_s)
+    unless session[:acl].include?(params[:controller].to_s + '.' + params[:action].to_s)
       if request.xhr?
         render json: {success: false}, status: 401
       else
@@ -170,26 +170,26 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Protected: Return users acl hash
+  # Protected: Return users acl array
   #
   # Examples
   #
   #   acl
   #   #=> {
-  #   #=>  'POST/sessions'    => 'sessions/create',
-  #   #=>  'DELETE/sessions'  => 'sessions/destroy'
+  #   #=>  'sessions/create',
+  #   #=>  'sessions/destroy'
   #   #=> }
   #
   # Returns Acl hash
   def acl
-    acl_hash = Hash.new
+    acl_array = Array.new
 
-    user_resources_raw = session[:user_id].nil? ? Hash.new : User.find(session[:user_id]).get_resources
+    user_resources_raw = session[:user_id].nil? ? Array.new : User.find(session[:user_id]).get_resources
     user_resources_raw.each do |resource|
-      acl_hash[resource.sys_path] = resource.sys_name
+      acl_array << resource.sys_name
     end
 
-    acl_hash
+    acl_array
   end
 
   # Protected: Create a credentials

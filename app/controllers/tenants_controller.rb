@@ -73,16 +73,15 @@ class TenantsController < ApplicationController
 
   # DELETE /tenants/:id
   def destroy
-    render json: request.method.to_s + request.path.to_s
-    #if is_owner session[:user_id]
-    #  @current_tenant.passive_at = Time.zone.now
-    #  @current_tenant.save
-    #  logout
-    #  render json: @@response
-    #else
-    #  add_notice 'ERR', 'only owner can delete the account'
-    #  render json: {success: false}
-    #end
+    if is_owner session[:user_id]
+      @current_tenant.passive_at = Time.zone.now
+      @current_tenant.save
+      logout
+      render json: @@response
+    else
+      add_notice 'ERR', 'only owner can delete the account'
+      render json: {success: false}
+    end
   end
 
   # GET/tenants/valid_host?host=host_name

@@ -12,6 +12,7 @@ class PagesController < ApplicationController
 
   # GET/pages/index
   def index
+    render json: session
   end
 
   # GET/pages/desktop

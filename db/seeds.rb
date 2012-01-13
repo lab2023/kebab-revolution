@@ -17,12 +17,12 @@ user_manager    = Application.create!(sys_name: 'UserManager',      sys_departme
 account_manager = Application.create!(sys_name: 'AccountManager',   sys_department: 'system')
 
 # Resources
-users_post      = Resource.create!(sys_path: 'POST/users',          sys_name: 'users/create')
-users_get       = Resource.create!(sys_path: 'GET/users',           sys_name: 'users/index')
-users_passive   = Resource.create!(sys_path: 'POST/users/passive',  sys_name: 'users/passive')
-users_active    = Resource.create!(sys_path: 'POST/users/active',   sys_name: 'users/active')
+users_post      = Resource.create!(sys_name: 'users.create')
+users_get       = Resource.create!(sys_name: 'users.index')
+users_passive   = Resource.create!(sys_name: 'users.passive')
+users_active    = Resource.create!(sys_name: 'users.active')
 
-accounts_delete = Resource.create!(sys_path: 'DELETE/tenants',      sys_name: 'tenants/destroy')
+accounts_delete = Resource.create!(sys_name: 'tenants.destroy')
 
 # Privileges Applications Resources Relation
 invite_user.applications << user_manager
