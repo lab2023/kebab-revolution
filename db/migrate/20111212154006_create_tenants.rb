@@ -10,5 +10,6 @@ class CreateTenants < ActiveRecord::Migration
 
     add_index :tenants, :name, :unique => true
     add_index :tenants, :host, :unique => true
+    add_index :tenants, :passive_at
   end
 end
