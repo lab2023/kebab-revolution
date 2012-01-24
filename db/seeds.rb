@@ -43,7 +43,7 @@ delete_account.resources    << accounts_delete
 delete_account.save
 
 # Tenants
-tenant_lab2023 = Tenant.create!(name: 'lab2023 Inc.', host: 'lab2023.kebab.local')
+tenant_lab2023 = Tenant.create!(name: 'lab2023 Inc.', host: "lab2023.#{Kebab.application_url.to_s}")
 Tenant.current = tenant_lab2023
 
 # Roles

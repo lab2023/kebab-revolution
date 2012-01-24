@@ -6,11 +6,11 @@ module KebabHelper
   end
 
   def valid_tenant_host
-    'lab2023.kebab.local'
+    "lab2023.#{Kebab.application_url.to_s}"
   end
 
   def invalid_tenant_host
-    'invalid.kebab.local'
+    "invalid.#{Kebab.application_url.to_s}"
   end
 end
 

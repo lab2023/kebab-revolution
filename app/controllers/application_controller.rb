@@ -196,8 +196,8 @@ class ApplicationController < ActionController::Base
   def paypal_credential plan
     @plan = plan
     ppr = PayPal::Recurring.new({
-                                    :return_url   => "http://www.kebab.local/register",
-                                    :cancel_url   => "http://www.kebab.local/paypal_cancel",
+                                    :return_url   => "http://www.#{Kebab.application_url.to_s}/register",
+                                    :cancel_url   => "http://www.#{Kebab.application_url.to_s}/paypal_cancel",
                                     :description  => "#{@plan.name}" + " - Monthly Subscription",
                                     :amount       => "#{@plan.price}" + ".00",
                                     :currency     => "USD"
@@ -262,9 +262,14 @@ class ApplicationController < ActionController::Base
   end
 
   # Protected: bootstrap
+  #
+  # tenant  boolean
+  #
+  # Return hash
   def bootstrap tenant = true
     bootstrap_hash = Hash.new
-    bootstrap_hash['root'] = 'http://static.kebab.local'
+    # KBBTODO get application name from config file.
+    bootstrap_hash['root'] = "http://static.#{Kebab.application_url.to_s}"
     bootstrap_hash[request_forgery_protection_token] = form_authenticity_token
     bootstrap_hash['tenant'] = Tenant.select('id, host, name').find_by_host!(request.host) if tenant
     bootstrap_hash['locale'] = {default_locale: I18n.locale, available_locales: I18n.available_locales}
