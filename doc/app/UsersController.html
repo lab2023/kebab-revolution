@@ -244,7 +244,7 @@
     <span class="ruby-ivar">@new_user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">user_hash</span>)
     <span class="ruby-ivar">@new_user</span>.<span class="ruby-identifier">roles</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Role</span>.<span class="ruby-identifier">find_by_name</span>(<span class="ruby-string">'User'</span>)
     <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">reach_user_limit?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@new_user</span>.<span class="ruby-identifier">save</span>
-      <span class="ruby-comment"># KBBTODO delay job integration</span>
+      <span class="ruby-comment"># KBBTODO #75 delay job integration</span>
       <span class="ruby-constant">UserMailer</span>.<span class="ruby-identifier">invite</span>(<span class="ruby-ivar">@new_user</span>).<span class="ruby-identifier">deliver</span>
       <span class="ruby-identifier">@@status</span> = <span class="ruby-value">:created</span>
     <span class="ruby-keyword">else</span>

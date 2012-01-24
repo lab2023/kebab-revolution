@@ -189,6 +189,7 @@
   <span class="ruby-identifier">subject</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:subject</span>]
   <span class="ruby-identifier">body</span>    = <span class="ruby-identifier">params</span>[<span class="ruby-value">:body</span>]
   <span class="ruby-identifier">user</span>    = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>])
+  <span class="ruby-comment"># KBBTODO #75 use delay jobs</span>
   <span class="ruby-constant">UserMailer</span>.<span class="ruby-identifier">send_feedback</span>(<span class="ruby-identifier">user</span>, <span class="ruby-identifier">subject</span>, <span class="ruby-identifier">body</span>).<span class="ruby-identifier">deliver</span>
   <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>
 <span class="ruby-keyword">end</span></pre>

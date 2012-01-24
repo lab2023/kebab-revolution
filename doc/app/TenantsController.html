@@ -185,12 +185,12 @@
 
         <div class="method-description">
           
-          <p>POST/tenants KBBTODO move all delete code to tenantsdelete private method</p>
+          <p>POST/tenants</p>
           
 
           
           <div class="method-source-code" id="create-source">
-            <pre><span class="ruby-comment"># File app/controllers/tenants_controller.rb, line 15</span>
+            <pre><span class="ruby-comment"># File app/controllers/tenants_controller.rb, line 14</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
 
   <span class="ruby-constant">Tenant</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
@@ -224,7 +224,7 @@
         <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">next_payment_date</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">zone</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>.<span class="ruby-identifier">months</span>
 
         <span class="ruby-keyword">if</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">save</span>
-          <span class="ruby-comment"># KBBTODO use delay job for sending mail in future</span>
+          <span class="ruby-comment"># KBBTODO #75 use delay job for sending mail in future</span>
           <span class="ruby-constant">TenantMailer</span>.<span class="ruby-identifier">create_tenant</span>(<span class="ruby-ivar">@user</span>, <span class="ruby-ivar">@tenant</span>, <span class="ruby-ivar">@subscription</span>).<span class="ruby-identifier">deliver</span>
           <span class="ruby-identifier">login</span> <span class="ruby-ivar">@user</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:user</span>][<span class="ruby-value">:password</span>]
           <span class="ruby-identifier">status</span> = <span class="ruby-value">:created</span>
@@ -270,7 +270,8 @@
 
         <div class="method-description">
           
-          <p>DELETE/tenants/:id</p>
+          <p>DELETE/tenants/:id KBBTODO move all delete code to tenantsdelete private
+method</p>
           
 
           
@@ -313,7 +314,7 @@
 
           
           <div class="method-source-code" id="show-source">
-            <pre><span class="ruby-comment"># File app/controllers/tenants_controller.rb, line 75</span>
+            <pre><span class="ruby-comment"># File app/controllers/tenants_controller.rb, line 74</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>
   <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:data</span>] = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
   <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:data</span>][<span class="ruby-value">:next</span>] = <span class="ruby-ivar">@current_tenant</span>.<span class="ruby-identifier">subscription</span>
@@ -342,8 +343,8 @@
 
         <div class="method-description">
           
-          <p>GET/tenants/valid_host?host=host_name KBBTODO set invalid tenant from one
-place</p>
+          <p>GET/tenants/valid_host?host=host_name KBBTODO #64 set invalid tenant from
+one place</p>
           
 
           
