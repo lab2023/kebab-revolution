@@ -11,7 +11,6 @@ class TenantsController < ApplicationController
   skip_before_filter  :authenticate
 
   # POST/tenants
-  # KBBTODO move all delete code to tenants#delete private method
   def create
 
     Tenant.transaction do
@@ -45,7 +44,7 @@ class TenantsController < ApplicationController
           @subscription.next_payment_date = Time.zone.now + 1.months
 
           if @subscription.save
-            # KBBTODO use delay job for sending mail in future
+            # KBBTODO #75 use delay job for sending mail in future
             TenantMailer.create_tenant(@user, @tenant, @subscription).deliver
             login @user, params[:user][:password]
             status = :created
@@ -81,6 +80,7 @@ class TenantsController < ApplicationController
   end
 
   # DELETE/tenants/:id
+  # KBBTODO move all delete code to tenants#delete private method
   def destroy
     if is_owner session[:user_id]
       @current_tenant.passive_at = Time.zone.now
@@ -94,7 +94,7 @@ class TenantsController < ApplicationController
   end
 
   # GET/tenants/valid_host?host=host_name
-  # KBBTODO set invalid tenant from one place
+  # KBBTODO #64 set invalid tenant from one place
   def valid_host
     if Tenant.find_by_host(params[:host]) != nil \
        || %w(www help support api apps status blog lab2023 static).include?(params[:host].split('.').first) \

@@ -13,6 +13,7 @@ class FeedbackController < ApplicationController
     subject = params[:subject]
     body    = params[:body]
     user    = User.find(session[:user_id])
+    # KBBTODO #75 use delay jobs
     UserMailer.send_feedback(user, subject, body).deliver
     render json: @@response
   end

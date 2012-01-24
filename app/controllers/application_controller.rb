@@ -6,6 +6,7 @@
 
 # Application Controller
 class ApplicationController < ActionController::Base
+  # KBBTODO #92 solve protect_from_forget problem
   #protect_from_forgery
 
   around_filter :tenant
@@ -23,7 +24,6 @@ class ApplicationController < ActionController::Base
 
   attr_reader :current_tenant
 
-  # KBBTODO
   # Protected:
   # attr_reader :current_tenant
 
@@ -62,7 +62,7 @@ class ApplicationController < ActionController::Base
   #
   # Returns void, Json
   def authenticate
-    # KBBTODO add logging
+    # KBBTODO #93 add logging
     unless session[:user_id]
       if request.xhr?
         render json: {success: false}, status: 403
@@ -80,10 +80,10 @@ class ApplicationController < ActionController::Base
   #   # => {success: false} # status 401
   #   # => nil
   #
-  # KBBTODO add logging
+  # KBBTODO #93  add logging
   # Returns void, Json
   def authorize
-    # KBBTODO add logging
+    # KBBTODO #93  add logging
     unless session[:acl].include?(params[:controller].to_s + '.' + params[:action].to_s)
       if request.xhr?
         render json: {success: false}, status: 401
@@ -268,7 +268,6 @@ class ApplicationController < ActionController::Base
   # Return hash
   def bootstrap tenant = true
     bootstrap_hash = Hash.new
-    # KBBTODO get application name from config file.
     bootstrap_hash['root'] = "http://static.#{Kebab.application_url.to_s}"
     bootstrap_hash[request_forgery_protection_token] = form_authenticity_token
     bootstrap_hash['tenant'] = Tenant.select('id, host, name').find_by_host!(request.host) if tenant

@@ -10,7 +10,7 @@ class PasswordsController < ApplicationController
   skip_before_filter :authorize
 
   # POST/passwords
-  # KBBTODO send activation for forget password
+  # KBBTODO #62 send activation for forget password
   def create
     @user = User.find_by_email(params[:email])
     new_password = rand(10000000000000).floor.to_s(36)
