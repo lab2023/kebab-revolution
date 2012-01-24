@@ -2,6 +2,7 @@ namespace :kebab do
   desc 'Daily task that will handle subscriptions'
   task :notifier => :environment do
 
+    # Rescue the exception and write log file. Other way process is stopped.
     def exception_catcher
       begin
         yield
