@@ -15,6 +15,9 @@ end
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
 
+# Paypal Gem
+gem "paypal-recurring", :git => "git@github.com:onurozgurozkan/paypal-recurring.git", :tag => "v0.1.6"
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

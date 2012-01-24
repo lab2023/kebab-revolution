@@ -1,5 +1,3 @@
-require "paypal/recurring"
-
 PayPal::Recurring.configure do |config|
   config.sandbox   = true
   config.username  = "seller_1325467709_biz_api1.lab2023.com"
