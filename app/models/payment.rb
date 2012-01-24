@@ -16,6 +16,7 @@ class Payment < ActiveRecord::Base
 
   before_validation :set_invoice_no
 
+  # Set Invoice No
   def set_invoice_no
     self.invoice_no = Payment.last.nil? ? Kebab.invoice_no : Payment.last.invoice_no.to_i + 1
   end

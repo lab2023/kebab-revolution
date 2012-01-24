@@ -188,7 +188,7 @@
 
           
           <div class="method-source-code" id="find_finished_trials-source">
-            <pre><span class="ruby-comment"># File app/models/subscription.rb, line 32</span>
+            <pre><span class="ruby-comment"># File app/models/subscription.rb, line 37</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_finished_trials</span>
   <span class="ruby-identifier">notifier</span>.<span class="ruby-identifier">without_recurring_profile</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;next_payment_date &lt; ?&quot;</span>, <span class="ruby-value">1</span>.<span class="ruby-identifier">days</span>.<span class="ruby-identifier">ago</span>.<span class="ruby-identifier">end_of_day</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -213,12 +213,16 @@
 
         <div class="method-description">
           
-          
+          <p>Find payment Failures</p>
+
+<p>next_payment_date Date</p>
+
+<p>Return Collection</p>
           
 
           
           <div class="method-source-code" id="find_payment_failures-source">
-            <pre><span class="ruby-comment"># File app/models/subscription.rb, line 36</span>
+            <pre><span class="ruby-comment"># File app/models/subscription.rb, line 46</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_payment_failures</span>(<span class="ruby-identifier">next_payment_date</span> = <span class="ruby-value">10</span>.<span class="ruby-identifier">days</span>.<span class="ruby-identifier">ago</span>)
   <span class="ruby-identifier">notifier</span>.<span class="ruby-identifier">with_recurring_profile</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;next_payment_date &lt; ?&quot;</span>, <span class="ruby-identifier">next_payment_date</span>.<span class="ruby-identifier">end_of_day</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -243,12 +247,16 @@
 
         <div class="method-description">
           
-          
+          <p>Find trials subscription without recurring profile</p>
+
+<p>next_payment_date Date</p>
+
+<p>Return Collection</p>
           
 
           
           <div class="method-source-code" id="find_trials_without_recurring_profile-source">
-            <pre><span class="ruby-comment"># File app/models/subscription.rb, line 27</span>
+            <pre><span class="ruby-comment"># File app/models/subscription.rb, line 32</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_trials_without_recurring_profile</span>(<span class="ruby-identifier">next_payment_date</span> = <span class="ruby-value">10</span>.<span class="ruby-identifier">days</span>.<span class="ruby-identifier">from_now</span>)
   <span class="ruby-identifier">notifier</span>.<span class="ruby-identifier">without_recurring_profile</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;next_payment_date &gt; ? AND next_payment_date &lt; ?&quot;</span>, <span class="ruby-identifier">next_payment_date</span>.<span class="ruby-identifier">beginning_of_day</span>, <span class="ruby-identifier">next_payment_date</span>.<span class="ruby-identifier">end_of_day</span>)
 <span class="ruby-keyword">end</span></pre>

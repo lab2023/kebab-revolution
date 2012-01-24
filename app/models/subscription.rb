@@ -24,6 +24,11 @@ class Subscription < ActiveRecord::Base
   scope :notifier,                  commercial.joins(:user, :plan, :tenant).where("tenants.passive_at IS NULL ") \
                                     .select("tenants.id as tenant_id, users.email, users.name as user_name, users.locale, subscriptions.price, subscriptions.next_payment_date, plans.name as plan_name")
 
+  # Find trials subscription without recurring profile
+  #
+  # next_payment_date Date
+  #
+  # Return Collection
   def self.find_trials_without_recurring_profile(next_payment_date = 10.days.from_now)
     notifier.without_recurring_profile.where("next_payment_date > ? AND next_payment_date < ?", next_payment_date.beginning_of_day, next_payment_date.end_of_day)
   end
@@ -33,6 +38,11 @@ class Subscription < ActiveRecord::Base
     notifier.without_recurring_profile.where("next_payment_date < ?", 1.days.ago.end_of_day)
   end
 
+  # Find payment Failures
+  #
+  # next_payment_date Date
+  #
+  # Return Collection
   def self.find_payment_failures(next_payment_date = 10.days.ago)
     notifier.with_recurring_profile.where("next_payment_date < ?", next_payment_date.end_of_day)
   end
