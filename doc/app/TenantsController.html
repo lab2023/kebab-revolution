@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
-<title>Class: TenantsController</title>
+<title>class TenantsController - Rails Application Documentation</title>
 
 <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
@@ -72,6 +72,10 @@
     
     <li><a href="#method-i-create">#create</a>
     
+    <li><a href="#method-i-destroy">#destroy</a>
+    
+    <li><a href="#method-i-show">#show</a>
+    
     <li><a href="#method-i-valid_host">#valid_host</a>
     
   </ul>
@@ -95,39 +99,15 @@
 
   <ul class="link-list">
   
-    <li><a href="./PayPal.html">PayPal</a>
-  
-    <li><a href="./PayPal/Recurring.html">PayPal::Recurring</a>
-  
-    <li><a href="./PayPal/Recurring/Base.html">PayPal::Recurring::Base</a>
-  
-    <li><a href="./PayPal/Recurring/Notification.html">PayPal::Recurring::Notification</a>
-  
-    <li><a href="./PayPal/Recurring/Request.html">PayPal::Recurring::Request</a>
-  
-    <li><a href="./PayPal/Recurring/Response.html">PayPal::Recurring::Response</a>
-  
-    <li><a href="./PayPal/Recurring/Response/Base.html">PayPal::Recurring::Response::Base</a>
-  
-    <li><a href="./PayPal/Recurring/Response/Checkout.html">PayPal::Recurring::Response::Checkout</a>
-  
-    <li><a href="./PayPal/Recurring/Response/Details.html">PayPal::Recurring::Response::Details</a>
-  
-    <li><a href="./PayPal/Recurring/Response/ManageProfile.html">PayPal::Recurring::Response::ManageProfile</a>
-  
-    <li><a href="./PayPal/Recurring/Response/Payment.html">PayPal::Recurring::Response::Payment</a>
-  
-    <li><a href="./PayPal/Recurring/Response/Profile.html">PayPal::Recurring::Response::Profile</a>
-  
-    <li><a href="./PayPal/Recurring/Utils.html">PayPal::Recurring::Utils</a>
-  
-    <li><a href="./PayPal/Recurring/Version.html">PayPal::Recurring::Version</a>
-  
     <li><a href="./Application.html">Application</a>
   
     <li><a href="./ApplicationController.html">ApplicationController</a>
   
     <li><a href="./FeedbackController.html">FeedbackController</a>
+  
+    <li><a href="./Kebab.html">Kebab</a>
+  
+    <li><a href="./NotifierMailer.html">NotifierMailer</a>
   
     <li><a href="./PagesController.html">PagesController</a>
   
@@ -279,6 +259,78 @@
       </div><!-- create-method -->
 
     
+      <div id="method-i-destroy" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">destroy</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>DELETE/tenants/:id</p>
+          
+
+          
+          <div class="method-source-code" id="destroy-source">
+            <pre><span class="ruby-comment"># File app/controllers/tenants_controller.rb, line 84</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_owner</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>]
+    <span class="ruby-ivar">@current_tenant</span>.<span class="ruby-identifier">passive_at</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">zone</span>.<span class="ruby-identifier">now</span>
+    <span class="ruby-ivar">@current_tenant</span>.<span class="ruby-identifier">save</span>
+    <span class="ruby-identifier">logout</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">add_notice</span> <span class="ruby-string">'ERR'</span>, <span class="ruby-string">'only owner can delete the account'</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">success</span><span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- destroy-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- destroy-method -->
+
+    
+      <div id="method-i-show" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">show</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>GET/tenant/1</p>
+          
+
+          
+          <div class="method-source-code" id="show-source">
+            <pre><span class="ruby-comment"># File app/controllers/tenants_controller.rb, line 75</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>
+  <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:data</span>] = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:data</span>][<span class="ruby-value">:next</span>] = <span class="ruby-ivar">@current_tenant</span>.<span class="ruby-identifier">subscription</span>
+  <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:data</span>][<span class="ruby-value">:older</span>] = <span class="ruby-ivar">@current_tenant</span>.<span class="ruby-identifier">subscription</span>.<span class="ruby-identifier">payments</span>
+
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- show-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- show-method -->
+
+    
       <div id="method-i-valid_host" class="method-detail ">
         
         <div class="method-heading">
@@ -296,7 +348,7 @@ place</p>
 
           
           <div class="method-source-code" id="valid_host-source">
-            <pre><span class="ruby-comment"># File app/controllers/tenants_controller.rb, line 76</span>
+            <pre><span class="ruby-comment"># File app/controllers/tenants_controller.rb, line 98</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">valid_host</span>
   <span class="ruby-keyword">if</span> <span class="ruby-constant">Tenant</span>.<span class="ruby-identifier">find_by_host</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:host</span>]) <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>         <span class="ruby-operator">||</span> <span class="ruby-node">%w(www help support api apps status blog lab2023 static)</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:host</span>].<span class="ruby-identifier">split</span>(<span class="ruby-string">'.'</span>).<span class="ruby-identifier">first</span>)         <span class="ruby-operator">||</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:host</span>].<span class="ruby-identifier">split</span>(<span class="ruby-string">'.'</span>).<span class="ruby-identifier">count</span> <span class="ruby-operator">!=</span> <span class="ruby-value">3</span>
     <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">success</span><span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>}
@@ -323,7 +375,7 @@ place</p>
 
 <footer id="validator-badges">
   <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
-  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.11.
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
   <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
 </footer>
 

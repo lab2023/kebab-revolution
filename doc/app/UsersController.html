@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
-<title>Class: UsersController</title>
+<title>class UsersController - Rails Application Documentation</title>
 
 <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
@@ -70,9 +70,17 @@
 
   <ul class="link-list">
     
-    <li><a href="#method-i-get_profile">#get_profile</a>
+    <li><a href="#method-i-active">#active</a>
     
-    <li><a href="#method-i-update_profile">#update_profile</a>
+    <li><a href="#method-i-create">#create</a>
+    
+    <li><a href="#method-i-index">#index</a>
+    
+    <li><a href="#method-i-passive">#passive</a>
+    
+    <li><a href="#method-i-show">#show</a>
+    
+    <li><a href="#method-i-update">#update</a>
     
   </ul>
 </nav>
@@ -95,39 +103,15 @@
 
   <ul class="link-list">
   
-    <li><a href="./PayPal.html">PayPal</a>
-  
-    <li><a href="./PayPal/Recurring.html">PayPal::Recurring</a>
-  
-    <li><a href="./PayPal/Recurring/Base.html">PayPal::Recurring::Base</a>
-  
-    <li><a href="./PayPal/Recurring/Notification.html">PayPal::Recurring::Notification</a>
-  
-    <li><a href="./PayPal/Recurring/Request.html">PayPal::Recurring::Request</a>
-  
-    <li><a href="./PayPal/Recurring/Response.html">PayPal::Recurring::Response</a>
-  
-    <li><a href="./PayPal/Recurring/Response/Base.html">PayPal::Recurring::Response::Base</a>
-  
-    <li><a href="./PayPal/Recurring/Response/Checkout.html">PayPal::Recurring::Response::Checkout</a>
-  
-    <li><a href="./PayPal/Recurring/Response/Details.html">PayPal::Recurring::Response::Details</a>
-  
-    <li><a href="./PayPal/Recurring/Response/ManageProfile.html">PayPal::Recurring::Response::ManageProfile</a>
-  
-    <li><a href="./PayPal/Recurring/Response/Payment.html">PayPal::Recurring::Response::Payment</a>
-  
-    <li><a href="./PayPal/Recurring/Response/Profile.html">PayPal::Recurring::Response::Profile</a>
-  
-    <li><a href="./PayPal/Recurring/Utils.html">PayPal::Recurring::Utils</a>
-  
-    <li><a href="./PayPal/Recurring/Version.html">PayPal::Recurring::Version</a>
-  
     <li><a href="./Application.html">Application</a>
   
     <li><a href="./ApplicationController.html">ApplicationController</a>
   
     <li><a href="./FeedbackController.html">FeedbackController</a>
+  
+    <li><a href="./Kebab.html">Kebab</a>
+  
+    <li><a href="./NotifierMailer.html">NotifierMailer</a>
   
     <li><a href="./PagesController.html">PagesController</a>
   
@@ -194,10 +178,10 @@
       <h3 class="section-header">Public Instance Methods</h3>
 
     
-      <div id="method-i-get_profile" class="method-detail ">
+      <div id="method-i-active" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">get_profile</span><span
+          <span class="method-name">active</span><span
             class="method-args">()</span>
           <span class="method-click-advice">click to toggle source</span>
         </div>
@@ -205,30 +189,34 @@
 
         <div class="method-description">
           
-          <p>GET/users/get_profile</p>
+          <p>POST/users/active</p>
           
 
           
-          <div class="method-source-code" id="get_profile-source">
-            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 23</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_profile</span>
-  <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:data</span>] = <span class="ruby-constant">User</span>.<span class="ruby-identifier">select</span>(<span class="ruby-string">&quot;email, name, locale, time_zone&quot;</span>).<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>])
-  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>
+          <div class="method-source-code" id="active-source">
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 70</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">active</span>
+  <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_owner</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">update_attribute</span>(<span class="ruby-value">:passive_at</span>, <span class="ruby-keyword">nil</span>)
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">success</span><span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>}
+  <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- get_profile-source -->
+          </div><!-- active-source -->
           
         </div>
 
         
 
         
-      </div><!-- get_profile-method -->
+      </div><!-- active-method -->
 
     
-      <div id="method-i-update_profile" class="method-detail ">
+      <div id="method-i-create" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">update_profile</span><span
+          <span class="method-name">create</span><span
             class="method-args">()</span>
           <span class="method-click-advice">click to toggle source</span>
         </div>
@@ -236,29 +224,186 @@
 
         <div class="method-description">
           
-          <p>POST/users/update_profile</p>
+          <p>POST/users</p>
           
 
           
-          <div class="method-source-code" id="update_profile-source">
+          <div class="method-source-code" id="create-source">
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
+  <span class="ruby-identifier">user_hash</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">user_hash</span>[<span class="ruby-value">:email</span>]     = <span class="ruby-identifier">params</span>[<span class="ruby-value">:email</span>]
+  <span class="ruby-identifier">user_hash</span>[<span class="ruby-value">:name</span>]      = <span class="ruby-identifier">params</span>[<span class="ruby-value">:name</span>]
+  <span class="ruby-identifier">user_hash</span>[<span class="ruby-value">:locale</span>]    = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-identifier">user_hash</span>[<span class="ruby-value">:time_zone</span>] = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">zone</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">slice</span>(<span class="ruby-value">12</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>)
+  <span class="ruby-identifier">new_password</span> = <span class="ruby-identifier">rand</span>(<span class="ruby-value">10000000000000</span>).<span class="ruby-identifier">floor</span>.<span class="ruby-identifier">to_s</span>(<span class="ruby-value">36</span>)
+  <span class="ruby-identifier">user_hash</span>[<span class="ruby-value">:password</span>]  = <span class="ruby-identifier">new_password</span>
+  <span class="ruby-identifier">user_hash</span>[<span class="ruby-value">:password_confirmation</span>] = <span class="ruby-identifier">new_password</span>
+
+  <span class="ruby-constant">User</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-ivar">@new_user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">user_hash</span>)
+    <span class="ruby-ivar">@new_user</span>.<span class="ruby-identifier">roles</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Role</span>.<span class="ruby-identifier">find_by_name</span>(<span class="ruby-string">'User'</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">reach_user_limit?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@new_user</span>.<span class="ruby-identifier">save</span>
+      <span class="ruby-comment"># KBBTODO delay job integration</span>
+      <span class="ruby-constant">UserMailer</span>.<span class="ruby-identifier">invite</span>(<span class="ruby-ivar">@new_user</span>).<span class="ruby-identifier">deliver</span>
+      <span class="ruby-identifier">@@status</span> = <span class="ruby-value">:created</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:success</span>] = <span class="ruby-ivar">@new_user</span>.<span class="ruby-identifier">errors</span>
+      <span class="ruby-identifier">@@status</span> = <span class="ruby-value">:unprocessable_entity</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>, <span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@status</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- create-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- create-method -->
+
+    
+      <div id="method-i-index" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">index</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>GET/users</p>
+          
+
+          
+          <div class="method-source-code" id="index-source">
             <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 12</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">update_profile</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
+  <span class="ruby-identifier">owner_id</span> =  <span class="ruby-constant">User</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">current_tenant</span>.<span class="ruby-identifier">subscription</span>.<span class="ruby-identifier">user_id</span>)
+  <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:data</span>] = <span class="ruby-constant">User</span>.<span class="ruby-identifier">select</span>(<span class="ruby-string">&quot;id, email, name, locale, time_zone, passive_at&quot;</span>).<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;id != ?&quot;</span>, <span class="ruby-identifier">owner_id</span>).<span class="ruby-identifier">all</span>
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- index-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- index-method -->
+
+    
+      <div id="method-i-passive" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">passive</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>POST/users/passive</p>
+          
+
+          
+          <div class="method-source-code" id="passive-source">
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 81</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">passive</span>
+  <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_owner</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">update_attribute</span>(<span class="ruby-value">:passive_at</span>, <span class="ruby-constant">Time</span>.<span class="ruby-identifier">zone</span>.<span class="ruby-identifier">now</span>)
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">success</span><span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- passive-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- passive-method -->
+
+    
+      <div id="method-i-show" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">show</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>GET/users/:id</p>
+          
+
+          
+          <div class="method-source-code" id="show-source">
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 19</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>
+  <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:data</span>] = <span class="ruby-constant">User</span>.<span class="ruby-identifier">select</span>(<span class="ruby-string">&quot;id, email, name, locale, time_zone, passive_at&quot;</span>).<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- show-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- show-method -->
+
+    
+      <div id="method-i-update" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">update</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>PUT/users/</p>
+          
+
+          
+          <div class="method-source-code" id="update-source">
+            <pre><span class="ruby-comment"># File app/controllers/users_controller.rb, line 52</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>
+  <span class="ruby-identifier">user</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">user</span>[<span class="ruby-value">:email</span>]     = <span class="ruby-identifier">params</span>[<span class="ruby-value">:email</span>]     <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:email</span>]
+  <span class="ruby-identifier">user</span>[<span class="ruby-value">:name</span>]      = <span class="ruby-identifier">params</span>[<span class="ruby-value">:name</span>]      <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:name</span>]
+  <span class="ruby-identifier">user</span>[<span class="ruby-value">:locale</span>]    = <span class="ruby-identifier">params</span>[<span class="ruby-value">:locale</span>]    <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:locale</span>]
+  <span class="ruby-identifier">user</span>[<span class="ruby-value">:time_zone</span>] = <span class="ruby-identifier">params</span>[<span class="ruby-value">:time_zone</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:time_zone</span>]
+
   <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>])
-  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">update_attributes</span>({<span class="ruby-identifier">email</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:email</span>], <span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:name</span>], <span class="ruby-identifier">locale</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:locale</span>], <span class="ruby-identifier">time_zone</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:time_zone</span>]})
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">user</span>)
+    <span class="ruby-identifier">session</span>[<span class="ruby-value">:locale</span>] = <span class="ruby-identifier">params</span>[<span class="ruby-value">:locale</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:locale</span>]
     <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>
   <span class="ruby-keyword">else</span>
     <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:error</span>] = <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span>, <span class="ruby-identifier">m</span><span class="ruby-operator">|</span> <span class="ruby-identifier">add_error</span> <span class="ruby-identifier">a</span>, <span class="ruby-identifier">m</span>}
     <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- update_profile-source -->
+          </div><!-- update-source -->
           
         </div>
 
         
 
         
-      </div><!-- update_profile-method -->
+      </div><!-- update-method -->
 
     
     </section><!-- public-instance-method-details -->
@@ -270,7 +415,7 @@
 
 <footer id="validator-badges">
   <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
-  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.11.
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
   <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
 </footer>
 
