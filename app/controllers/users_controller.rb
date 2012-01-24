@@ -69,7 +69,7 @@ class UsersController < ApplicationController
   #POST/users/active
   def active
     @user = User.find(params[:id])
-    if is_owner params[:id] && @user.update_attribute(:passive_at, nil)
+    if !reach_user_limit? && @new_user.save && is_owner(params[:id]) && @user.update_attribute(:passive_at, nil)
       render json: @@response
     else
       render json: {success: false}
