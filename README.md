@@ -29,10 +29,9 @@ We use ExtJs 4.0 for client and Ror 3.1.3 for server.
 * 85 - DONE - Improve multitenant system
 * 84 - DONE - Passive user can not login
 * 79 - DONE - See older and next payments info
-* 73 - Add SubscriptionNotifier
+* 73 - DONE - Add SubscriptionNotifier
 * 55 - Paypal integration
-* 60 - Added options for trial period for paypal
-* 69 - Invoice no problem
+* 69 - DONE - Invoice no problem
 * 78 - Update plan
 
 ## 2.0.0.alpha5 - 2012.01.11
