@@ -6,6 +6,10 @@ KebabServerRor::Application.routes.draw do
   match 'plans'             => 'pages#plans'
   match 'register'          => 'pages#register'
 
+  get 'pages/paypal_recurring_payment_success'
+  get 'pages/paypal_recurring_payment_failed'
+  get 'pages/paypal_credential'
+
   resources :sessions
   resources :passwords
   resources :feedback

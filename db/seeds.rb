@@ -10,7 +10,7 @@ invite_user      = Privilege.create!(sys_name: 'InviteUser',        name: 'Invit
 passive_user     = Privilege.create!(sys_name: 'PassiveUser',       name: 'Passive User')
 active_user      = Privilege.create!(sys_name: 'ActiveUser',        name: 'Active User')
 
-delete_account   = Privilege.create!(sys_name: 'DeleteAccount',     name: 'Delete Account')
+manage_account   = Privilege.create!(sys_name: 'ManageAccount',     name: 'Manage Account')
 
 # Application
 user_manager    = Application.create!(sys_name: 'UserManager',      sys_department: 'system')
@@ -22,7 +22,10 @@ users_get       = Resource.create!(sys_name: 'users.index')
 users_passive   = Resource.create!(sys_name: 'users.passive')
 users_active    = Resource.create!(sys_name: 'users.active')
 
-accounts_delete = Resource.create!(sys_name: 'tenants.destroy')
+accounts_delete   = Resource.create!(sys_name: 'tenants.destroy')                        # Delete account
+payment_success   = Resource.create!(sys_name: 'pages.paypal_recurring_payment_success') # Paypal success recurring payment return page
+payment_failed    = Resource.create!(sys_name: 'pages.paypal_recurring_payment_failed')  # Paypal failed  recurring payment return page
+paypal_credential = Resource.create!(sys_name: 'pages.paypal_credential')                # Paypal paypal_credential ajax
 
 # Privileges Applications Resources Relation
 invite_user.applications << user_manager
@@ -38,9 +41,12 @@ active_user.applications << user_manager
 active_user.resources    << users_active
 active_user.save
 
-delete_account.applications << account_manager
-delete_account.resources    << accounts_delete
-delete_account.save
+manage_account.applications << account_manager
+manage_account.resources    << accounts_delete
+manage_account.resources    << payment_failed
+manage_account.resources    << payment_success
+manage_account.resources    << paypal_credential
+manage_account.save
 
 # Tenants
 tenant_lab2023 = Tenant.create!(name: 'lab2023 Inc.', host: "lab2023.#{Kebab.application_url.to_s}")
@@ -52,7 +58,7 @@ user_role   = Role.create!(name: 'User')
 
 # Role Privileges
 admin_role.privileges << invite_user
-admin_role.privileges << delete_account
+admin_role.privileges << manage_account
 admin_role.save
 
 # Users
@@ -69,4 +75,5 @@ tayfun.roles << user_role
 tayfun.save
 
 # Subscription
-subscription_lab2023 = Subscription.create!(plan_id: 1, tenant_id: 1, user_id: 1, price: 0, payment_period: 1, next_payment_date: Time.zone.now + 1.months)
+plan_2 = Plan.find(2)
+subscription_lab2023 = Subscription.create!(plan_id: plan_2.id, tenant_id: 1, user_id: 1, price: plan_2.price, payment_period: 1, next_payment_date: Time.zone.now + 1.months)
