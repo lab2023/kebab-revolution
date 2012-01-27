@@ -76,7 +76,6 @@ class UsersController < ApplicationController
     end
   end
 
-
   #POST/users/passive
   def passive
     @user = User.find(params[:id])
