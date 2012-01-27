@@ -4,7 +4,6 @@ class CreatePayments < ActiveRecord::Migration
       t.references  :subscription
       t.decimal     :price, :precision => 6, :scale => 2
       t.datetime    :payment_date
-      t.string      :paypal_recurring_payment_profile_token
       t.string      :invoice_no
       t.string      :transaction_id
 

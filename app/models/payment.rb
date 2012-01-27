@@ -12,7 +12,6 @@ class Payment < ActiveRecord::Base
   validates  :price,                                  :presence => true
   validates  :payment_date,                           :presence => true
   validates  :invoice_no,                             :presence => true
-  validates  :paypal_recurring_payment_profile_token, :presence => true
 
   before_validation :set_invoice_no
 
