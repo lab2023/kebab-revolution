@@ -6,9 +6,11 @@ KebabServerRor::Application.routes.draw do
   match 'plans'             => 'pages#plans'
   match 'register'          => 'pages#register'
 
-  get 'pages/paypal_recurring_payment_success'
-  get 'pages/paypal_recurring_payment_failed'
-  get 'pages/paypal_credential'
+  get 'subscriptions/paypal_recurring_payment_success'
+  get 'subscriptions/paypal_recurring_payment_failed'
+  get 'subscriptions/paypal_credential'
+  get 'subscriptions/next_subscription'
+  get 'subscriptions/payments'
 
   resources :sessions
   resources :passwords
@@ -24,5 +26,6 @@ KebabServerRor::Application.routes.draw do
     get :tests
   end
 
+  # KBBTODO #97
   root to: "pages#index"
 end

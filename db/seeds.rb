@@ -22,10 +22,12 @@ users_get       = Resource.create!(sys_name: 'users.index')
 users_passive   = Resource.create!(sys_name: 'users.passive')
 users_active    = Resource.create!(sys_name: 'users.active')
 
-accounts_delete   = Resource.create!(sys_name: 'tenants.destroy')                        # Delete account
-payment_success   = Resource.create!(sys_name: 'pages.paypal_recurring_payment_success') # Paypal success recurring payment return page
-payment_failed    = Resource.create!(sys_name: 'pages.paypal_recurring_payment_failed')  # Paypal failed  recurring payment return page
-paypal_credential = Resource.create!(sys_name: 'pages.paypal_credential')                # Paypal paypal_credential ajax
+accounts_delete         = Resource.create!(sys_name: 'tenants.destroy')                                # Delete account
+paypal_payment_success  = Resource.create!(sys_name: 'subscriptions.paypal_recurring_payment_success') # Paypal success recurring payment return page
+paypal_payment_failed   = Resource.create!(sys_name: 'subscriptions.paypal_recurring_payment_failed')  # Paypal failed  recurring payment return page
+paypal_credential       = Resource.create!(sys_name: 'subscriptions.paypal_credential')                # Paypal paypal_credential ajax
+next_subscription       = Resource.create!(sys_name: 'subscriptions.next_subscription')                # Next subscription
+payments                = Resource.create!(sys_name: 'subscriptions.payments')                         # All payments
 
 # Privileges Applications Resources Relation
 invite_user.applications << user_manager
@@ -43,9 +45,11 @@ active_user.save
 
 manage_account.applications << account_manager
 manage_account.resources    << accounts_delete
-manage_account.resources    << payment_failed
-manage_account.resources    << payment_success
+manage_account.resources    << paypal_payment_failed
+manage_account.resources    << paypal_payment_success
 manage_account.resources    << paypal_credential
+manage_account.resources    << next_subscription
+manage_account.resources    << payments
 manage_account.save
 
 # Tenants
