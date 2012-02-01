@@ -5,6 +5,7 @@ class CreateSubscriptions < ActiveRecord::Migration
       t.references  :tenant
       t.references  :user
       t.decimal     :price, :precision => 6, :scale => 2
+      t.integer     :user_limit
       t.integer     :payment_period
       t.datetime    :next_payment_date
       t.string      :paypal_token

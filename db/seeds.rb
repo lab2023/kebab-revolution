@@ -84,4 +84,4 @@ tayfun.save
 
 # Subscription
 plan_2 = Plan.find(2)
-subscription_lab2023 = Subscription.create!(plan_id: plan_2.id, tenant_id: 1, user_id: 1, price: plan_2.price, payment_period: 1, next_payment_date: Time.zone.now + 1.months)
+subscription_lab2023 = Subscription.create!(plan_id: plan_2.id, tenant_id: 1, user_id: 1, price: plan_2.price, user_limit: plan_2.user_limit, payment_period: 1, next_payment_date: Time.zone.now + 1.months)

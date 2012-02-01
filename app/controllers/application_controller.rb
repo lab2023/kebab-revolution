@@ -253,6 +253,6 @@ class ApplicationController < ActionController::Base
   #
   # Return boolean
   def reach_user_limit?
-    @current_tenant.subscription.plan.user_limit < User.active.all.count
+    @current_tenant.subscription.user_limit < User.active.all.count
   end
 end

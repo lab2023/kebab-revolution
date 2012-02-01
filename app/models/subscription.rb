@@ -15,6 +15,7 @@ class Subscription < ActiveRecord::Base
   validates :plan,           :presence => {:on => :create}
   validates :user,           :presence => {:on => :create}
   validates :price,          :presence => {:on => :create}
+  validates :user_limit,     :presence => {:on => :create}, :numericality => {:greater_than => 0, :only_integer => true}
   validates :payment_period, :numericality => { :greater_than => 0 }
 
   scope :commercial,                where("subscriptions.price > 0")

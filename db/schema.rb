@@ -27,9 +27,8 @@ ActiveRecord::Schema.define(:version => 20120103013003) do
 
   create_table "payments", :force => true do |t|
     t.integer  "subscription_id"
-    t.decimal  "price",                                  :precision => 6, :scale => 2
+    t.decimal  "price",           :precision => 6, :scale => 2
     t.datetime "payment_date"
-    t.string   "paypal_recurring_payment_profile_token"
     t.string   "invoice_no"
     t.string   "transaction_id"
     t.datetime "created_at"
@@ -38,9 +37,9 @@ ActiveRecord::Schema.define(:version => 20120103013003) do
 
   create_table "plans", :force => true do |t|
     t.string  "name"
-    t.decimal "price",       :precision => 10, :scale => 0
+    t.decimal "price",       :precision => 6, :scale => 2
     t.integer "user_limit"
-    t.boolean "recommended",                                :default => false
+    t.boolean "recommended",                               :default => false
   end
 
   create_table "privilege_translations", :force => true do |t|
@@ -73,12 +72,10 @@ ActiveRecord::Schema.define(:version => 20120103013003) do
   add_index "privileges_roles", ["privilege_id", "role_id"], :name => "index_privileges_roles_on_privilege_id_and_role_id", :unique => true
 
   create_table "resources", :force => true do |t|
-    t.string "sys_path"
     t.string "sys_name"
   end
 
   add_index "resources", ["sys_name"], :name => "index_resources_on_sys_name"
-  add_index "resources", ["sys_path"], :name => "index_resources_on_sys_path"
 
   create_table "roles", :force => true do |t|
     t.integer  "tenant_id"
@@ -99,6 +96,7 @@ ActiveRecord::Schema.define(:version => 20120103013003) do
     t.integer  "tenant_id"
     t.integer  "user_id"
     t.decimal  "price",                                  :precision => 6, :scale => 2
+    t.integer  "user_limit"
     t.integer  "payment_period"
     t.datetime "next_payment_date"
     t.string   "paypal_token"
@@ -118,6 +116,7 @@ ActiveRecord::Schema.define(:version => 20120103013003) do
 
   add_index "tenants", ["host"], :name => "index_tenants_on_host", :unique => true
   add_index "tenants", ["name"], :name => "index_tenants_on_name", :unique => true
+  add_index "tenants", ["passive_at"], :name => "index_tenants_on_passive_at"
 
   create_table "users", :force => true do |t|
     t.integer  "tenant_id"

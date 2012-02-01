@@ -7,7 +7,7 @@
 # Tenants Controller
 class TenantsController < ApplicationController
   skip_around_filter  :tenant,        only: [:create, :valid_host]
-  skip_before_filter  :authorize#,     only: [:create, :valid_host]
+  skip_before_filter  :authorize,     only: [:create, :valid_host]
   skip_before_filter  :authenticate
 
   # POST/tenants
@@ -24,10 +24,11 @@ class TenantsController < ApplicationController
         Time.zone = params[:user][:time_zone]
         I18n.locale = params[:user][:locale]
 
-        @user   = User.new(params[:user])
+        @user = User.new(params[:user])
         admin = Role.create(name: 'Admin')
         admin.privileges << Privilege.all
         admin.save
+
         @user.tenant = @tenant
         @user.roles << admin
         @user.save
@@ -35,12 +36,13 @@ class TenantsController < ApplicationController
         if @user.save
 
           # KBBTODO Refactor this ugly code
-          @subscription = Subscription.new
-          @subscription.user    = @user
-          @subscription.tenant  = @tenant
-          @subscription.plan    = @plan
-          @subscription.price   = @plan.price
-          @subscription.payment_period = 0
+          @subscription                   = Subscription.new
+          @subscription.user              = @user
+          @subscription.tenant            = @tenant
+          @subscription.plan              = @plan
+          @subscription.price             = @plan.price
+          @subscription.user_limit        = @plan.user_limit
+          @subscription.payment_period    = 0
           @subscription.next_payment_date = Time.zone.now + 1.months
 
           if @subscription.save
@@ -72,8 +74,8 @@ class TenantsController < ApplicationController
 
   # GET/tenant/1
   def show
-    @@response[:data] = Hash.new
-    @@response[:data][:next] = @current_tenant.subscription
+    @@response[:data]         = Hash.new
+    @@response[:data][:next]  = @current_tenant.subscription
     @@response[:data][:older] = @current_tenant.subscription.payments
 
     render json: @@response
