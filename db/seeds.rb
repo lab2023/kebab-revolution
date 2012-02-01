@@ -28,6 +28,8 @@ paypal_payment_failed   = Resource.create!(sys_name: 'subscriptions.paypal_recur
 paypal_credential       = Resource.create!(sys_name: 'subscriptions.paypal_credential')                # Paypal paypal_credential ajax
 next_subscription       = Resource.create!(sys_name: 'subscriptions.next_subscription')                # Next subscription
 payments                = Resource.create!(sys_name: 'subscriptions.payments')                         # All payments
+plans                   = Resource.create!(sys_name: 'subscriptions.plans')                            # All plans
+update_plan             = Resource.create!(sys_name: 'subscriptions.update')                           # Update plan
 
 # Privileges Applications Resources Relation
 invite_user.applications << user_manager
@@ -50,6 +52,8 @@ manage_account.resources    << paypal_payment_success
 manage_account.resources    << paypal_credential
 manage_account.resources    << next_subscription
 manage_account.resources    << payments
+manage_account.resources    << plans
+manage_account.resources    << update_plan
 manage_account.save
 
 # Tenants

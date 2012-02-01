@@ -46,4 +46,23 @@ class Subscription < ActiveRecord::Base
   def self.find_payment_failures(next_payment_date = 10.days.ago)
     notifier.with_recurring_profile.where("next_payment_date < ?", next_payment_date.end_of_day)
   end
+
+  # Change plan type
+  #
+  # old_plan_id Integer
+  # new_plan_id Integer
+  #
+  # Return String
+  def self.change_plan_type old_plan_id, new_plan_id
+    change_plan_type = false
+    if old_plan_id  == 1 and new_plan_id > 1
+      change_plan_type = 'free_to_commercial'
+    elsif old_plan_id > 1 and new_plan_id == 1
+      change_plan_type = 'commercial_to_free'
+    elsif old_plan_id > 1 and new_plan_id > 1 and old_plan_id > new_plan_id
+      change_plan_type = 'downgrade'
+    elsif old_plan_id > 1 and new_plan_id > 1 and old_plan_id < new_plan_id
+      change_plan_type = 'upgrade'
+    end
+  end
 end

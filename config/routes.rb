@@ -6,11 +6,16 @@ KebabServerRor::Application.routes.draw do
   match 'plans'             => 'pages#plans'
   match 'register'          => 'pages#register'
 
-  get 'subscriptions/paypal_recurring_payment_success'
-  get 'subscriptions/paypal_recurring_payment_failed'
-  get 'subscriptions/paypal_credential'
-  get 'subscriptions/next_subscription'
-  get 'subscriptions/payments'
+  resources :subscriptions do
+    collection do
+      get 'paypal_recurring_payment_success'
+      get 'paypal_recurring_payment_failed'
+      get 'paypal_credential'
+      get 'next_subscription'
+      get 'payments'
+      get 'plans'
+    end
+  end
 
   resources :sessions
   resources :passwords
@@ -21,6 +26,7 @@ KebabServerRor::Application.routes.draw do
       post 'passive'
     end
   end
+
   resources :tenants do
     get :valid_host
     get :tests

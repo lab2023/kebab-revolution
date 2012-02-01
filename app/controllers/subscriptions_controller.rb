@@ -77,4 +77,15 @@ class SubscriptionsController < ApplicationController
     render text: 'Paypal payment failed'
   end
 
+  # GET/subscriptions/plans
+  def plans
+    @@response['current_plan'] = @current_tenant.subscription.plan.id
+    @@response['plans'] = Plan.order('price')
+    render json: @@response
+  end
+
+  # PUT/subscriptions
+  def update
+    change_plan_type = Subscription.change_plan_type params[:old_plan_id], params[:new_plan_id]
+  end
 end
