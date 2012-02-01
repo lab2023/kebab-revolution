@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:onurozgurozkan/paypal-recurring.git
-  revision: 37e48c2eaeb18278717ae5aad1d533e97b2d6b2d
-  tag: v0.1.6
+  revision: abd6b4f14940a2e0464b6596c693fdf081537d68
+  tag: v0.1.7
   specs:
-    paypal-recurring (0.1.6)
+    paypal-recurring (0.1.7)
 
 GEM
   remote: http://rubygems.org/
