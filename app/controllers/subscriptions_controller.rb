@@ -15,7 +15,7 @@ class SubscriptionsController < ApplicationController
     @@response[:price] = subscription.price
     @@response[:next_payment_date] = subscription.next_payment_date
     @@response[:payment_period] = subscription.payment_period
-    @@response[:paypal_active] = subscription.paypal_recurring_payment_profile_token ? true : false
+    @@response[:paypal_active] = subscription.paypal_payment_token ? true : false
     render json: @@response
   end
 
@@ -64,7 +64,7 @@ class SubscriptionsController < ApplicationController
       @subscription.payment_period = 1
       @subscription.paypal_token = params[:token]
       @subscription.paypal_customer_token = params[:PayerID]
-      @subscription.paypal_recurring_payment_profile_token = response.profile_id
+      @subscription.paypal_payment_token = response.profile_id
       @subscription.save
       render json: @@response
     else

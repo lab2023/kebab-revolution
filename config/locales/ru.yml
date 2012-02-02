@@ -42,7 +42,7 @@ ru:
         payment_period: "payment period"
         next_payment_date: "next payment date"
         paypal_customer_token: "paypal customer id"
-        paypal_recurring_payment_profile_token: "paypal profile tokent"
+        paypal_payment_token: "paypal profile tokent"
       plan:
         name: "name"
         price: "price"
@@ -53,6 +53,6 @@ ru:
         price: "price"
         payment_date: "payment date"
         invoice_no: "invoice no"
-        paypal_recurring_payment_profile_token: "paypal profile token"
+        paypal_payment_token: "paypal profile token"
   notice:
     invalid_tenant: "Неверный счет"

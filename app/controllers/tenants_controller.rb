@@ -85,8 +85,8 @@ class TenantsController < ApplicationController
   # KBBTODO move all delete code to tenants#delete private method
   def destroy
     if is_owner session[:user_id]
-      if @current_tenant.subscription.paypal_recurring_payment_profile_token
-        ppr = PayPal::Recurring.new(:profile_id => @current_tenant.subscription.paypal_recurring_payment_profile_token)
+      if @current_tenant.subscription.paypal_payment_token
+        ppr = PayPal::Recurring.new(:profile_id => @current_tenant.subscription.paypal_payment_token)
         ppr.cancel
       end
       @current_tenant.passive_at = Time.zone.now

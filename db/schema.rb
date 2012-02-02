@@ -95,13 +95,13 @@ ActiveRecord::Schema.define(:version => 20120103013003) do
     t.integer  "plan_id"
     t.integer  "tenant_id"
     t.integer  "user_id"
-    t.decimal  "price",                                  :precision => 6, :scale => 2
+    t.decimal  "price",                 :precision => 6, :scale => 2
     t.integer  "user_limit"
     t.integer  "payment_period"
     t.datetime "next_payment_date"
     t.string   "paypal_token"
     t.string   "paypal_customer_token"
-    t.string   "paypal_recurring_payment_profile_token"
+    t.string   "paypal_payment_token"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

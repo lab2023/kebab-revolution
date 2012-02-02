@@ -42,7 +42,7 @@ tr:
         payment_period: "ödeme dönemi"
         next_payment_date: "sonraki ödeme tarihi"
         paypal_customer_token: "paypal müşteri idsi"
-        paypal_recurring_payment_profile_token: "paypal otomatik ödeme idsi"
+        paypal_payment_token: "paypal otomatik ödeme idsi"
       plan:
         name: "isim"
         price: "fiyat"
@@ -53,6 +53,6 @@ tr:
         price: "fiyat"
         payment_date: "ödeme tarihi"
         invoice_no: "fatura no"
-        paypal_recurring_payment_profile_token: "paypal ödeme idsi"
+        paypal_payment_token: "paypal ödeme idsi"
   notice:
     invalid_tenant: "Geçersiz hesap"

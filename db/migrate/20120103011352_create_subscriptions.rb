@@ -10,7 +10,7 @@ class CreateSubscriptions < ActiveRecord::Migration
       t.datetime    :next_payment_date
       t.string      :paypal_token
       t.string      :paypal_customer_token
-      t.string      :paypal_recurring_payment_profile_token
+      t.string      :paypal_payment_token
 
       t.timestamps
     end

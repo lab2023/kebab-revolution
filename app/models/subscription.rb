@@ -20,8 +20,8 @@ class Subscription < ActiveRecord::Base
 
   scope :commercial, where("subscriptions.price > 0")
   scope :free, where("subscriptions.price = 0")
-  scope :with_recurring_profile, where("paypal_recurring_payment_profile_token IS NOT NULL")
-  scope :without_recurring_profile, where("paypal_recurring_payment_profile_token IS NULL")
+  scope :with_recurring_profile, where("paypal_payment_token IS NOT NULL")
+  scope :without_recurring_profile, where("paypal_payment_token IS NULL")
   scope :notifier, commercial.joins(:user, :plan, :tenant).where("tenants.passive_at IS NULL ") \
                                     .select("tenants.id as tenant_id, users.email, users.name as user_name, users.locale, subscriptions.price, subscriptions.next_payment_date, plans.name as plan_name")
 
@@ -79,8 +79,8 @@ class Subscription < ActiveRecord::Base
     @subscription = Subscription.find_by_tenant_id(@tenant.id)
     @free_plan = Plan.first
 
-    unless @tenant.subscription.paypal_recurring_payment_profile_token.nil?
-      ppr = PayPal::Recurring.new(:profile_id => @tenant.subscription.paypal_recurring_payment_profile_token)
+    unless @tenant.subscription.paypal_payment_token.nil?
+      ppr = PayPal::Recurring.new(:profile_id => @tenant.subscription.paypal_payment_token)
       ppr.cancel
     end
 
@@ -89,7 +89,7 @@ class Subscription < ActiveRecord::Base
     @subscription.user_limit = @free_plan.user_limit
     @subscription.paypal_token = nil
     @subscription.paypal_customer_token = nil
-    @subscription.paypal_recurring_payment_profile_token = nil
+    @subscription.paypal_payment_token = nil
     @subscription.next_payment_date = nil
 
     return @subscription.save ? true : false
@@ -123,11 +123,11 @@ class Subscription < ActiveRecord::Base
     @subscription = Subscription.find_by_tenant_id(@tenant.id)
     @new_plan = Plan.find(new_plan_id)
 
-    unless @tenant.subscription.paypal_recurring_payment_profile_token.nil?
+    unless @tenant.subscription.paypal_payment_token.nil?
       ppr = PayPal::Recurring.new({
                                       :amount => @new_plan.price,
                                       :currency => "USD",
-                                      :profile_id => @subscription.paypal_recurring_payment_profile_token,
+                                      :profile_id => @subscription.paypal_payment_token,
                                       :description => "#{@new_plan.name}" + " - Monthly Subscription",
                                   })
 
@@ -151,8 +151,8 @@ class Subscription < ActiveRecord::Base
     @subscription = Subscription.find_by_tenant_id(@tenant.id)
     @new_plan = Plan.find(new_plan_id)
 
-    unless @tenant.subscription.paypal_recurring_payment_profile_token.nil?
-      ppr = PayPal::Recurring.new(:profile_id => @tenant.subscription.paypal_recurring_payment_profile_token)
+    unless @tenant.subscription.paypal_payment_token.nil?
+      ppr = PayPal::Recurring.new(:profile_id => @tenant.subscription.paypal_payment_token)
       ppr.cancel
     end
 
@@ -162,7 +162,7 @@ class Subscription < ActiveRecord::Base
     @subscription.payment_period = 1
     @subscription.paypal_token = nil
     @subscription.paypal_customer_token = nil
-    @subscription.paypal_recurring_payment_profile_token = nil
+    @subscription.paypal_payment_token = nil
 
     return @subscription.save ? true : @subscription.errors
   end
