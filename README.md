@@ -18,7 +18,11 @@ We use ExtJs 4.0 for client and Ror 3.1.3 for server.
 
 # Changelog
 
-## 2.0.0.alpha6 -
+## 2.0.0.alpha7 -
+
+* 97 - root to: "pages#index" problem
+
+## 2.0.0.alpha6 - 2012.02.02
 
 * 49 - DONE - User invite
 * 55 - DONE - Paypal integration
