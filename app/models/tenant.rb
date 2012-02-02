@@ -11,7 +11,7 @@ class Tenant < ActiveRecord::Base
   has_many    :roles
 
   validates :name, :presence => {:on => :create}, :uniqueness => true, :length => {:in => 4..255}
-  validates :host, :presence => {:on => :create}, :uniqueness => true, :exclusion => {:in => %w(www help support api apps status blog lab2023 static)}, :length => {:in => 4..255}
+  validates :host, :presence => {:on => :create}, :uniqueness => true, :exclusion => {:in => Kebab.invalid_tenant_names.collect {|x| x + '.' + Kebab.application_url } }, :length => {:in => 4..255}
 
   scope :active,  where("passive_at IS NULL")
   scope :passive, where("passive_at IS NOT NULL")

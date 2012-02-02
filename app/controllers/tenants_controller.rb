@@ -100,10 +100,9 @@ class TenantsController < ApplicationController
   end
 
   # GET/tenants/valid_host?host=host_name
-  # KBBTODO #64 set invalid tenant from one place
   def valid_host
     if Tenant.find_by_host(params[:host]) != nil \
-       || %w(www help support api apps status blog lab2023 static).include?(params[:host].split('.').first) \
+       || Kebab.invalid_tenant_names.include?(params[:host].split('.').first) \
        || params[:host].split('.').count != 3
       render json: {success: false}
     else

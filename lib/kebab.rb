@@ -6,6 +6,7 @@ module Kebab
    attr_accessor :application_name
    attr_accessor :application_url
    attr_accessor :invoice_no
+   attr_accessor :invalid_tenant_names
  end
 
  # Configure
