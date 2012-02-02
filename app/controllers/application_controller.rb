@@ -6,10 +6,10 @@
 
 # Application Controller
 class ApplicationController < ActionController::Base
+  # KBBTODO #92 solve protect_from_forget problem
   #protect_from_forgery
 
-  before_filter :tenant
-  #around_filter :with_tenant
+  around_filter :tenant
   before_filter :authenticate
   before_filter :authorize
   before_filter :i18n_locale
@@ -24,12 +24,6 @@ class ApplicationController < ActionController::Base
 
   attr_reader :current_tenant
 
-  def with_tenant
-    @current_tenant = Tenant.find_by_host!(request.host)
-    @current_tenant.with { yield }
-  end
-
-  # KBBTODO
   # Protected:
   # attr_reader :current_tenant
 
@@ -43,8 +37,9 @@ class ApplicationController < ActionController::Base
   #
   # Returns void, Json or render 404 page
   def tenant
-    if Tenant.find_by_host(request.host) != nil
-      @tenant = Tenant.current = Tenant.find_by_host!(request.host)
+    if Tenant.active.find_by_host(request.host) != nil
+      @current_tenant = Tenant.active.find_by_host!(request.host)
+      @current_tenant.with { yield }
     else
       @@response = {:success => false}
       add_notice 'ERR', I18n.t('notice.invalid_tenant')
@@ -67,7 +62,7 @@ class ApplicationController < ActionController::Base
   #
   # Returns void, Json
   def authenticate
-    # KBBTODO add logging
+    # KBBTODO #93 add logging
     unless session[:user_id]
       if request.xhr?
         render json: {success: false}, status: 403
@@ -85,11 +80,11 @@ class ApplicationController < ActionController::Base
   #   # => {success: false} # status 401
   #   # => nil
   #
-  # KBBTODO add logging
+  # KBBTODO #93  add logging
   # Returns void, Json
   def authorize
-    # KBBTODO add logging
-    unless session[:acl].include?(request.method.to_s + request.path.to_s)
+    # KBBTODO #93  add logging
+    unless session[:acl].include?(params[:controller].to_s + '.' + params[:action].to_s)
       if request.xhr?
         render json: {success: false}, status: 401
       else
@@ -175,67 +170,26 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Protected: Return users acl hash
+  # Protected: Return users acl array
   #
   # Examples
   #
   #   acl
   #   #=> {
-  #   #=>  'POST/sessions'    => 'sessions/create',
-  #   #=>  'DELETE/sessions'  => 'sessions/destroy'
+  #   #=>  'sessions/create',
+  #   #=>  'sessions/destroy'
   #   #=> }
   #
   # Returns Acl hash
   def acl
-    acl = Hash.new
+    acl_array = Array.new
 
-    user_resources_raw = session[:user_id].nil? ? Hash.new : User.find(session[:user_id]).get_resources
+    user_resources_raw = session[:user_id].nil? ? Array.new : User.find(session[:user_id]).get_resources
     user_resources_raw.each do |resource|
-      acl[resource.sys_path] = resource.sys_name
+      acl_array << resource.sys_name
     end
 
-    acl
-  end
-
-  # Protected: Create a credentials
-  def paypal_credential plan
-    @plan = plan
-    ppr = PayPal::Recurring.new({
-                                    :return_url   => "http://www.kebab.local/register",
-                                    :cancel_url   => "http://www.kebab.local/paypal_cancel",
-                                    :description  => "#{@plan.name}" + " - Monthly Subscription",
-                                    :amount       => "#{@plan.price}" + ".00",
-                                    :currency     => "USD"
-                                })
-    response = ppr.checkout
-    if response.valid?
-      response.checkout_url
-    else
-      false
-    end
-  end
-
-  # Protected: Create a recurring payment
-  #
-  # Return Recurring ProfileId
-  def paypal_recurring_payment plan, reference, payer_id, token
-    @plan = plan
-    ppr = PayPal::Recurring.new({
-      :amount      => "#{@plan.price}" + ".00",
-      :currency    => "USD",
-      :description => "#{plan.name}" + " - Monthly Subscription", #plan info
-      :frequency   => 1,
-      :token       => token,                                      #profile token
-      :period      => :monthly,
-      :reference   => reference,                                  #Invoice Number
-      :payer_id    => payer_id,                                   #payer token
-      :start_at    => Time.now,
-      :failed      => 15,
-      :outstanding => :next_billing
-    })
-
-    response = ppr.create_recurring_profile
-    response.profile_id
+    acl_array
   end
 
   # Protected: login
@@ -245,8 +199,9 @@ class ApplicationController < ActionController::Base
   #
   # Return boolean
   def login user, password
-    if user && user.authenticate(password)
+    if user && user.passive_at == nil && user.authenticate(password)
       session[:user_id] = user.id
+      session[:locale] = user.locale
       session[:acl] = acl
 
       I18n.locale = user.locale
@@ -261,13 +216,18 @@ class ApplicationController < ActionController::Base
   # Protected: logout
   def logout
     session[:user_id] = nil
+    session[:locale] = nil
     session[:acl] = nil
   end
 
   # Protected: bootstrap
+  #
+  # tenant  boolean
+  #
+  # Return hash
   def bootstrap tenant = true
     bootstrap_hash = Hash.new
-    bootstrap_hash['root'] = 'http://static.kebab.local'
+    bootstrap_hash['root'] = "http://static.#{Kebab.application_url.to_s}"
     bootstrap_hash[request_forgery_protection_token] = form_authenticity_token
     bootstrap_hash['tenant'] = Tenant.select('id, host, name').find_by_host!(request.host) if tenant
     bootstrap_hash['locale'] = {default_locale: I18n.locale, available_locales: I18n.available_locales}
@@ -278,5 +238,28 @@ class ApplicationController < ActionController::Base
       bootstrap_hash['user']  = user
     end
     bootstrap_hash
+  end
+
+  # Protected: is_owner
+  #
+  # id    Integer
+  #
+  # Return boolean
+  def is_owner id
+    return id == @current_tenant.subscription.user_id
+  end
+
+  # Protected reach_user_limit?
+  #
+  # Return boolean
+  def reach_user_limit?
+    @current_tenant.subscription.user_limit < User.active.all.count
+  end
+
+  # Protected reach_user_limit?
+  #
+  # Return boolean
+  def reach_plan_user_limit? plan_id
+    Plan.find(plan_id).user_limit >= User.active.all.count
   end
 end

@@ -19,8 +19,8 @@ class User < TenantScopedModel
   validates :password,  :presence => {:on => :create}, :confirmation => true
   validates :password_confirmation, :presence => {:on => :create}
 
-  scope :active,  where("users.passive_at IS NULL")
-  scope :passive, where("users.passive_at IS NOT NULL")
+  scope :active,  where("passive_at IS NULL")
+  scope :passive, where("passive_at IS NOT NULL")
 
   # Pubic: Return users privileges hash
   # KBBTODO refactor methods in loop

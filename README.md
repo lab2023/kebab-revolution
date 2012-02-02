@@ -20,18 +20,24 @@ We use ExtJs 4.0 for client and Ror 3.1.3 for server.
 
 ## 2.0.0.alpha6 -
 
-* 77 - Subscription limit controller
-* 49 - User invite
-* 76 - Change user status
-* 72 - User cancel own account
-* 81 - Change server local
-* 80 - Cancel account
-* 79 - See older and next payments info
-* 73 - Add SubscriptionNotifier
-* 55 - Paypal integration
-* 60 - Added options for trial period for paypal
-* 69 - Invoice no problem
-* 78 - Update plan
+* 49 - DONE - User invite
+* 55 - DONE - Paypal integration
+* 69 - DONE - Invoice no problem
+* 73 - DONE - Add SubscriptionNotifier
+* 76 - DONE - Change user status
+* 77 - DONE - Subscription limit controller
+* 78 - DONE - Update plan
+* 79 - DONE - See older and next payments info
+* 80 - DONE - Cancel account
+* 81 - DONE - Change server local
+* 83 - DONE - Fork and create a new paypal recurring gem
+* 84 - DONE - Passive user can not login
+* 85 - DONE - Improve multitenant system
+* 86 - DONE - Improve ACL system
+* 87 - DONE - Create a config file for project
+* 91 - DONE - Get application url from one place
+* 94 - DONE - Add passenger restart rake task
+* 99 - DONE - Add limits to subscriptions table
 
 ## 2.0.0.alpha5 - 2012.01.11
 

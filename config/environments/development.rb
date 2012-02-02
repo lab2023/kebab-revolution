@@ -33,8 +33,8 @@ KebabServerRor::Application.configure do
   config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",
     :port                 => 587,
-    :domain               => 'kebab.local',
-    :user_name            => 'example.com',
+    :domain               => 'lab2023.com',
+    :user_name            => 'onur.ozgur.ozkan@lab2023.com',
     :password             => 'password',
     :authentication       => 'plain',
     :enable_starttls_auto => true

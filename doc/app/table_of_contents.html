@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
-<title>Table of Contents</title>
+<title>Table of Contents - Rails Application Documentation</title>
 
 <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
@@ -21,7 +21,7 @@
 
 
 <body class="indexpage">
-<h1>Table of Contents</h1>
+<h1>Table of Contents - Rails Application Documentation</h1>
 
 <h2>Pages</h2>
 <ul>
@@ -41,16 +41,31 @@
 <h2 id="classes">Classes/Modules</h2>
 <ul>
   <li class="class">
-    <a href="App.html">App</a>
+    <a href="Application.html">Application</a>
   </li>
     <li class="class">
     <a href="ApplicationController.html">ApplicationController</a>
+  </li>
+    <li class="class">
+    <a href="FeedbackController.html">FeedbackController</a>
+  </li>
+    <li class="module">
+    <a href="Kebab.html">Kebab</a>
+  </li>
+    <li class="class">
+    <a href="NotifierMailer.html">NotifierMailer</a>
   </li>
     <li class="class">
     <a href="PagesController.html">PagesController</a>
   </li>
     <li class="class">
     <a href="PasswordsController.html">PasswordsController</a>
+  </li>
+    <li class="class">
+    <a href="Payment.html">Payment</a>
+  </li>
+    <li class="class">
+    <a href="Plan.html">Plan</a>
   </li>
     <li class="class">
     <a href="Privilege.html">Privilege</a>
@@ -65,7 +80,13 @@
     <a href="SessionsController.html">SessionsController</a>
   </li>
     <li class="class">
+    <a href="Subscription.html">Subscription</a>
+  </li>
+    <li class="class">
     <a href="Tenant.html">Tenant</a>
+  </li>
+    <li class="class">
+    <a href="TenantMailer.html">TenantMailer</a>
   </li>
     <li class="class">
     <a href="TenantScopedModel.html">TenantScopedModel</a>
@@ -79,6 +100,9 @@
     <li class="class">
     <a href="UserMailer.html">UserMailer</a>
   </li>
+    <li class="class">
+    <a href="UsersController.html">UsersController</a>
+  </li>
   
 </ul>
 
@@ -87,11 +111,21 @@
   
     <li class="method"><a href="TenantScopedModel.html#method-c-build_default_scope">::build_default_scope &mdash; TenantScopedModel</a>
   
+    <li class="method"><a href="Kebab.html#method-c-configure">::configure &mdash; Kebab</a>
+  
     <li class="method"><a href="Tenant.html#method-c-current">::current &mdash; Tenant</a>
   
     <li class="method"><a href="Tenant.html#method-c-current-3D">::current= &mdash; Tenant</a>
   
+    <li class="method"><a href="Subscription.html#method-c-find_finished_trials">::find_finished_trials &mdash; Subscription</a>
+  
+    <li class="method"><a href="Subscription.html#method-c-find_payment_failures">::find_payment_failures &mdash; Subscription</a>
+  
+    <li class="method"><a href="Subscription.html#method-c-find_trials_without_recurring_profile">::find_trials_without_recurring_profile &mdash; Subscription</a>
+  
     <li class="method"><a href="ApplicationController.html#method-i-acl">#acl &mdash; ApplicationController</a>
+  
+    <li class="method"><a href="UsersController.html#method-i-active">#active &mdash; UsersController</a>
   
     <li class="method"><a href="ApplicationController.html#method-i-add_error">#add_error &mdash; ApplicationController</a>
   
@@ -101,19 +135,29 @@
   
     <li class="method"><a href="ApplicationController.html#method-i-authorize">#authorize &mdash; ApplicationController</a>
   
-    <li class="method"><a href="TenantsController.html#method-i-bootstrap">#bootstrap &mdash; TenantsController</a>
+    <li class="method"><a href="ApplicationController.html#method-i-bootstrap">#bootstrap &mdash; ApplicationController</a>
+  
+    <li class="method"><a href="FeedbackController.html#method-i-create">#create &mdash; FeedbackController</a>
+  
+    <li class="method"><a href="UsersController.html#method-i-create">#create &mdash; UsersController</a>
   
     <li class="method"><a href="PasswordsController.html#method-i-create">#create &mdash; PasswordsController</a>
   
     <li class="method"><a href="SessionsController.html#method-i-create">#create &mdash; SessionsController</a>
   
+    <li class="method"><a href="TenantsController.html#method-i-create">#create &mdash; TenantsController</a>
+  
+    <li class="method"><a href="TenantMailer.html#method-i-create_tenant">#create_tenant &mdash; TenantMailer</a>
+  
     <li class="method"><a href="PagesController.html#method-i-desktop">#desktop &mdash; PagesController</a>
+  
+    <li class="method"><a href="TenantsController.html#method-i-destroy">#destroy &mdash; TenantsController</a>
   
     <li class="method"><a href="SessionsController.html#method-i-destroy">#destroy &mdash; SessionsController</a>
   
     <li class="method"><a href="UserMailer.html#method-i-forget_password">#forget_password &mdash; UserMailer</a>
   
-    <li class="method"><a href="User.html#method-i-get_apps">#get_apps &mdash; User</a>
+    <li class="method"><a href="User.html#method-i-get_applications">#get_applications &mdash; User</a>
   
     <li class="method"><a href="User.html#method-i-get_privileges">#get_privileges &mdash; User</a>
   
@@ -125,16 +169,66 @@
   
     <li class="method"><a href="ApplicationController.html#method-i-i18n_locale_from_session">#i18n_locale_from_session &mdash; ApplicationController</a>
   
+    <li class="method"><a href="PagesController.html#method-i-index">#index &mdash; PagesController</a>
+  
+    <li class="method"><a href="UsersController.html#method-i-index">#index &mdash; UsersController</a>
+  
+    <li class="method"><a href="UserMailer.html#method-i-invite">#invite &mdash; UserMailer</a>
+  
+    <li class="method"><a href="ApplicationController.html#method-i-is_owner">#is_owner &mdash; ApplicationController</a>
+  
+    <li class="method"><a href="ApplicationController.html#method-i-login">#login &mdash; ApplicationController</a>
+  
     <li class="method"><a href="PagesController.html#method-i-login">#login &mdash; PagesController</a>
   
+    <li class="method"><a href="ApplicationController.html#method-i-logout">#logout &mdash; ApplicationController</a>
+  
+    <li class="method"><a href="UsersController.html#method-i-passive">#passive &mdash; UsersController</a>
+  
+    <li class="method"><a href="NotifierMailer.html#method-i-payment_failures_5_days_ago">#payment_failures_5_days_ago &mdash; NotifierMailer</a>
+  
+    <li class="method"><a href="NotifierMailer.html#method-i-payment_failures_cancel_tenant">#payment_failures_cancel_tenant &mdash; NotifierMailer</a>
+  
+    <li class="method"><a href="ApplicationController.html#method-i-paypal_credential">#paypal_credential &mdash; ApplicationController</a>
+  
+    <li class="method"><a href="ApplicationController.html#method-i-paypal_recurring_payment">#paypal_recurring_payment &mdash; ApplicationController</a>
+  
+    <li class="method"><a href="PagesController.html#method-i-plans">#plans &mdash; PagesController</a>
+  
+    <li class="method"><a href="ApplicationController.html#method-i-reach_user_limit-3F">#reach_user_limit? &mdash; ApplicationController</a>
+  
+    <li class="method"><a href="PagesController.html#method-i-register">#register &mdash; PagesController</a>
+  
+    <li class="method"><a href="UserMailer.html#method-i-send_feedback">#send_feedback &mdash; UserMailer</a>
+  
+    <li class="method"><a href="Payment.html#method-i-set_invoice_no">#set_invoice_no &mdash; Payment</a>
+  
+    <li class="method"><a href="TenantsController.html#method-i-show">#show &mdash; TenantsController</a>
+  
+    <li class="method"><a href="UsersController.html#method-i-show">#show &mdash; UsersController</a>
+  
     <li class="method"><a href="ApplicationController.html#method-i-tenant">#tenant &mdash; ApplicationController</a>
+  
+    <li class="method"><a href="NotifierMailer.html#method-i-trial_10_days_from_now">#trial_10_days_from_now &mdash; NotifierMailer</a>
+  
+    <li class="method"><a href="NotifierMailer.html#method-i-trial_5_days_from_now">#trial_5_days_from_now &mdash; NotifierMailer</a>
+  
+    <li class="method"><a href="NotifierMailer.html#method-i-trial_cancel_tenant">#trial_cancel_tenant &mdash; NotifierMailer</a>
+  
+    <li class="method"><a href="UsersController.html#method-i-update">#update &mdash; UsersController</a>
+  
+    <li class="method"><a href="PasswordsController.html#method-i-update">#update &mdash; PasswordsController</a>
+  
+    <li class="method"><a href="TenantsController.html#method-i-valid_host">#valid_host &mdash; TenantsController</a>
+  
+    <li class="method"><a href="Tenant.html#method-i-with">#with &mdash; Tenant</a>
   
 </ul>
 
 
 <footer id="validator-badges">
   <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
-  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.11.
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
   <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
 </footer>
 

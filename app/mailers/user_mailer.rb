@@ -28,4 +28,12 @@ class UserMailer < ActionMailer::Base
     @message = message
     mail(to: "onur.ozgur.ozkan@lab2023.com", subject: "#{@user.name}" + " " + subject)
   end
+
+  # Public: Invite
+  #
+  # user    - object - User Model
+  def invite  user
+    @user   = user
+    mail(to: @user.email, subject: 'Welcome to Kebab Project')
+  end
 end

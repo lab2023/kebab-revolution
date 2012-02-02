@@ -10,22 +10,19 @@ describe PagesController do
   end
 
   describe "GET 'login'" do
-    it "returns http success" do
-      get 'login'
-      response.should be_success
-    end
+    it "returns http success"
   end
 
-  describe "GET 'plan'" do
+  describe "GET 'plans'" do
     it "returns http success" do
-      get 'plan'
+      get 'plans'
       response.should be_success
     end
   end
 
   describe "GET 'register'" do
     it "returns http success" do
-      get 'plan'
+      get 'register'
       response.should be_success
     end
   end
