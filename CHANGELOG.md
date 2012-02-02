@@ -2,7 +2,9 @@
 
 ## 2.0.0.alpha7 -
 
-* 97 - DONE - root to: "pages#index" problem
+* 64  - DONE - set invalid tenant from one place
+* 97  - DONE - root to: "pages#index" problem
+* 101 - DONE - Change paypal_recurring_payment_profile_token to paypal_payment_token
 
 ## 2.0.0.alpha6 - 2012.02.02
 

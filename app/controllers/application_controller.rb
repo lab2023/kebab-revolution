@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
     else
       @@response = {:success => false}
       add_notice 'ERR', I18n.t('notice.invalid_tenant')
-
+      logger.warn "404 Tenant filter" + log_client_info
       if request.xhr?
         render json: @@response, status: :not_found
       else
@@ -62,8 +62,8 @@ class ApplicationController < ActionController::Base
   #
   # Returns void, Json
   def authenticate
-    # KBBTODO #93 add logging
     unless session[:user_id]
+      logger.warn "403 Authenticate" + log_client_info
       if request.xhr?
         render json: {success: false}, status: 403
       else
@@ -80,11 +80,10 @@ class ApplicationController < ActionController::Base
   #   # => {success: false} # status 401
   #   # => nil
   #
-  # KBBTODO #93  add logging
   # Returns void, Json
   def authorize
-    # KBBTODO #93  add logging
     unless session[:acl].include?(params[:controller].to_s + '.' + params[:action].to_s)
+      logger.warn "401 Authorize" + log_client_info
       if request.xhr?
         render json: {success: false}, status: 401
       else
@@ -209,6 +208,7 @@ class ApplicationController < ActionController::Base
 
       true
     else
+      logger.warn "Can not login" + log_client_info
       false
     end
   end
@@ -261,5 +261,12 @@ class ApplicationController < ActionController::Base
   # Return boolean
   def reach_plan_user_limit? plan_id
     Plan.find(plan_id).user_limit >= User.active.all.count
+  end
+
+  # Request info for logger
+  #
+  # Return string
+  def log_client_info
+   return "\n IP\t#{request.remote_ip} \n METHOD\t#{request.method} \n URL\t#{request.url} \n PARAMS\t#{request.params.as_json} \n AJAX\t#{request.xhr? ? 'TRUE' : 'FALSE'}"
   end
 end
