@@ -50,11 +50,12 @@ class Subscription < ActiveRecord::Base
 
   # Change plan type
   #
-  # old_plan_id Integer
   # new_plan_id Integer
+  # old_plan_id Integer
   #
-  # Return String
+  # Return false or String
   def self.change_plan_type new_plan_id, old_plan_id
+    # KBBTODO refactor this code use switch
     change_plan_type = false
     if old_plan_id == 1 and new_plan_id > 1
       change_plan_type = 'free_to_commercial'
@@ -69,7 +70,10 @@ class Subscription < ActiveRecord::Base
 
   # Commercial to free
   #
-  # Return boolean or Hash
+  # We assume that first plan is free plan. We cancel the paypal recurring payment profile if there is a token at
+  # subscription table then update subscription table.
+  #
+  # Return boolean
   def self.commercial_to_free
     @tenant = Tenant.current
     @subscription = Subscription.find_by_tenant_id(@tenant.id)
@@ -84,18 +88,18 @@ class Subscription < ActiveRecord::Base
     @subscription.price = @free_plan.price
     @subscription.user_limit = @free_plan.user_limit
     @subscription.paypal_token = nil
-    @subscription.next_payment_date = nil
     @subscription.paypal_customer_token = nil
     @subscription.paypal_recurring_payment_profile_token = nil
+    @subscription.next_payment_date = nil
 
-    if @subscription.save
-      return true
-    else
-      return @subscription.errors
-    end
+    return @subscription.save ? true : false
   end
 
   # Free to Commercial
+  #
+  # new_plan_id Integer
+  #
+  # Return boolean
   def self.free_to_commercial new_plan_id
     @tenant = Tenant.current
     @subscription = Subscription.find_by_tenant_id(@tenant.id)
@@ -104,17 +108,16 @@ class Subscription < ActiveRecord::Base
     @subscription.plan = @commercial_plan
     @subscription.price = @commercial_plan.price
     @subscription.user_limit = @commercial_plan.user_limit
+    @subscription.next_payment_date = Time.zone.now
 
-    if @subscription.save
-      return true
-    else
-      return @subscription.errors
-    end
+    return @subscription.save ? true : false
   end
 
   # Downgrade
   #
-  # Return boolean or Hash
+  # new_plan_id Integer
+  #
+  # Return boolean
   def self.downgrade new_plan_id
     @tenant = Tenant.current
     @subscription = Subscription.find_by_tenant_id(@tenant.id)
@@ -125,7 +128,7 @@ class Subscription < ActiveRecord::Base
                                       :amount => @new_plan.price,
                                       :currency => "USD",
                                       :profile_id => @subscription.paypal_recurring_payment_profile_token,
-                                      :description => "#{@subscription.plan.name}" + " - Monthly Subscription",
+                                      :description => "#{@new_plan.name}" + " - Monthly Subscription",
                                   })
 
       response = ppr.update_recurring_profile
@@ -135,16 +138,14 @@ class Subscription < ActiveRecord::Base
     @subscription.price = @new_plan.price
     @subscription.user_limit = @new_plan.user_limit
 
-    if @subscription.save
-      return true
-    else
-      return @subscription.errors
-    end
+    return @subscription.save ? true : false
   end
 
   # Upgrade
   #
-  # Return boolean or Hash
+  # new_plan_id Integer
+  #
+  # Return boolean
   def self.upgrade new_plan_id
     @tenant = Tenant.current
     @subscription = Subscription.find_by_tenant_id(@tenant.id)
@@ -155,18 +156,14 @@ class Subscription < ActiveRecord::Base
       ppr.cancel
     end
 
-    @subscription.plan_id= @new_plan.id
-    @subscription.price= @new_plan.price
-    @subscription.user_limit= @new_plan.user_limit
-    @subscription.payment_period= nil
-    @subscription.paypal_token= nil
-    @subscription.paypal_customer_token= nil
-    @subscription.paypal_recurring_payment_profile_token= nil
+    @subscription.plan_id = @new_plan.id
+    @subscription.price = @new_plan.price
+    @subscription.user_limit = @new_plan.user_limit
+    @subscription.payment_period = 1
+    @subscription.paypal_token = nil
+    @subscription.paypal_customer_token = nil
+    @subscription.paypal_recurring_payment_profile_token = nil
 
-    if @subscription.save
-      return true
-    else
-      return @subscription.errors
-    end
+    return @subscription.save ? true : @subscription.errors
   end
 end
