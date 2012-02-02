@@ -32,6 +32,6 @@ KebabServerRor::Application.routes.draw do
     get :tests
   end
 
-  # KBBTODO #97
-  root to: "pages#index"
+  root to: "pages#index", :constraints => {:subdomain => "www"}
+  root to: "pages#login"
 end
