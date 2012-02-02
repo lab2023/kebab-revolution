@@ -86,6 +86,42 @@ class SubscriptionsController < ApplicationController
 
   # PUT/subscriptions
   def update
-    change_plan_type = Subscription.change_plan_type params[:old_plan_id], params[:new_plan_id]
+    @@response['change_plan_type'] = Subscription.change_plan_type params[:new_plan_id].to_i, @current_tenant.subscription.plan.id
+    case @@response['change_plan_type']
+      when 'free_to_commercial'
+        Subscription.free_to_commercial params[:new_plan_id].to_i
+      when 'commercial_to_free'
+        return render json: @@response unless check_limits params[:new_plan_id].to_i
+        Subscription.commercial_to_free
+      when 'downgrade'
+        return render json: @@response unless check_limits params[:new_plan_id].to_i
+        @@response[:errors] = Subscription.downgrade params[:new_plan_id].to_i unless Subscription.downgrade params[:new_plan_id].to_i
+      when 'upgrade'
+        Subscription.upgrade params[:new_plan_id].to_i
+      else
+        @@response[:success] = false
+    end
+
+    render json: @@response
+  end
+
+  private
+
+  # Check limits
+  #
+  # new_plan_id Integer
+  #
+  # Return boolean
+  def check_limits new_plan_id
+    retVal = true
+
+    #KBBTODO #100
+    unless reach_plan_user_limit? new_plan_id
+      @@response[:success] = false
+      add_notice('ERROR', 'User limit false')
+      retVal = false
+    end
+
+    retVal
   end
 end

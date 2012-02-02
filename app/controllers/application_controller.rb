@@ -255,4 +255,11 @@ class ApplicationController < ActionController::Base
   def reach_user_limit?
     @current_tenant.subscription.user_limit < User.active.all.count
   end
+
+  # Protected reach_user_limit?
+  #
+  # Return boolean
+  def reach_plan_user_limit? plan_id
+    Plan.find(plan_id).user_limit >= User.active.all.count
+  end
 end
