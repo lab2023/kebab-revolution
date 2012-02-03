@@ -3,8 +3,11 @@
 ## 2.0.0.alpha7 -
 
 * 64  - DONE - set invalid tenant from one place
+* 88  - DONE - Log untanslated server and client side i18n keys
+* 93  - DONE - Create şpgg,m systeö fpr fatal, errors, warning, info
 * 97  - DONE - root to: "pages#index" problem
 * 101 - DONE - Change paypal_recurring_payment_profile_token to paypal_payment_token
+* 102 - DONE - Add kebab version
 
 ## 2.0.0.alpha6 - 2012.02.02
 
