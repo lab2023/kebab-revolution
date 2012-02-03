@@ -23,7 +23,10 @@ class Subscription < ActiveRecord::Base
   scope :with_recurring_profile, where("paypal_payment_token IS NOT NULL")
   scope :without_recurring_profile, where("paypal_payment_token IS NULL")
   scope :notifier, commercial.joins(:user, :plan, :tenant).where("tenants.passive_at IS NULL ") \
-                                    .select("tenants.id as tenant_id, users.email, users.name as user_name, users.locale, subscriptions.price, subscriptions.next_payment_date, plans.name as plan_name")
+                             .select("tenants.id as tenant_id")
+                             .select("users.email, users.name as user_name, users.locale")
+                             .select("subscriptions.price, subscriptions.next_payment_date")
+                             .select("plans.name as plan_name")
 
   # Find trials subscription without recurring profile
   #
@@ -37,6 +40,11 @@ class Subscription < ActiveRecord::Base
   # Find due trials to cancel account
   def self.find_finished_trials
     notifier.without_recurring_profile.where("next_payment_date < ?", 1.days.ago.end_of_day)
+  end
+
+  # Find payments
+  def self.find_payment
+    notifier.with_recurring_profile.select('subscriptions.payment_period, subscriptions.paypal_payment_token').where("next_payment_date < ?", Time.zone.now.end_of_day)
   end
 
   # Find payment Failures
