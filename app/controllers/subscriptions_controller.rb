@@ -55,7 +55,7 @@ class SubscriptionsController < ApplicationController
                                     :period => :monthly,
                                     :payer_id => params[:PayerID], #payer token
                                     :start_at => @subscription.next_payment_date,
-                                    :failed => 10,
+                                    :failed => 10,  # KBBTODO #107 add to config file
                                     :outstanding => :next_billing
                                 })
 
