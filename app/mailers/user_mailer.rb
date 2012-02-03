@@ -12,9 +12,9 @@ class UserMailer < ActionMailer::Base
   #
   # user - user object instance of UserModel
   def forget_password user
+    I18n.locale = user.locale
     @user = user
     @new_password = user.password
-    # KBBTODO add i18n
     mail(to: @user.email, subject: "Forget Password")
   end
 
@@ -24,8 +24,10 @@ class UserMailer < ActionMailer::Base
   # body    - text
   # user    - object - User Model
   def send_feedback  user, subject, message
+    I18n.locale = user.locale
     @user   = user
     @message = message
+    # KBBTODO add application email address
     mail(to: "onur.ozgur.ozkan@lab2023.com", subject: "#{@user.name}" + " " + subject)
   end
 
@@ -33,6 +35,7 @@ class UserMailer < ActionMailer::Base
   #
   # user    - object - User Model
   def invite  user
+    I18n.locale = user.locale
     @user   = user
     mail(to: @user.email, subject: 'Welcome to Kebab Project')
   end

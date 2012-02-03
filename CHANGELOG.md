@@ -8,6 +8,8 @@
 * 97  - DONE - root to: "pages#index" problem
 * 101 - DONE - Change paypal_recurring_payment_profile_token to paypal_payment_token
 * 102 - DONE - Add kebab version
+* 104 - DONE - Check recurring payment profile is valid and update subscription after payment
+* 105 - Add i18n for mails
 
 ## 2.0.0.alpha6 - 2012.02.02
 

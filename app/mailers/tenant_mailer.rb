@@ -14,10 +14,10 @@ class TenantMailer < ActionMailer::Base
   # user          - user   object instance of UserModel
   # subscription  - subscription object instance of Subscription
   def create_tenant user, tenant, subscription
-    @user         = user
-    @tenant       = tenant
+    I18n.locale = user.locale
+    @user = user
+    @tenant = tenant
     @subscription = subscription
-    # KBBTODO add i18n
     mail(:to => user.email, :subject => "Welcome Kebab Project")
   end
 end
