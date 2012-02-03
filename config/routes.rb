@@ -6,6 +6,8 @@ KebabServerRor::Application.routes.draw do
   match 'plans'             => 'pages#plans'
   match 'register'          => 'pages#register'
 
+  post 'pages/missing_translation'
+
   resources :subscriptions do
     collection do
       get 'paypal_recurring_payment_success'

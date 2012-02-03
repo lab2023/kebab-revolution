@@ -6,8 +6,8 @@
 #
 # Pages Controller
 class PagesController < ApplicationController
-  skip_around_filter :tenant,       only: [:index, :register, :plans]
-  skip_before_filter :authenticate, only: [:index, :register, :plans, :login]
+  skip_around_filter :tenant,       only: [:index, :register, :plans, :missing_translation]
+  skip_before_filter :authenticate, only: [:index, :register, :plans, :missing_translation, :login]
   skip_before_filter :authorize
 
   # GET/pages/index
@@ -32,5 +32,11 @@ class PagesController < ApplicationController
   # GET/pages/register
   def register
     @bootstrap = bootstrap false
+  end
+
+  # POST/pages/missing_translation
+  def missing_translation
+    logger.fatal params[:missing]
+    render json: @@response
   end
 end
