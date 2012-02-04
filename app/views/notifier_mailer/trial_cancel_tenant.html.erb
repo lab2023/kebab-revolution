@@ -1,11 +1,1 @@
-<% # KBBTODO i18n %>
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-  </head>
-  <body>
-    <h1>Hi <%= @subscription.user_name %></h1>
-    <p>We cancel your account because you didn't start paypal recurring payment</p>
-  </body>
-</html>
+<p><%=t 'mail.notifier.trial_cancel_tenant.p1', :application_name => Kebab.application_name %></p>

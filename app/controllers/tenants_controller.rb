@@ -47,7 +47,7 @@ class TenantsController < ApplicationController
 
           if @subscription.save
             # KBBTODO #75 use delay job for sending mail in future
-            TenantMailer.create_tenant(@user, @tenant, @subscription).deliver
+            TenantMailer.create_tenant(@user, @tenant).deliver
             login @user, params[:user][:password]
             status = :created
           else

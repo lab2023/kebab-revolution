@@ -1,11 +1,2 @@
-<% # KBBTODO i18n %>
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-  </head>
-  <body>
-    <h1>Hi <%= @subscription.user_name %></h1>
-    <p>Please start recurring payment from account manager. Otherwise system cancel your account 5 days from now.</p>
-  </body>
-</html>
+<p><%=t 'mail.notifier.trial_5_days_from_now.p1', :application_name => Kebab.application_name %></p>
+<p><%=t 'mail.notifier.trial_5_days_from_now.p2', :application_name => Kebab.application_name %></p>

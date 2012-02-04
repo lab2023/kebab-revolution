@@ -1,11 +1,1 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-  </head>
-  <body>
-    <h1>Welcome <%= @user.name %></h1>
-    <p>Your tenant <%= @tenant.name %></p>
-    <p>Your subscription <%= @subscription.price %></p>
-  </body>
-</html>
+<p><%=t 'mail.tenant.create.p1', :application_name => Kebab.application_name, :application_url => @application_url %></p>

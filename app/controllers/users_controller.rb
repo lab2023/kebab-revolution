@@ -37,7 +37,7 @@ class UsersController < ApplicationController
       @new_user.roles << Role.find_by_name('User')
       if !reach_user_limit? && @new_user.save
         # KBBTODO #75 delay job integration
-        UserMailer.invite(@new_user).deliver
+        UserMailer.invite(@new_user, @current_tenant.host).deliver
         @@status = :created
       else
         @@response[:success] = @new_user.errors

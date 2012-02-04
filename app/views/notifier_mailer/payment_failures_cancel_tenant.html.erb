@@ -1,12 +1,1 @@
-<% # KBBTODO i18n %>
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-  </head>
-  <body>
-    <h1>Hi <%= @subscription.user_name %></h1>
-
-    <p>We cancel your account because of failures payment 10 days ago</p>
-  </body>
-</html>
+<p><%=t 'mail.notifier.payment_failures_cancel_tenant.p1', :application_name => Kebab.application_name, :subscription_next_payment_date => @subscription.next_payment_date, :subscription_amount => @subscription.amount  %></p>
