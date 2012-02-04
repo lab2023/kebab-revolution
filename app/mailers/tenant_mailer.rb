@@ -6,6 +6,7 @@
 
 # Tenant Mailer
 class TenantMailer < ActionMailer::Base
+  layout 'email'
   default from: "onur.ozgur.ozkan@lab2023.com"
 
   # Public: Create new tenant mail
@@ -13,11 +14,10 @@ class TenantMailer < ActionMailer::Base
   # tenant        - tenant object instance of TenantModel
   # user          - user   object instance of UserModel
   # subscription  - subscription object instance of Subscription
-  def create_tenant user, tenant, subscription
+  def create_tenant user, tenant
     I18n.locale = user.locale
     @user = user
-    @tenant = tenant
-    @subscription = subscription
-    mail(:to => user.email, :subject => "Welcome Kebab Project")
+    @application_url = "http://" + tenant.host.to_s
+    mail(:to => user.email, :subject => "Welcome #{Kebab.application_name}")
   end
 end

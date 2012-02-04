@@ -5,6 +5,7 @@
 # price: "99.0",
 # user_name: "Onur Ozgur OZKAN"
 class NotifierMailer < ActionMailer::Base
+  layout 'email'
   default from: "onur.ozgur.ozkan@lab2023.com"
 
   # Before 10 days

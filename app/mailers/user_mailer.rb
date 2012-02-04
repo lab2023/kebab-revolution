@@ -6,7 +6,8 @@
 
 # User Mailer
 class UserMailer < ActionMailer::Base
-  default from: "example@example.com"
+  layout 'email'
+  default from: "onur.ozgur.ozkan@lab2023.com"
 
   # Public: Send forget password mail
   #
@@ -15,6 +16,7 @@ class UserMailer < ActionMailer::Base
     I18n.locale = user.locale
     @user = user
     @new_password = user.password
+    @application_name = Kebab.application_name
     mail(to: @user.email, subject: "Forget Password")
   end
 
@@ -27,16 +29,16 @@ class UserMailer < ActionMailer::Base
     I18n.locale = user.locale
     @user   = user
     @message = message
-    # KBBTODO add application email address
     mail(to: "onur.ozgur.ozkan@lab2023.com", subject: "#{@user.name}" + " " + subject)
   end
 
   # Public: Invite
   #
-  # user    - object - User Model
-  def invite  user
+  # user - object - User Model
+  def invite user, tenant_host
     I18n.locale = user.locale
     @user   = user
+    @application_url = "http:\\" + tenant_host.to_s
     mail(to: @user.email, subject: 'Welcome to Kebab Project')
   end
 end
