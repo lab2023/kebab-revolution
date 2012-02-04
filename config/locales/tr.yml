@@ -65,23 +65,23 @@ tr:
       ask_question: "Her türlü sorunuzu %{application_email} adresine mail atarak sorabilirsiniz."
     user:
       forget_password:
-        p1: "Your new %{application_name} password is %{new_password}, consume more fish to have better memory."
+        p1: "%{application_name} yeni şifreniz %{new_password} dir. Daha iyi bir hafıza için daha fazla balık tüketiniz."
       invite:
-        p1: "Your %{application_name} account was opened. You can access the program at %{application_url}."
-        p2: "Password: %{user_password}"
+        p1: "%{application_name} programı hesabınız açılmıştır. Programa %{application_url} adresinden girebilirsiniz."
+        p2: "Şifreniz: %{user_password}"
     tenant:
       create:
         p1: "Thanks for preferring %{application_name}. You can access the program at this address %{application_url}"
     notifier:
       trial_10_days_from_now:
-        p1: "%{application_name} trial edition will be end in 10 days. If you want to continue using  %{application_name}, Please Firstly sign-in at %{application_name} and activate Paypal recurring payment at account setting."
+        p1: "10 gün içerisinde %{application_name} deneme sürümünüz bitecektir. Lütfen hesabınızın devam etmesi için öncelikle %{application_name}'ya oturum açmanız sonra hesap yönetimi uygulamasından Paypal düzenli ödemesini aktive etmeniz gerekmektedir."
       trial_5_days_from_now:
-        p1: "%{application_name} trial edition will be end in  5 days. If you want to continue using  %{application_name}, Please Firstly sign-in at %{application_name} and activate Paypal recurring payment at account setting."
-        p2: "ps. This mail is second mail we send you about finishing your %{application_name}’s trial period, You wont get another mail. Your %{application_name} account will be deactivated in 5 days."
+        p1: "10 gün içerisinde %{application_name} deneme sürümünüz bitecektir. Lütfen hesabınızın devam etmesi için öncelikle %{application_name}'ya oturum açmanız sonra hesap yönetimi uygulamasından Paypal düzenli ödemesini aktive etmeniz gerekmektedir."
+        p2: "NOT: Bu size attığımız ikinci maildir ve başka uyarı maili atılmayacaktır. 5 gün sonra %{application_name} hesabımız pasif edilecektir.."
       trial_cancel_tenant:
-        p1: "Your %{application_name}’s trial period is end. Your %{application_name} account was deactivated in order to don’t activate Paypal recurring payment."
+        p1: "%{application_name} deneme sürümünüz bitmiştir ve Paypal otomatik ödemeyi aktive etmediğiniz için coNinja hesabınız pasif edilmiştir."
       payment_failures_5_days_ago:
-        p1: "Your %{application_name} payment, %{subscription_next_payment_date} dated and USD%{subscription_amount} amount was failed, Please check you paypal payment."
-        p2: "Your %{application_name} account will be deactivated unless your payment doesn't made in 5 days."
+        p1: "%{subscription_next_payment_date} tarihindeki %{subscription_amount} USD tutarında ki %{application_name} ödemeniz maalesef başarısız olmuştur. Lütfen Paypal hesabınızı kontrol ediniz."
+        p2: "Ödeme 5 gün içerisinde gerçekleşmezse  %{application_name} hesabınız pasif edilecektir."
       payment_failures_cancel_tenant:
-        p1: "Your %{application_name} account was deactivated because of failing your paypal payment %{subscription_next_payment_date} dated,  USD%{subscription_amount} amount."
+        p1: "Your %{application_name}  account was deactivated because of failing your paypal payment %{subscription_next_payment_date} dated,  %{subscription_amount} USD amount."
