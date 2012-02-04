@@ -17,7 +17,7 @@ class UserMailer < ActionMailer::Base
     @user = user
     @new_password = user.password
     @application_name = Kebab.application_name
-    mail(to: @user.email, subject: "Forget Password")
+    mail(to: @user.email, subject: I18n.t('mail.subjects.forget_password', :application_name => Kebab.application_name))
   end
 
   # Public: Send feedback
@@ -38,7 +38,7 @@ class UserMailer < ActionMailer::Base
   def invite user, tenant_host
     I18n.locale = user.locale
     @user   = user
-    @application_url = "http:\\" + tenant_host.to_s
-    mail(to: @user.email, subject: 'Welcome to Kebab Project')
+    @application_url = "http://" + tenant_host.to_s
+    mail(to: @user.email, subject: I18n.t('mail.subjects.invite_user', :application_name => Kebab.application_name))
   end
 end

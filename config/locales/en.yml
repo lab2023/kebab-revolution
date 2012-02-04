@@ -59,6 +59,15 @@ en:
     invalid_tenant: "Invalid account"
 
   mail:
+    subjects:
+      forget_password: "%{application_name} Forget Password "
+      invite_user: "Welcome %{application_name} "
+      register_tenant: "Welcome %{application_name} "
+      trial_10_days_from_now: "%{application_name} Trial Account Reminder "
+      trial_5_days_from_now: "%{application_name} Trial Account Reminder "
+      trial_cancel_tenant: "%{application_name} Trial Account Canceled "
+      payment_failures_5_days_ago: "%{application_name} Payment Reminder"
+      payment_failures_cancel_tenant: "%{application_name} Payment Reminder "
     common:
       dear_user_name: "Dear %{user_name}"
       best_regards: "Best Regards"

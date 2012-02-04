@@ -18,6 +18,6 @@ class TenantMailer < ActionMailer::Base
     I18n.locale = user.locale
     @user = user
     @application_url = "http://" + tenant.host.to_s
-    mail(:to => user.email, :subject => "Welcome #{Kebab.application_name}")
+    mail(:to => user.email, :subject => I18n.t('mail.subjects.register_tenant', :application_name => Kebab.application_name) )
   end
 end
