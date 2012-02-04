@@ -54,5 +54,34 @@ tr:
         payment_date: "ödeme tarihi"
         invoice_no: "fatura no"
         paypal_payment_token: "paypal ödeme idsi"
+
   notice:
     invalid_tenant: "Geçersiz hesap"
+
+  mail:
+    common:
+      dear_user_name: "Sayın %{user_name}"
+      best_regards: "İyi Çalışmalar"
+      ask_question: "Her türlü sorunuzu %{application_email} adresine mail atarak sorabilirsiniz."
+    user:
+      forget_password:
+        p1: "Your new %{application_name} password is %{new_password}, consume more fish to have better memory."
+      invite:
+        p1: "Your %{application_name} account was opened. You can access the program at %{application_url}."
+        p2: "Password: %{user_password}"
+    tenant:
+      create:
+        p1: "Thanks for preferring %{application_name}. You can access the program at this address %{application_url}"
+    notifier:
+      trial_10_days_from_now:
+        p1: "%{application_name} trial edition will be end in 10 days. If you want to continue using  %{application_name}, Please Firstly sign-in at %{application_name} and activate Paypal recurring payment at account setting."
+      trial_5_days_from_now:
+        p1: "%{application_name} trial edition will be end in  5 days. If you want to continue using  %{application_name}, Please Firstly sign-in at %{application_name} and activate Paypal recurring payment at account setting."
+        p2: "ps. This mail is second mail we send you about finishing your %{application_name}’s trial period, You wont get another mail. Your %{application_name} account will be deactivated in 5 days."
+      trial_cancel_tenant:
+        p1: "Your %{application_name}’s trial period is end. Your %{application_name} account was deactivated in order to don’t activate Paypal recurring payment."
+      payment_failures_5_days_ago:
+        p1: "Your %{application_name} payment, %{subscription_next_payment_date} dated and USD%{subscription_amount} amount was failed, Please check you paypal payment."
+        p2: "Your %{application_name} account will be deactivated unless your payment doesn't made in 5 days."
+      payment_failures_cancel_tenant:
+        p1: "Your %{application_name} account was deactivated because of failing your paypal payment %{subscription_next_payment_date} dated,  USD%{subscription_amount} amount."
