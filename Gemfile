@@ -1,28 +1,28 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.3'
+gem 'rails', '3.2.1'
 
 gem 'mysql2'
 
 gem 'globalize3'
 
 group :assets do
-  gem 'sass-rails',   '~> 3.1.5'
-  gem 'coffee-rails', '~> 3.1.1'
-  gem 'uglifier', '>= 1.0.3'
+  gem 'sass-rails', "  ~> 3.2.3"
+  gem 'coffee-rails', "~> 3.2.1"
+  gem 'uglifier', '>=1.0.3'
 end
 
-# To use ActiveModel has_secure_password
+# To use ActiveModel HAS_SECURE_PASSWORD
 gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Paypal Gem
 gem "paypal-recurring", :git => "git@github.com:onurozgurozkan/paypal-recurring.git", :tag => "v0.1.7"
 
 # Use unicorn as the web server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Deploy with Capistrano
-# gem 'capistrano'
+gem 'capistrano'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
@@ -35,4 +35,3 @@ group :test do
 end
 
 gem "rspec-rails", :group => [:test, :development]
-
