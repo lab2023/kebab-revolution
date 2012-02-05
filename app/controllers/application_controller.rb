@@ -227,7 +227,7 @@ class ApplicationController < ActionController::Base
   # Return hash
   def bootstrap tenant = true
     bootstrap_hash = Hash.new
-    bootstrap_hash['root'] = "http://static.#{Kebab.application_url.to_s}"
+    bootstrap_hash['root'] = "static"
     bootstrap_hash[request_forgery_protection_token] = form_authenticity_token
     bootstrap_hash['tenant'] = Tenant.select('id, host, name').find_by_host!(request.host) if tenant
     bootstrap_hash['locale'] = {default_locale: I18n.locale, available_locales: I18n.available_locales}
