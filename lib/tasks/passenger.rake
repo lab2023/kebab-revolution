@@ -1,6 +1,7 @@
 namespace :passenger do
   desc "Restart Application"
   task :restart do
-    puts `touch tmp/restart.txt`
+    system `cd #{Rails.root} && touch tmp/restart.txt`
+    puts "Passenger is restart"
   end
 end
