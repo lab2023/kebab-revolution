@@ -10,6 +10,8 @@
 * 102 - DONE - Add kebab version
 * 104 - DONE - Check recurring payment profile is valid and update subscription after payment
 * 105 - DONE - Add i18n for mails
+* 109 - DONE - Add unicorn support
+* 111 - DONE - Add client-web-os git submodule
 
 ## 2.0.0.alpha6 - 2012.02.02
 
