@@ -5,6 +5,12 @@ class CreatePrivileges < ActiveRecord::Migration
     end
 
     Privilege.create_translation_table! :name => :string, :info => :text
+
+    # add initial data
+    Privilege.create!(sys_name: 'InviteUser',        name: 'Invite User')
+    Privilege.create!(sys_name: 'PassiveUser',       name: 'Passive User')
+    Privilege.create!(sys_name: 'ActiveUser',        name: 'Active User')
+    Privilege.create!(sys_name: 'ManageAccount',     name: 'Manage Account')
   end
 
   def down

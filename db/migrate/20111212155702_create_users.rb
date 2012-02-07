@@ -14,6 +14,11 @@ class CreateUsers < ActiveRecord::Migration
 
       add_index :users, :tenant_id
       add_index :users, :email, :unique => true
+
+      # Add initial data
+      Tenant.current = Tenant.find(1)
+      User.create!(name: 'Onur Ozgur OZKAN',   email: 'onur@ozgur.com',  password: '123456', password_confirmation: '123456', locale: 'tr', time_zone: 'Istanbul')
+      User.create!(name: 'Tayfun Ozis ERIKAN', email: 'tayfun@ozis.com', password: '123456', password_confirmation: '123456', locale: 'tr', time_zone: 'Istanbul')
   end
 
   def down

@@ -6,6 +6,10 @@ class CreateRoles < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    # add initial data
+    Role.create!(name: 'Admin')
+    Role.create!(name: 'User')
   end
 
   def down
