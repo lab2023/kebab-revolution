@@ -6,32 +6,27 @@
 
 # Tenant Model
 class Tenant < ActiveRecord::Base
-  has_one     :subscription
-  has_many    :users
-  has_many    :roles
+  has_one   :subscription
+  has_many  :users
+  has_many  :roles
+  has_many  :companies
+  has_many  :personnel
+  has_many  :projects
+  has_many  :worksites
+  has_many  :machines
+  has_many  :engine_times
+  has_many  :kilometers
+  has_many  :machine_activities
+  has_many  :tankers
+  has_many  :tanker_sensors
+  has_many  :cameras
 
-  validates :name, :presence => {:on => :create}, :uniqueness => true, :length => {:in => 4..255}
-  validates :host, :presence => {:on => :create}, :uniqueness => true, :exclusion => {:in => Kebab.invalid_tenant_names.collect {|x| x + '.' + Kebab.application_url } }, :length => {:in => 4..255}
 
-  scope :active,  where("passive_at IS NULL")
-  scope :passive, where("passive_at IS NOT NULL")
+  # Tenant regex standard
+  SUBDOMAIN =/\A[a-zA-Z0-9]+\z/i
+  validates :name,      :presence => {:on => :create}, :uniqueness => true, :length => {:in => 4..255}
+  validates :subdomain, :presence => {:on => :create}, :uniqueness => true, :exclusion => {:in => Kebab.invalid_tenant_names }, :length => {:in => 4..61},:format => {:with => SUBDOMAIN}
 
-  class << self
-    # Public: Return current tenant
-    def current
-      Thread.current[:tenant]
-    end
-
-    # Public: Set current tenant
-    def current=(tenant)
-      Thread.current[:tenant] = tenant
-    end
-  end
-
-  def with
-    previous, Tenant.current = Tenant.current, self
-    yield
-  ensure
-    Tenant.current = previous
-  end
+  scope :active,  where("tenants.passive_at IS NULL")
+  scope :passive, where("tenants.passive_at IS NOT NULL")
 end
