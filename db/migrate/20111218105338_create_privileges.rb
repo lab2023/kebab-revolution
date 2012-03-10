@@ -1,3 +1,4 @@
+# encoding: utf-8
 class CreatePrivileges < ActiveRecord::Migration
   def up
     create_table :privileges do |t|
@@ -6,7 +7,8 @@ class CreatePrivileges < ActiveRecord::Migration
 
     Privilege.create_translation_table! :name => :string, :info => :text
 
-    # add initial data    
+    # add initial data
+
     # English
     I18n.locale = :en
     invite_user  = Privilege.create!(sys_name: 'InviteUser',        name: 'Invite User')
@@ -35,6 +37,7 @@ class CreatePrivileges < ActiveRecord::Migration
     active_user.save
     manager_account.name = "Управление аккаунтом"
     manager_account.save
+
   end
 
   def down

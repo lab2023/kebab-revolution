@@ -7,9 +7,8 @@ class CreateRoles < ActiveRecord::Migration
       t.timestamps
     end
 
-    # add initial data
-    Role.create!(name: 'Admin')
-    Role.create!(name: 'User')
+    add_index :roles, :tenant_id
+
   end
 
   def down
