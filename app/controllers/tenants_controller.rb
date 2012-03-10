@@ -6,8 +6,8 @@
 
 # Tenants Controller
 class TenantsController < ApplicationController
-  skip_around_filter  :tenant,        only: [:create, :valid_host]
-  skip_before_filter  :authorize,     only: [:create, :valid_host]
+  skip_before_filter  :tenant,        only: [:create, :valid_subdomain]
+  skip_before_filter  :authorize,     only: [:create, :valid_subdomain]
   skip_before_filter  :authenticate
 
   # POST/tenants
@@ -15,23 +15,31 @@ class TenantsController < ApplicationController
 
     Tenant.transaction do
 
-      @plan = Plan.find(params[:plan][:id])
-      @tenant = Tenant.new(params[:tenant])
+      @plan = Plan.find(params[:plan_id])
+
+      @tenant = Tenant.new
+      @tenant.subdomain = "#{params[:tenant_subdomain]}".downcase
+      @tenant.name = params[:tenant_name].strip
 
       if @tenant.save
 
-        Tenant.current = @tenant
-        Time.zone = params[:user][:time_zone]
-        I18n.locale = params[:user][:locale]
+        Time.zone = params[:user_time_zone]
+        I18n.locale = params[:user_locale]
 
-        @user = User.new(params[:user])
-        admin = Role.create(name: 'Admin')
+        @user = User.new
+        @user.name = params[:user_name].strip
+        @user.email = params[:user_email].strip
+        @user.password = params[:user_password].strip
+        @user.password_confirmation = params[:user_password_confirmation].strip
+        @user.locale = params[:user_locale]
+        @user.time_zone = params[:user_time_zone]
+        @user.tenant = @tenant
+
+        admin = Role.create(name: 'Admin', tenant: @tenant)
         admin.privileges << Privilege.all
         admin.save
 
-        @user.tenant = @tenant
         @user.roles << admin
-        @user.save
 
         if @user.save
 
@@ -42,43 +50,56 @@ class TenantsController < ApplicationController
           @subscription.plan              = @plan
           @subscription.price             = @plan.price
           @subscription.user_limit        = @plan.user_limit
-          @subscription.payment_period    = 0
+          @subscription.machine_limit     = @plan.machine_limit
+          @subscription.tanker_limit      = @plan.tanker_limit
+          @subscription.payment_period    = 1
           @subscription.next_payment_date = Time.zone.now + 1.months
 
           if @subscription.save
             # KBBTODO #75 use delay job for sending mail in future
-            TenantMailer.create_tenant(@user, @tenant).deliver
-            login @user, params[:user][:password]
+            TenantMailer.create_tenant(@user, @tenant, params[:user_password]).deliver
             status = :created
+            @response[:tenant_host] = "http://" + @tenant.subdomain.to_s + '.' + Kebab.application_url.to_s
           else
             @tenant.delete
             @user.delete
             @subscription.valid?
-            @subscription.errors.each { |a, m| add_error a, m}
             status = :unprocessable_entity
           end
 
         else
           @tenant.delete
           @user.delete
-          @user.errors.each { |a, m| add_error a, m}
           status = :unprocessable_entity
         end
       else
-        @tenant.errors.each { |a, m| add_error a, m}
         status = :unprocessable_entity
       end
     end
-    render json: @@response, status: status
+
+    if !@tenant.nil? && @tenant.invalid?
+      add_error 'tenant_name', @tenant.errors[:name] unless @tenant.errors[:name].blank?
+      add_error 'tenant_subdomain', @tenant.errors[:subdomain] unless @tenant.errors[:subdomain].blank?
+    end
+
+    if !@user.nil? && @user.invalid?
+      add_error 'user_name', @user.errors[:name] unless @user.errors[:name].blank?
+      add_error 'user_email', @user.errors[:email] unless @user.errors[:email].blank?
+      add_error 'user_password', @user.errors[:password] unless @user.errors[:password].blank?
+      add_error 'user_password_confirmation', @user.errors[:password_confirmation] unless @user.errors[:password_confirmation].blank?
+      add_error 'user_locale', @user.errors[:locale] unless @user.errors[:locale].blank?
+    end
+
+    render json: @response, status: status
   end
 
   # GET/tenant/1
   def show
-    @@response[:data]         = Hash.new
-    @@response[:data][:next]  = @current_tenant.subscription
-    @@response[:data][:older] = @current_tenant.subscription.payments
+    @response[:data]         = Hash.new
+    @response[:data][:next]  = @current_tenant.subscription
+    @response[:data][:older] = @current_tenant.subscription.payments
 
-    render json: @@response
+    render json: @response
   end
 
   # DELETE/tenants/:id
@@ -89,24 +110,22 @@ class TenantsController < ApplicationController
         ppr = PayPal::Recurring.new(:profile_id => @current_tenant.subscription.paypal_payment_token)
         ppr.cancel
       end
-      @current_tenant.passive_at = Time.zone.now
+      @current_tenant.active = false
       @current_tenant.save
       logout
-      render json: @@response
+      render json: @response
     else
       add_notice 'ERR', 'only owner can delete the account'
       render json: {success: false}
     end
   end
 
-  # GET/tenants/valid_host?host=host_name
-  def valid_host
-    if Tenant.find_by_host(params[:host]) != nil \
-       || Kebab.invalid_tenant_names.include?(params[:host].split('.').first) \
-       || params[:host].split('.').count != 3
+  # GET/tenants/valid_subdomain?subdomain=subdomain
+  def valid_subdomain
+    if Tenant.find_by_subdomain(params[:subdomain]) || Kebab.invalid_tenant_names.include?(params[:subdomain])
       render json: {success: false}
     else
-      render json: @@response
+      render json: @response
     end
   end
 end
