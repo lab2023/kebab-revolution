@@ -5,9 +5,11 @@
 # License::   Distributes under MIT
 
 # Role Model
-class Role < TenantScopedModel
+class Role <  ActiveRecord::Base
+  belongs_to :tenant
   has_and_belongs_to_many :users
   has_and_belongs_to_many :privileges
 
-  validates   :name, :presence => true
+  validates :tenant, :presence => true
+  validates :name, :presence => true
 end
