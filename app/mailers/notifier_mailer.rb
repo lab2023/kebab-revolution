@@ -6,7 +6,7 @@
 # user_name: "Onur Ozgur OZKAN"
 class NotifierMailer < ActionMailer::Base
   layout 'email'
-  default from: "onur.ozgur.ozkan@lab2023.com"
+  default from: "Kebab Dev Team <info@kebab-project.com>"
 
   # Before 10 days
   def trial_10_days_from_now subscription

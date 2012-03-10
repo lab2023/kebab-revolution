@@ -6,13 +6,13 @@
 -->
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-  </head>
-  <body>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body>
     <h1><%=t 'mail.common.dear_user_name', :user_name => @user.name %>,</h1>
     <%= yield %>
-    <p><%=t 'mail.common.ask_question', :application_email => Kebab.application_email %></p>
+    <p><%=t 'mail.common.ask_question', :application_email => Kebab.application_support_email %></p>
     <p><%=t 'mail.common.best_regards' %></p>
-  </body>
+</body>
 </html>

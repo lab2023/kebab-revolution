@@ -7,7 +7,7 @@
 # User Mailer
 class UserMailer < ActionMailer::Base
   layout 'email'
-  default from: "onur.ozgur.ozkan@lab2023.com"
+  default from: "Kebab Dev Team <no-reply@kebab-project.com>"
 
   # Public: Send forget password mail
   #
@@ -17,28 +17,32 @@ class UserMailer < ActionMailer::Base
     @user = user
     @new_password = user.password
     @application_name = Kebab.application_name
-    mail(to: @user.email, subject: I18n.t('mail.subjects.forget_password', :application_name => Kebab.application_name))
-  end
-
-  # Public: Send feedback
-  #
-  # subject - string
-  # body    - text
-  # user    - object - User Model
-  def send_feedback  user, subject, message
-    I18n.locale = user.locale
-    @user   = user
-    @message = message
-    mail(to: "onur.ozgur.ozkan@lab2023.com", subject: "#{@user.name}" + " " + subject)
+    email_with_name = "#{@user.name} <#{@user.email}>"
+    mail(to: email_with_name, subject: I18n.t('mail.subjects.forget_password', :application_name => Kebab.application_name))
   end
 
   # Public: Invite
   #
   # user - object - User Model
-  def invite user, tenant_host
+  def invite user, subdomain
     I18n.locale = user.locale
     @user   = user
-    @application_url = "http://" + tenant_host.to_s
-    mail(to: @user.email, subject: I18n.t('mail.subjects.invite_user', :application_name => Kebab.application_name))
+    @application_url = "http://" + subdomain.to_s + "." + Kebab.application_url.to_s
+    email_with_name = "#{@user.name} <#{@user.email}>"
+    mail(to: email_with_name, subject: I18n.t('mail.subjects.invite_user', :application_name => Kebab.application_name))
+  end
+
+  def enable user
+    I18n.locale = user.locale
+    @user = user
+    email_with_name = "#{@user.name} <#{@user.email}>"
+    mail(to: email_with_name, subject: I18n.t('mail.subjects.enable_user', :application_name => Kebab.application_name))
+  end
+
+  def disable user
+    I18n.locale = user.locale
+    @user = user
+    email_with_name = "#{@user.name} <#{@user.email}>"
+    mail(to: email_with_name, subject: I18n.t('mail.subjects.disable_user', :application_name => Kebab.application_name))
   end
 end
