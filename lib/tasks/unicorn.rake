@@ -5,32 +5,32 @@ namespace :unicorn do
 
   desc "start unicorn"
   task :start do
+    puts "Unicorn is starting"
     system "cd #{Rails.root} && bundle exec unicorn -c #{Rails.root}/config/unicorn.rb -E #{rails_env} -D"
-    puts "Unicorn is start"
   end
 
   desc "stop unicorn"
   task :stop do
+    puts "Unicorn is stopping"
     system "kill `cat #{unicorn_pid}`"
-    puts "Unicorn is stop"
   end
 
   desc "graceful stop unicorn"
   task :graceful_stop do
+    puts "Unicorn is graceful stopping"
     system "kill -s QUIT `cat #{unicorn_pid}`"
-    puts "Unicorn is graceful stop"
   end
 
   desc "reload unicorn"
   task :reload do
+    puts "Unicorn is reloading"
     system "kill -s USR2 `cat #{unicorn_pid}`"
-    puts "Unicorn is reload"
   end
 
   desc "restart unicorn"
   task :restart do
-    stop
-    start
-    puts "Unicorn is restart"
+    puts "Unicorn is restarting"
+    Rake::Task['unicorn:stop'].execute
+    Rake::Task['unicorn:start'].execute
   end
 end
