@@ -20,6 +20,6 @@ class TenantMailer < ActionMailer::Base
     @password = password
     @application_url = "http://" + tenant.subdomain.to_s + '.' + Kebab.application_url
     email_with_name = "#{@user.name} <#{@user.email}>"
-    mail(:to => email_with_name, :bcc => 'info@coninja.com', :subject => I18n.t('mail.subjects.register_tenant', :application_name => Kebab.application_name) )
+    mail(:to => email_with_name, :bcc => 'info@kebab-project.com', :subject => I18n.t('mail.subjects.register_tenant', :application_name => Kebab.application_name) )
   end
 end

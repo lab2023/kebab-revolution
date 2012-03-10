@@ -88,7 +88,7 @@ tr:
         p1: "10 gün içerisinde %{application_name} deneme sürümünüz bitecektir. Lütfen hesabınızın devam etmesi için öncelikle %{application_name}'ya oturum açmanız sonra hesap yönetimi uygulamasından Paypal düzenli ödemesini aktive etmeniz gerekmektedir."
         p2: "NOT: Bu size attığımız ikinci maildir ve başka uyarı maili atılmayacaktır. 5 gün sonra %{application_name} hesabımız pasif edilecektir.."
       trial_cancel_tenant:
-        p1: "%{application_name} deneme sürümünüz bitmiştir ve Paypal otomatik ödemeyi aktive etmediğiniz için coNinja hesabınız pasif edilmiştir."
+        p1: "%{application_name} deneme sürümünüz bitmiştir ve Paypal otomatik ödemeyi aktive etmediğiniz için kebab hesabınız pasif edilmiştir."
       payment_failures_5_days_ago:
         p1: "%{subscription_next_payment_date} tarihindeki %{subscription_amount} USD tutarında ki %{application_name} ödemeniz maalesef başarısız olmuştur. Lütfen Paypal hesabınızı kontrol ediniz."
         p2: "Ödeme 5 gün içerisinde gerçekleşmezse  %{application_name} hesabınız pasif edilecektir."

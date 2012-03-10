@@ -29,6 +29,6 @@ class PagesController < ApplicationController
   # POST/pages/missing_translation
   def missing_translation
     logger.fatal params[:missing]
-    render json: @@response
+    render json: @response
   end
 end
