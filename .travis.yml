@@ -2,6 +2,9 @@ language: ruby
 rvm:
   - 1.9.3
 
+before_script:
+  - mysql -e 'create database kebab_test;'
+
 branches:
   only:
     - master
