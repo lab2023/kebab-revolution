@@ -50,8 +50,6 @@ class TenantsController < ApplicationController
           @subscription.plan              = @plan
           @subscription.price             = @plan.price
           @subscription.user_limit        = @plan.user_limit
-          @subscription.machine_limit     = @plan.machine_limit
-          @subscription.tanker_limit      = @plan.tanker_limit
           @subscription.payment_period    = 1
           @subscription.next_payment_date = Time.zone.now + 1.months
 

@@ -1,0 +1,6 @@
+<script type="text/javascript">
+Kebab.setBootstrap(<%= @bootstrap.to_json.html_safe %>);
+Ext.onReady(function() {
+    Ext.create('Apps.' + Ext.urlDecode(window.location.search).app + '.Application') ;
+});
+</script>

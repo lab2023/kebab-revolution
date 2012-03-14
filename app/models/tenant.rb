@@ -9,17 +9,6 @@ class Tenant < ActiveRecord::Base
   has_one   :subscription
   has_many  :users
   has_many  :roles
-  has_many  :companies
-  has_many  :personnel
-  has_many  :projects
-  has_many  :worksites
-  has_many  :machines
-  has_many  :engine_times
-  has_many  :kilometers
-  has_many  :machine_activities
-  has_many  :tankers
-  has_many  :tanker_sensors
-  has_many  :cameras
 
 
   # Tenant regex standard
