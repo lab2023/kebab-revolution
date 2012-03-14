@@ -7,7 +7,7 @@ class CreatePlans < ActiveRecord::Migration
       t.boolean :recommended, :default => false
     end
 
-    Plan.create!(:name => "Free",    :price => 0,   :user_limit => 1,    :recommended => false)
+    Plan.create!(:name => "Free",    :price => 0,   :user_limit => 2,    :recommended => false)
     Plan.create!(:name => "Basic",   :price => 99,  :user_limit => 4,    :recommended => false)
     Plan.create!(:name => "Plus",    :price => 299, :user_limit => 12,   :recommended => true)
     Plan.create!(:name => "Premium", :price => 499, :user_limit => 24,   :recommended => false)
