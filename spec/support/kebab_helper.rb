@@ -5,11 +5,11 @@ module KebabHelper
     Rails.application
   end
 
-  def valid_tenant_host
+  def valid_tenant_subdomain
     "lab2023.#{Kebab.application_url.to_s}"
   end
 
-  def invalid_tenant_host
+  def invalid_tenant_subdomain
     "invalid.#{Kebab.application_url.to_s}"
   end
 end

@@ -38,7 +38,7 @@ describe Tenant do
     end
     
     it "should be uniqueness" do
-      @new_tenant.subdomain = @tenant.host
+      @new_tenant.subdomain = @tenant.subdomain
       @new_tenant.should be_invalid
       @new_tenant.errors[:subdomain].should include("has already been taken")
     end
@@ -58,7 +58,7 @@ describe Tenant do
     it "length should be maximum 255" do
       tenant = Tenant.create({:subdomain => 'test'*64})
       tenant.should be_invalid
-      tenant.errors[:subdomain].should include("is too long (maximum is 255 characters)")
+      tenant.errors[:subdomain].should include("is too long (maximum is 61 characters)")
     end
   end
 end
