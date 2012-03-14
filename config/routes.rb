@@ -17,6 +17,7 @@ KebabServerRor::Application.routes.draw do
       get 'next_subscription'
       get 'payments'
       get 'plans'
+      get 'limits'
     end
   end
 
@@ -25,8 +26,8 @@ KebabServerRor::Application.routes.draw do
   resources :feedback
   resources :users do
     collection do
-      post 'active'
-      post 'passive'
+      post 'enable'
+      post 'disable'
     end
   end
 
