@@ -44,7 +44,7 @@ namespace :dev do
 
     # Subscription
     plan_2 = Plan.find(2)
-    subscription = Subscription.create!(plan_id: plan_2.id, tenant_id: 1, user_id: 1, price: plan_2.price, user_limit: plan_2.user_limit, machine_limit: plan_2.machine_limit, tanker_limit: plan_2.tanker_limit, payment_period: 1, next_payment_date: Time.zone.now + 1.months)
+    subscription = Subscription.create!(plan_id: plan_2.id, tenant_id: 1, user_id: 1, price: plan_2.price, user_limit: plan_2.user_limit, payment_period: 1, next_payment_date: Time.zone.now + 1.months)
 
     # Payments
     Payment.create!(price: 99, payment_date: Time.now - 1.months, subscription: subscription)

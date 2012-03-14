@@ -11,9 +11,10 @@
     <title>Kebab Web OS</title>
 
     <!-- include js and css files here -->
-    <link rel="stylesheet" type="text/css" href="static/vendors/ext-4.1.0-beta-2/resources/css/ext-all-gray.css" />
-    <script type="text/javascript" src="static/vendors/ext-4.1.0-beta-2/ext-all-debug.js"></script>
-    <script type="text/javascript" src="static/kebab/bootstrap.js"></script>
+    <script type="text/javascript" src="os/vendors/ext-4.1.0-beta-2/ext-all-debug.js"></script>
+    <script type="text/javascript" src="os/vendors/ext-4.1.0-beta-2/locale/ext-lang-<%=I18n.locale %>.js"></script>
+    <script type="text/javascript" src="os/locale/kebab-lang-<%=I18n.locale%>.js"></script>
+    <script type="text/javascript" src="os/kebab/kebab.js"></script>
 
     <%= csrf_meta_tags %>
 </head>

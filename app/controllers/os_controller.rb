@@ -21,7 +21,7 @@ class OsController < ApplicationController
     @bootstrap = bootstrap
   end
 
-  # GET/os/login
+  # GET/os/app_runner
   def app_runner
     @bootstrap = bootstrap
   end

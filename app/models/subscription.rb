@@ -16,7 +16,6 @@ class Subscription < ActiveRecord::Base
   validates :user, :presence => {:on => :create}
   validates :price, :presence => {:on => :create}
   validates :user_limit, :presence => {:on => :create}, :numericality => {:greater_than => 0, :only_integer => true}
-  validates :machine_limit, :presence => {:on => :create}, :numericality => {:greater_than => 0, :only_integer => true}
   validates :payment_period, :numericality => {:greater_than => 0, :only_integer => true}
 
   scope :commercial, where("subscriptions.price > 0")
@@ -95,8 +94,6 @@ class Subscription < ActiveRecord::Base
     @subscription.plan_id = @free_plan.id
     @subscription.price = @free_plan.price
     @subscription.user_limit = @free_plan.user_limit
-    @subscription.machine_limit = @free_plan.machine_limit
-    @subscription.tanker_limit = @free_plan.tanker_limit
     @subscription.paypal_token = nil
     @subscription.paypal_customer_token = nil
     @subscription.paypal_payment_token = nil
@@ -117,8 +114,6 @@ class Subscription < ActiveRecord::Base
     @subscription.plan = @commercial_plan
     @subscription.price = @commercial_plan.price
     @subscription.user_limit = @commercial_plan.user_limit
-    @subscription.machine_limit = @commercial_plan.machine_limit
-    @subscription.tanker_limit = @commercial_plan.tanker_limit
     @subscription.next_payment_date = Time.zone.now
 
     return @subscription.save ? true : false
@@ -147,8 +142,6 @@ class Subscription < ActiveRecord::Base
     @subscription.plan_id = @new_plan.id
     @subscription.price = @new_plan.price
     @subscription.user_limit = @new_plan.user_limit
-    @subscription.machine_limit = @new_plan.machine_limit
-    @subscription.tanker_limit = @new_plan.tanker_limit
 
     return @subscription.save ? true : false
   end
@@ -170,8 +163,6 @@ class Subscription < ActiveRecord::Base
     @subscription.plan_id = @new_plan.id
     @subscription.price = @new_plan.price
     @subscription.user_limit = @new_plan.user_limit
-    @subscription.machine_limit = @new_plan.machine_limit
-    @subscription.tanker_limit = @new_plan.tanker_limit
     @subscription.payment_period = 1
     @subscription.paypal_token = nil
     @subscription.paypal_customer_token = nil

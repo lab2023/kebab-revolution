@@ -37,10 +37,9 @@ ActiveRecord::Schema.define(:version => 20120103013003) do
 
   create_table "plans", :force => true do |t|
     t.string  "name"
-    t.decimal "price",         :precision => 6, :scale => 2
+    t.decimal "price",       :precision => 6, :scale => 2
     t.integer "user_limit"
-    t.integer "machine_limit"
-    t.boolean "recommended",                                 :default => false
+    t.boolean "recommended",                               :default => false
   end
 
   create_table "privilege_translations", :force => true do |t|
@@ -100,7 +99,6 @@ ActiveRecord::Schema.define(:version => 20120103013003) do
     t.integer  "user_id"
     t.decimal  "price",                 :precision => 6, :scale => 2
     t.integer  "user_limit"
-    t.integer  "machine_limit"
     t.integer  "payment_period"
     t.datetime "next_payment_date"
     t.string   "paypal_token"

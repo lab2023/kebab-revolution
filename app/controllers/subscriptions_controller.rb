@@ -13,8 +13,6 @@ class SubscriptionsController < ApplicationController
     subscription = @current_tenant.subscription
     response = {success: true}
     response[:user_limit] = "#{@current_tenant.users.enable.count}" + " / " + "#{@current_tenant.subscription.user_limit}"
-    response[:machine_limit] = "#{@current_tenant.machines.active.count}" + " / " + "#{@current_tenant.subscription.machine_limit}"
-    response[:tanker_limit] = "#{@current_tenant.tankers.enable.count}" + " / " + "#{@current_tenant.subscription.tanker_limit}"
     response[:plan_id] = subscription.plan.id
     response[:plan_name] = subscription.plan.name
     response[:created_at] = subscription.created_at
@@ -122,9 +120,7 @@ class SubscriptionsController < ApplicationController
   # Return json
   def limits
     @response[:data] = {
-        user: {total:  @current_tenant.users.enable.count, limit: @current_tenant.subscription.user_limit},
-        machine: {total:  @current_tenant.machines.active.count, limit: @current_tenant.subscription.machine_limit},
-        tanker: {total:  @current_tenant.tankers.enable.count, limit: @current_tenant.subscription.tanker_limit}
+        user: {total:  @current_tenant.users.enable.count, limit: @current_tenant.subscription.user_limit}
     }
     render json: @response
   end
@@ -143,18 +139,6 @@ class SubscriptionsController < ApplicationController
     unless reach_plan_user_limit? new_plan_id
       @response[:success] = false
       add_notice('error', I18n.t('notice.subscriptions.too_many_active_user_for_downgrade_plan'))
-      retVal = false
-    end
-
-    unless reach_plan_machine_limit? new_plan_id
-      @response[:success] = false
-      add_notice('info', I18n.t('notice.subscriptions.too_many_active_machine_for_downgrade_plan'))
-      retVal = false
-    end
-
-    unless reach_plan_tanker_limit? new_plan_id
-      @response[:success] = false
-      add_notice('error', I18n.t('notice.subscriptions.too_many_active_tanker_for_downgrade_plan'))
       retVal = false
     end
 

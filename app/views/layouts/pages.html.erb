@@ -11,27 +11,14 @@
   <meta name="description" content=""/>
 
   <!-- stylesheets -->
-  <%= stylesheet_link_tag "layout", :debug => true %>
-  <%= stylesheet_link_tag "ext-core/lightbox" %>
+  <%= stylesheet_link_tag "application", :debug => true %>
   <%= favicon_link_tag '/favicon.ico' %>
-  <%= javascript_include_tag "ext-core/ext-core" %>
-  <%= javascript_include_tag "ext-core/lightbox" %>
-  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "application", :debug => true  %>
 
   <%= csrf_meta_tags %>
 </head>
 
 <body>
-
-<div class="container_12">
-
-  <%= render "partials/pages/header" %>
-
-  <%= yield %>
-
-  <%= render "partials/pages/footer" %>
-
-</div>
-
+<%= yield %>
 </body>
 </html>

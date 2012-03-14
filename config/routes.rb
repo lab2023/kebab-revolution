@@ -6,7 +6,11 @@ KebabServerRor::Application.routes.draw do
   match 'plans'             => 'pages#plans'
   match 'register'          => 'pages#register'
 
-  post 'pages/missing_translation'
+  #os
+  match 'login'   => 'os#login'
+  match 'desktop' => 'os#desktop'
+  match 'app_runner' => 'os#app_runner'
+  post 'os/missing_translation'
 
   resources :subscriptions do
     collection do
@@ -35,5 +39,5 @@ KebabServerRor::Application.routes.draw do
   end
 
   root to: "pages#index", :constraints => {:subdomain => "www"}
-  root to: "pages#login"
+  root to: "os#login"
 end
