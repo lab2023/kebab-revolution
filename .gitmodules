@@ -1,3 +1,0 @@
-[submodule "public/os"]
-	path = public/os
-	url = git@github.com:kebab-project/client-web-os.git
