@@ -1,6 +1,6 @@
 GIT
-  remote: git@github.com:onurozgurozkan/paypal-recurring.git
-  revision: e77bce044559d8b9acd4e0675a4cdd7a1bd91da2
+  remote: git://github.com/onurozgurozkan/paypal-recurring.git
+  revision: 5d7198ee0339fc7a9a180af549379aadec3db0ef
   branch: master
   specs:
     paypal-recurring (0.1.6)

@@ -11,7 +11,7 @@ gem 'globalize3'
 gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Paypal Gem
-gem "paypal-recurring", :git => "git@github.com:onurozgurozkan/paypal-recurring.git", :branch => "master"
+gem "paypal-recurring", :git => "git://github.com/onurozgurozkan/paypal-recurring.git", :branch => "master"
 
 # Use unicorn as the web server
 gem 'unicorn'

@@ -37,9 +37,10 @@ ActiveRecord::Schema.define(:version => 20120103013003) do
 
   create_table "plans", :force => true do |t|
     t.string  "name"
-    t.decimal "price",       :precision => 6, :scale => 2
+    t.decimal "price",         :precision => 6, :scale => 2
     t.integer "user_limit"
-    t.boolean "recommended",                               :default => false
+    t.integer "machine_limit"
+    t.boolean "recommended",                                 :default => false
   end
 
   create_table "privilege_translations", :force => true do |t|
@@ -84,6 +85,8 @@ ActiveRecord::Schema.define(:version => 20120103013003) do
     t.datetime "updated_at"
   end
 
+  add_index "roles", ["tenant_id"], :name => "index_roles_on_tenant_id"
+
   create_table "roles_users", :id => false, :force => true do |t|
     t.integer "role_id", :null => false
     t.integer "user_id", :null => false
@@ -97,6 +100,7 @@ ActiveRecord::Schema.define(:version => 20120103013003) do
     t.integer  "user_id"
     t.decimal  "price",                 :precision => 6, :scale => 2
     t.integer  "user_limit"
+    t.integer  "machine_limit"
     t.integer  "payment_period"
     t.datetime "next_payment_date"
     t.string   "paypal_token"
@@ -106,17 +110,21 @@ ActiveRecord::Schema.define(:version => 20120103013003) do
     t.datetime "updated_at"
   end
 
+  add_index "subscriptions", ["tenant_id"], :name => "index_subscriptions_on_tenant_id"
+
   create_table "tenants", :force => true do |t|
     t.string   "name"
-    t.string   "host"
+    t.string   "subdomain"
+    t.string   "cname"
     t.datetime "passive_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "tenants", ["host"], :name => "index_tenants_on_host", :unique => true
+  add_index "tenants", ["cname"], :name => "index_tenants_on_cname", :unique => true
   add_index "tenants", ["name"], :name => "index_tenants_on_name", :unique => true
   add_index "tenants", ["passive_at"], :name => "index_tenants_on_passive_at"
+  add_index "tenants", ["subdomain"], :name => "index_tenants_on_subdomain", :unique => true
 
   create_table "users", :force => true do |t|
     t.integer  "tenant_id"
@@ -125,7 +133,7 @@ ActiveRecord::Schema.define(:version => 20120103013003) do
     t.string   "password_digest"
     t.string   "time_zone"
     t.string   "locale"
-    t.datetime "passive_at"
+    t.boolean  "disabled",        :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
