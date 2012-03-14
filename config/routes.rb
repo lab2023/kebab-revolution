@@ -1,10 +1,7 @@
 KebabServerRor::Application.routes.draw do
 
-  match 'index'             => 'pages#index'
-  match 'desktop'           => 'pages#desktop'
-  match 'login'             => 'pages#login'
-  match 'plans'             => 'pages#plans'
-  match 'register'          => 'pages#register'
+  #pages
+  match 'index' => 'pages#index'
 
   #os
   match 'login'   => 'os#login'
