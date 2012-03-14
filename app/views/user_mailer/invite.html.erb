@@ -1,11 +1,2 @@
-<% # KBBTODO add i18n %>
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-  </head>
-  <body>
-    <h1>Welcome <%= @user.name %>,</h1>
-    <p>Your password is <%= @user.password %>.</p>
-  </body>
-</html>
+<p><%=t 'mail.user.invite.p1', :application_name => Kebab.application_name, :application_url => @application_url %></p>
+<p><%=t 'mail.user.invite.p2', :user_password => @user.password %></p>

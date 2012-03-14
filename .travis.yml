@@ -1,0 +1,15 @@
+before_script:
+  - mysql -e 'create database kebab_test;'
+
+rvm:
+  - 1.9.3
+
+script:
+  - "bundle exec rake db:create db:migrate spec"
+
+env:
+  - DB=mysql
+
+branches:
+  only:
+    - develop

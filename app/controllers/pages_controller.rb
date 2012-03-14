@@ -6,31 +6,29 @@
 #
 # Pages Controller
 class PagesController < ApplicationController
-  skip_around_filter :tenant,       only: [:index, :register, :plans]
-  skip_before_filter :authenticate, only: [:index, :register, :plans, :login]
+  layout "pages"
+
+  skip_before_filter :tenant
+  skip_before_filter :authenticate
   skip_before_filter :authorize
 
   # GET/pages/index
   def index
   end
 
-  # GET/pages/desktop
-  def desktop
-    @bootstrap = bootstrap
-  end
-
-  # GET/pages/login
-  def login
-    @bootstrap = bootstrap
-  end
-
   # GET/pages/plans
   def plans
-    @plans = Plan.order("price")
   end
 
   # GET/pages/register
   def register
-    @bootstrap = bootstrap false
+    @plan_id = params[:plan].to_i
+    redirect_to :action => :plans unless (1..5).member?(@plan_id.to_i)
+  end
+
+  # POST/pages/missing_translation
+  def missing_translation
+    logger.fatal params[:missing]
+    render json: @response
   end
 end

@@ -5,10 +5,6 @@ describe Tenant do
     @tenant = Factory(:tenant)
     @new_tenant = Tenant.new
   end
-  
-  it "can be instance of tenant" do
-    @tenant.should be_an_instance_of(Tenant)
-  end
 
   describe "Name" do
     it "should be presence" do
@@ -35,34 +31,34 @@ describe Tenant do
     end    
   end
   
-  describe "Host" do
+  describe "subdomain" do
     it "should be presence" do
       @new_tenant.should be_invalid
-      @new_tenant.errors[:host].should include("can't be blank")      
+      @new_tenant.errors[:subdomain].should include("can't be blank")
     end
     
     it "should be uniqueness" do
-      @new_tenant.host = @tenant.host
+      @new_tenant.subdomain = @tenant.subdomain
       @new_tenant.should be_invalid
-      @new_tenant.errors[:host].should include("has already been taken")
+      @new_tenant.errors[:subdomain].should include("has already been taken")
     end
     
     it "should be exclusion of www" do
-      @new_tenant.host = 'www'
+      @new_tenant.subdomain = 'www'
       @new_tenant.should be_invalid
-      @new_tenant.errors[:host].should include("is reserved")
+      @new_tenant.errors[:subdomain].should include("is reserved")
     end
     
     it "length should be minimum 4" do
-      tenant = Tenant.create({:host => 'abc'})
+      tenant = Tenant.create({:subdomain => 'abc'})
       tenant.should be_invalid
-      tenant.errors[:host].should include("is too short (minimum is 4 characters)")
+      tenant.errors[:subdomain].should include("is too short (minimum is 4 characters)")
     end
     
     it "length should be maximum 255" do
-      tenant = Tenant.create({:host => 'test'*64})
+      tenant = Tenant.create({:subdomain => 'test'*64})
       tenant.should be_invalid
-      tenant.errors[:host].should include("is too long (maximum is 255 characters)")
+      tenant.errors[:subdomain].should include("is too long (maximum is 61 characters)")
     end
   end
 end

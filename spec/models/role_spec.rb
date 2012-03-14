@@ -22,7 +22,7 @@ describe Role do
     end
 
     it "fallbacks for empty translations" do
-      @role.tenant = Tenant.create(:name => 'Test', :host => 'test.server-ror.local')
+      @role.tenant = Tenant.create(:name => 'Test', :subdomain => 'test')
       I18n.locale = :tr
       @role.name.should eql('Admin')
       I18n.locale = :en

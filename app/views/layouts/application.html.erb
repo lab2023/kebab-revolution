@@ -10,10 +10,14 @@
     <meta charset="utf-8">
     <title>Kebab Web OS</title>
 
+    <!-- include favicon here -->
+    <%= favicon_link_tag '/favicon.ico' %>
+
     <!-- include js and css files here -->
-    <link rel="stylesheet" type="text/css" href="http://static.<%= Kebab.application_url.to_s %>/vendors/ext-4.0.7-gpl/resources/css/ext-all-gray.css" />
-    <script type="text/javascript" src="http://static.<%= Kebab.application_url.to_s %>/vendors/ext-4.0.7-gpl/bootstrap.js"></script>
-    <script type="text/javascript" src="http://static.<%= Kebab.application_url.to_s %>/kebab/bootstrap.js"></script>
+    <script type="text/javascript" src="os/vendors/ext-4.1.0-beta-2/ext-all-debug.js"></script>
+    <script type="text/javascript" src="os/vendors/ext-4.1.0-beta-2/locale/ext-lang-<%=I18n.locale %>.js"></script>
+    <script type="text/javascript" src="os/locale/kebab-lang-<%=I18n.locale%>.js"></script>
+    <script type="text/javascript" src="os/kebab/kebab.js"></script>
 
     <%= csrf_meta_tags %>
 </head>

@@ -4,6 +4,9 @@ class CreateApplications < ActiveRecord::Migration
       t.string :sys_name
       t.string :sys_department
     end
+
+    Application.create!(sys_name: 'userManager',      sys_department: 'system')
+    Application.create!(sys_name: 'accountManager',   sys_department: 'system')
   end
 
   def down

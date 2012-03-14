@@ -42,7 +42,7 @@ ru:
         payment_period: "payment period"
         next_payment_date: "next payment date"
         paypal_customer_token: "paypal customer id"
-        paypal_recurring_payment_profile_token: "paypal profile tokent"
+        paypal_payment_token: "paypal profile tokent"
       plan:
         name: "name"
         price: "price"
@@ -53,6 +53,44 @@ ru:
         price: "price"
         payment_date: "payment date"
         invoice_no: "invoice no"
-        paypal_recurring_payment_profile_token: "paypal profile token"
+        paypal_payment_token: "paypal profile token"
+
   notice:
     invalid_tenant: "Неверный счет"
+
+  mail:
+    subjects:
+      forget_password: "%{application_name} Forget Password "
+      invite_user: "Welcome %{application_name} "
+      register_tenant: "Welcome %{application_name} "
+      trial_10_days_from_now: "%{application_name} Trial Account Reminder "
+      trial_5_days_from_now: "%{application_name} Trial Account Reminder "
+      trial_cancel_tenant: "%{application_name} Trial Account Canceled "
+      payment_failures_5_days_ago: "%{application_name} Payment Reminder"
+      payment_failures_cancel_tenant: "%{application_name} Payment Reminder "
+    common:
+      dear_user_name: "Dear %{user_name}"
+      best_regards: "Best Regards"
+      ask_question: "You can ask any question via sending mail at %{application_email}"
+    user:
+      forget_password:
+        p1: "Your new %{application_name} password is %{new_password}, consume more fish to have better memory."
+      invite:
+        p1: "Your %{application_name} account was opened. You can access the program at %{application_url}."
+        p2: "Password: %{user_password}"
+    tenant:
+      create:
+        p1: "Thanks for preferring %{application_name}. You can access the program at this address %{application_url}"
+    notifier:
+      trial_10_days_from_now:
+        p1: "%{application_name} trial edition will be end in 10 days. If you want to continue using  %{application_name}, Please Firstly sign-in at %{application_name} and activate Paypal recurring payment at account setting."
+      trial_5_days_from_now:
+        p1: "%{application_name} trial edition will be end in  5 days. If you want to continue using  %{application_name}, Please Firstly sign-in at %{application_name} and activate Paypal recurring payment at account setting."
+        p2: "ps. This mail is second mail we send you about finishing your %{application_name}’s trial period, You wont get another mail. Your %{application_name} account will be deactivated in 5 days."
+      trial_cancel_tenant:
+        p1: "Your %{application_name}’s trial period is end. Your %{application_name} account was deactivated in order to don’t activate Paypal recurring payment."
+      payment_failures_5_days_ago:
+        p1: "Your %{application_name} payment, %{subscription_next_payment_date} dated and USD%{subscription_amount} amount was failed, Please check you paypal payment."
+        p2: "Your %{application_name} account will be deactivated unless your payment doesn't made in 5 days."
+      payment_failures_cancel_tenant:
+        p1: "Your %{application_name} account was deactivated because of failing your paypal payment %{subscription_next_payment_date} dated,  USD%{subscription_amount} amount."

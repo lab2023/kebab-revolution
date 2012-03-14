@@ -1,10 +1,13 @@
 KebabServerRor::Application.routes.draw do
 
-  match 'index'             => 'pages#index'
-  match 'desktop'           => 'pages#desktop'
-  match 'login'             => 'pages#login'
-  match 'plans'             => 'pages#plans'
-  match 'register'          => 'pages#register'
+  #pages
+  match 'index' => 'pages#index'
+
+  #os
+  match 'login'   => 'os#login'
+  match 'desktop' => 'os#desktop'
+  match 'app_runner' => 'os#app_runner'
+  post 'os/missing_translation'
 
   resources :subscriptions do
     collection do
@@ -14,6 +17,7 @@ KebabServerRor::Application.routes.draw do
       get 'next_subscription'
       get 'payments'
       get 'plans'
+      get 'limits'
     end
   end
 
@@ -22,8 +26,8 @@ KebabServerRor::Application.routes.draw do
   resources :feedback
   resources :users do
     collection do
-      post 'active'
-      post 'passive'
+      post 'enable'
+      post 'disable'
     end
   end
 
@@ -32,6 +36,6 @@ KebabServerRor::Application.routes.draw do
     get :tests
   end
 
-  # KBBTODO #97
-  root to: "pages#index"
+  root to: "pages#index", :constraints => {:subdomain => "www"}
+  root to: "os#login"
 end

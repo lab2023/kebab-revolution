@@ -11,19 +11,22 @@ class Subscription < ActiveRecord::Base
   belongs_to :plan
   belongs_to :user
 
-  validates :tenant, :presence => {:on => :create}
+  validates :tenant, :presence => true
   validates :plan, :presence => {:on => :create}
   validates :user, :presence => {:on => :create}
   validates :price, :presence => {:on => :create}
   validates :user_limit, :presence => {:on => :create}, :numericality => {:greater_than => 0, :only_integer => true}
-  validates :payment_period, :numericality => {:greater_than => 0}
+  validates :payment_period, :numericality => {:greater_than => 0, :only_integer => true}
 
   scope :commercial, where("subscriptions.price > 0")
   scope :free, where("subscriptions.price = 0")
-  scope :with_recurring_profile, where("paypal_recurring_payment_profile_token IS NOT NULL")
-  scope :without_recurring_profile, where("paypal_recurring_payment_profile_token IS NULL")
+  scope :with_recurring_profile, where("paypal_payment_token IS NOT NULL")
+  scope :without_recurring_profile, where("paypal_payment_token IS NULL")
   scope :notifier, commercial.joins(:user, :plan, :tenant).where("tenants.passive_at IS NULL ") \
-                                    .select("tenants.id as tenant_id, users.email, users.name as user_name, users.locale, subscriptions.price, subscriptions.next_payment_date, plans.name as plan_name")
+                             .select("tenants.id as tenant_id")
+  .select("users.email, users.name as user_name, users.locale")
+  .select("subscriptions.price, subscriptions.next_payment_date")
+  .select("plans.name as plan_name")
 
   # Find trials subscription without recurring profile
   #
@@ -37,6 +40,11 @@ class Subscription < ActiveRecord::Base
   # Find due trials to cancel account
   def self.find_finished_trials
     notifier.without_recurring_profile.where("next_payment_date < ?", 1.days.ago.end_of_day)
+  end
+
+  # Find payments
+  def self.find_payment
+    notifier.with_recurring_profile.select('subscriptions.payment_period, subscriptions.paypal_payment_token').where("next_payment_date < ?", Time.zone.now.end_of_day)
   end
 
   # Find payment Failures
@@ -54,7 +62,7 @@ class Subscription < ActiveRecord::Base
   # old_plan_id Integer
   #
   # Return false or String
-  def self.change_plan_type new_plan_id, old_plan_id
+  def self.change_plan_type old_plan_id, new_plan_id
     # KBBTODO refactor this code use switch
     change_plan_type = false
     if old_plan_id == 1 and new_plan_id > 1
@@ -74,13 +82,12 @@ class Subscription < ActiveRecord::Base
   # subscription table then update subscription table.
   #
   # Return boolean
-  def self.commercial_to_free
-    @tenant = Tenant.current
-    @subscription = Subscription.find_by_tenant_id(@tenant.id)
+  def self.commercial_to_free subscription
     @free_plan = Plan.first
+    @subscription = subscription
 
-    unless @tenant.subscription.paypal_recurring_payment_profile_token.nil?
-      ppr = PayPal::Recurring.new(:profile_id => @tenant.subscription.paypal_recurring_payment_profile_token)
+    unless @subscription.paypal_payment_token.nil?
+      ppr = PayPal::Recurring.new(:profile_id => @subscription.paypal_payment_token)
       ppr.cancel
     end
 
@@ -89,7 +96,7 @@ class Subscription < ActiveRecord::Base
     @subscription.user_limit = @free_plan.user_limit
     @subscription.paypal_token = nil
     @subscription.paypal_customer_token = nil
-    @subscription.paypal_recurring_payment_profile_token = nil
+    @subscription.paypal_payment_token = nil
     @subscription.next_payment_date = nil
 
     return @subscription.save ? true : false
@@ -100,11 +107,10 @@ class Subscription < ActiveRecord::Base
   # new_plan_id Integer
   #
   # Return boolean
-  def self.free_to_commercial new_plan_id
-    @tenant = Tenant.current
-    @subscription = Subscription.find_by_tenant_id(@tenant.id)
+  def self.free_to_commercial subscription, new_plan_id
     @commercial_plan = Plan.find(new_plan_id)
 
+    @subscription = subscription
     @subscription.plan = @commercial_plan
     @subscription.price = @commercial_plan.price
     @subscription.user_limit = @commercial_plan.user_limit
@@ -118,16 +124,15 @@ class Subscription < ActiveRecord::Base
   # new_plan_id Integer
   #
   # Return boolean
-  def self.downgrade new_plan_id
-    @tenant = Tenant.current
-    @subscription = Subscription.find_by_tenant_id(@tenant.id)
+  def self.downgrade subscription, new_plan_id
     @new_plan = Plan.find(new_plan_id)
+    @subscription = subscription
 
-    unless @tenant.subscription.paypal_recurring_payment_profile_token.nil?
+    unless @subscription.paypal_payment_token.nil?
       ppr = PayPal::Recurring.new({
                                       :amount => @new_plan.price,
                                       :currency => "USD",
-                                      :profile_id => @subscription.paypal_recurring_payment_profile_token,
+                                      :profile_id => @subscription.paypal_payment_token,
                                       :description => "#{@new_plan.name}" + " - Monthly Subscription",
                                   })
 
@@ -146,13 +151,12 @@ class Subscription < ActiveRecord::Base
   # new_plan_id Integer
   #
   # Return boolean
-  def self.upgrade new_plan_id
-    @tenant = Tenant.current
-    @subscription = Subscription.find_by_tenant_id(@tenant.id)
+  def self.upgrade subscription, new_plan_id
+    @subscription = subscription
     @new_plan = Plan.find(new_plan_id)
 
-    unless @tenant.subscription.paypal_recurring_payment_profile_token.nil?
-      ppr = PayPal::Recurring.new(:profile_id => @tenant.subscription.paypal_recurring_payment_profile_token)
+    unless @subscription.paypal_payment_token.nil?
+      ppr = PayPal::Recurring.new(:profile_id => @subscription.paypal_payment_token)
       ppr.cancel
     end
 
@@ -162,7 +166,7 @@ class Subscription < ActiveRecord::Base
     @subscription.payment_period = 1
     @subscription.paypal_token = nil
     @subscription.paypal_customer_token = nil
-    @subscription.paypal_recurring_payment_profile_token = nil
+    @subscription.paypal_payment_token = nil
 
     return @subscription.save ? true : @subscription.errors
   end

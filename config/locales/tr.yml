@@ -42,7 +42,7 @@ tr:
         payment_period: "ödeme dönemi"
         next_payment_date: "sonraki ödeme tarihi"
         paypal_customer_token: "paypal müşteri idsi"
-        paypal_recurring_payment_profile_token: "paypal otomatik ödeme idsi"
+        paypal_payment_token: "paypal otomatik ödeme idsi"
       plan:
         name: "isim"
         price: "fiyat"
@@ -53,6 +53,44 @@ tr:
         price: "fiyat"
         payment_date: "ödeme tarihi"
         invoice_no: "fatura no"
-        paypal_recurring_payment_profile_token: "paypal ödeme idsi"
+        paypal_payment_token: "paypal ödeme idsi"
+
   notice:
     invalid_tenant: "Geçersiz hesap"
+
+  mail:
+    subjects:
+      forget_password: "%{application_name} Forget Password "
+      invite_user: "Welcome %{application_name} "
+      register_tenant: "Welcome %{application_name} "
+      trial_10_days_from_now: "%{application_name} Trial Account Reminder "
+      trial_5_days_from_now: "%{application_name} Trial Account Reminder "
+      trial_cancel_tenant: "%{application_name} Trial Account Canceled "
+      payment_failures_5_days_ago: "%{application_name} Payment Reminder"
+      payment_failures_cancel_tenant: "%{application_name} Payment Reminder "
+    common:
+      dear_user_name: "Sayın %{user_name}"
+      best_regards: "İyi Çalışmalar"
+      ask_question: "Her türlü sorunuzu %{application_email} adresine mail atarak sorabilirsiniz."
+    user:
+      forget_password:
+        p1: "%{application_name} yeni şifreniz %{new_password} dir. Daha iyi bir hafıza için daha fazla balık tüketiniz."
+      invite:
+        p1: "%{application_name} programı hesabınız açılmıştır. Programa %{application_url} adresinden girebilirsiniz."
+        p2: "Şifreniz: %{user_password}"
+    tenant:
+      create:
+        p1: "Thanks for preferring %{application_name}. You can access the program at this address %{application_url}"
+    notifier:
+      trial_10_days_from_now:
+        p1: "10 gün içerisinde %{application_name} deneme sürümünüz bitecektir. Lütfen hesabınızın devam etmesi için öncelikle %{application_name}'ya oturum açmanız sonra hesap yönetimi uygulamasından Paypal düzenli ödemesini aktive etmeniz gerekmektedir."
+      trial_5_days_from_now:
+        p1: "10 gün içerisinde %{application_name} deneme sürümünüz bitecektir. Lütfen hesabınızın devam etmesi için öncelikle %{application_name}'ya oturum açmanız sonra hesap yönetimi uygulamasından Paypal düzenli ödemesini aktive etmeniz gerekmektedir."
+        p2: "NOT: Bu size attığımız ikinci maildir ve başka uyarı maili atılmayacaktır. 5 gün sonra %{application_name} hesabımız pasif edilecektir.."
+      trial_cancel_tenant:
+        p1: "%{application_name} deneme sürümünüz bitmiştir ve Paypal otomatik ödemeyi aktive etmediğiniz için kebab hesabınız pasif edilmiştir."
+      payment_failures_5_days_ago:
+        p1: "%{subscription_next_payment_date} tarihindeki %{subscription_amount} USD tutarında ki %{application_name} ödemeniz maalesef başarısız olmuştur. Lütfen Paypal hesabınızı kontrol ediniz."
+        p2: "Ödeme 5 gün içerisinde gerçekleşmezse  %{application_name} hesabınız pasif edilecektir."
+      payment_failures_cancel_tenant:
+        p1: "Your %{application_name}  account was deactivated because of failing your paypal payment %{subscription_next_payment_date} dated,  %{subscription_amount} USD amount."

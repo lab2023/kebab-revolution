@@ -5,6 +5,7 @@ class CreatePrivilegesRoles < ActiveRecord::Migration
       t.integer :role_id,       :null => false
     end
     add_index :privileges_roles, [:privilege_id, :role_id], :unique => true
+
   end
 
   def down

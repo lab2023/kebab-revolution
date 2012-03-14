@@ -1,6 +1,6 @@
 Factory.define :tenant do |f|
-  f.sequence(:name) { |n| "name-#{n}" }
-  f.sequence(:host) { |n| "name-#{n}.#{Kebab.application_url.to_s}" }
+  f.sequence(:name) { |n| "name#{n}" }
+  f.sequence(:subdomain) { |n| "name#{n}" }
 end
 
 Factory.define :user do |f|
@@ -11,7 +11,7 @@ Factory.define :user do |f|
   f.time_zone 'Istanbul'
   f.sequence(:name) { |n|  "Name#{n} Surname#{n}" }
   f.tenant {|a| a.association(:tenant) }
-  f.passive_at 'nil'
+  f.disabled 0
 end
 
 Factory.define :privilege do |f|
@@ -21,6 +21,5 @@ Factory.define :privilege do |f|
 end
 
 Factory.define :resource do |f|
-  f.sequence(:sys_path) { |n| "GET/controller#{n}/action#{n}" }
   f.sequence(:sys_name) { |n| "controller#{n}.action#{n}" }
 end

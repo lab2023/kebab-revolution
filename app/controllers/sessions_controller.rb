@@ -11,18 +11,17 @@ class SessionsController < ApplicationController
 
   # POST/sessions
   def create
-    user = User.find_by_email(params[:email])
+    user = @current_tenant.users.find_by_email(params[:email])
     unless login user, params[:password]
-      @@response[:success] = false
-      @@status = :unauthorized
+      @response[:success] = false
     end
 
-    render json: @@response, status: @@status
+    render json: @response
   end
 
   # DELETE/sessions
   def destroy
     logout
-    render json: @@response
+    render json: @response
   end
 end

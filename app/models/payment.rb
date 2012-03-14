@@ -8,10 +8,10 @@
 class Payment < ActiveRecord::Base
   belongs_to :subscription
 
-  validates  :subscription,                           :presence => true
-  validates  :price,                                  :presence => true
-  validates  :payment_date,                           :presence => true
-  validates  :invoice_no,                             :presence => true
+  validates :subscription, :presence => true
+  validates :price, :presence => true
+  validates :payment_date, :presence => true
+  validates :invoice_no, :presence => true,  :uniqueness => true
 
   before_validation :set_invoice_no
 
