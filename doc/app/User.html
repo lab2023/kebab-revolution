@@ -59,26 +59,12 @@
     <nav id="parent-class-section" class="section">
   <h3 class="section-header">Parent</h3>
   
-  <p class="link"><a href="TenantScopedModel.html">TenantScopedModel</a>
+  <p class="link">ActiveRecord::Base
   
 </nav>
 
     
-    <!-- Method Quickref -->
-<nav id="method-list-section" class="section">
-  <h3 class="section-header">Methods</h3>
-
-  <ul class="link-list">
     
-    <li><a href="#method-i-get_applications">#get_applications</a>
-    
-    <li><a href="#method-i-get_privileges">#get_privileges</a>
-    
-    <li><a href="#method-i-get_resources">#get_resources</a>
-    
-  </ul>
-</nav>
-
   </div>
 
   <div id="project-metadata">
@@ -101,11 +87,11 @@
   
     <li><a href="./ApplicationController.html">ApplicationController</a>
   
-    <li><a href="./FeedbackController.html">FeedbackController</a>
-  
     <li><a href="./Kebab.html">Kebab</a>
   
     <li><a href="./NotifierMailer.html">NotifierMailer</a>
+  
+    <li><a href="./OsController.html">OsController</a>
   
     <li><a href="./PagesController.html">PagesController</a>
   
@@ -125,11 +111,13 @@
   
     <li><a href="./Subscription.html">Subscription</a>
   
+    <li><a href="./SubscriptionsController.html">SubscriptionsController</a>
+  
     <li><a href="./Tenant.html">Tenant</a>
   
     <li><a href="./TenantMailer.html">TenantMailer</a>
   
-    <li><a href="./TenantScopedModel.html">TenantScopedModel</a>
+    <li><a href="./TenantObserver.html">TenantObserver</a>
   
     <li><a href="./TenantsController.html">TenantsController</a>
   
@@ -181,126 +169,6 @@
 
     <!-- Methods -->
     
-     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
-      <h3 class="section-header">Public Instance Methods</h3>
-
-    
-      <div id="method-i-get_applications" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">get_applications</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Public: Return users apps hash KBBTODO refactor methods in loop</p>
-          
-
-          
-          <div class="method-source-code" id="get_applications-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 41</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_applications</span>
-  <span class="ruby-identifier">applications</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
-
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_privileges</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">p</span>.<span class="ruby-identifier">applications</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">applications</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">a</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">applications</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">a</span>)
-    <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">end</span>
-
-  <span class="ruby-identifier">applications</span>
-<span class="ruby-keyword">end</span></pre>
-          </div><!-- get_applications-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- get_applications-method -->
-
-    
-      <div id="method-i-get_privileges" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">get_privileges</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Pubic: Return users privileges hash KBBTODO refactor methods in loop</p>
-          
-
-          
-          <div class="method-source-code" id="get_privileges-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 27</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_privileges</span>
-  <span class="ruby-identifier">privileges</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
-
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">roles</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span>
-   <span class="ruby-identifier">r</span>.<span class="ruby-identifier">privileges</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
-     <span class="ruby-identifier">privileges</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">privileges</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">p</span>)
-   <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">end</span>
-
-  <span class="ruby-identifier">privileges</span>
-<span class="ruby-keyword">end</span></pre>
-          </div><!-- get_privileges-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- get_privileges-method -->
-
-    
-      <div id="method-i-get_resources" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">get_resources</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Public: Return users resources hash KBBTODO refactor methods in loop</p>
-          
-
-          
-          <div class="method-source-code" id="get_resources-source">
-            <pre><span class="ruby-comment"># File app/models/user.rb, line 55</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_resources</span>
-  <span class="ruby-identifier">resources</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
-
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_privileges</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">p</span>.<span class="ruby-identifier">resources</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">resources</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">a</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">resources</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">a</span>)
-    <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">end</span>
-
-  <span class="ruby-identifier">resources</span>
-<span class="ruby-keyword">end</span></pre>
-          </div><!-- get_resources-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- get_resources-method -->
-
-    
-    </section><!-- public-instance-method-details -->
-  
   </section><!-- 5Buntitled-5D -->
 
 </div><!-- documentation -->

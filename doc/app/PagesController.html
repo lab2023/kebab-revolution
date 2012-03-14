@@ -70,11 +70,9 @@
 
   <ul class="link-list">
     
-    <li><a href="#method-i-desktop">#desktop</a>
-    
     <li><a href="#method-i-index">#index</a>
     
-    <li><a href="#method-i-login">#login</a>
+    <li><a href="#method-i-missing_translation">#missing_translation</a>
     
     <li><a href="#method-i-plans">#plans</a>
     
@@ -105,11 +103,11 @@
   
     <li><a href="./ApplicationController.html">ApplicationController</a>
   
-    <li><a href="./FeedbackController.html">FeedbackController</a>
-  
     <li><a href="./Kebab.html">Kebab</a>
   
     <li><a href="./NotifierMailer.html">NotifierMailer</a>
+  
+    <li><a href="./OsController.html">OsController</a>
   
     <li><a href="./PagesController.html">PagesController</a>
   
@@ -129,11 +127,13 @@
   
     <li><a href="./Subscription.html">Subscription</a>
   
+    <li><a href="./SubscriptionsController.html">SubscriptionsController</a>
+  
     <li><a href="./Tenant.html">Tenant</a>
   
     <li><a href="./TenantMailer.html">TenantMailer</a>
   
-    <li><a href="./TenantScopedModel.html">TenantScopedModel</a>
+    <li><a href="./TenantObserver.html">TenantObserver</a>
   
     <li><a href="./TenantsController.html">TenantsController</a>
   
@@ -154,6 +154,18 @@
 
   <div id="description" class="description">
     
+<p><a href="Kebab.html">Kebab</a> 2.0 - Server Ror</p>
+<dl class="rdoc-list note-list"><dt>Author
+<dd>
+<p>Onur Özgür ÖZKAN &lt;lab2023 at onur.ozgur.ozkan.com&gt;</p>
+</dd><dt>Copyright
+<dd>
+<p>Copyright © 2011 lab2023 - internet technologies</p>
+</dd><dt>License
+<dd>
+<p>Distributes under MIT</p>
+</dd></dl>
+
 <p>Pages Controller</p>
 
   </div><!-- description -->
@@ -176,36 +188,6 @@
       <h3 class="section-header">Public Instance Methods</h3>
 
     
-      <div id="method-i-desktop" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">desktop</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>GET/pages/desktop</p>
-          
-
-          
-          <div class="method-source-code" id="desktop-source">
-            <pre><span class="ruby-comment"># File app/controllers/pages_controller.rb, line 18</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">desktop</span>
-  <span class="ruby-ivar">@bootstrap</span> = <span class="ruby-identifier">bootstrap</span>
-<span class="ruby-keyword">end</span></pre>
-          </div><!-- desktop-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- desktop-method -->
-
-    
       <div id="method-i-index" class="method-detail ">
         
         <div class="method-heading">
@@ -222,7 +204,7 @@
 
           
           <div class="method-source-code" id="index-source">
-            <pre><span class="ruby-comment"># File app/controllers/pages_controller.rb, line 14</span>
+            <pre><span class="ruby-comment"># File app/controllers/pages_controller.rb, line 16</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- index-source -->
@@ -235,10 +217,10 @@
       </div><!-- index-method -->
 
     
-      <div id="method-i-login" class="method-detail ">
+      <div id="method-i-missing_translation" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">login</span><span
+          <span class="method-name">missing_translation</span><span
             class="method-args">()</span>
           <span class="method-click-advice">click to toggle source</span>
         </div>
@@ -246,23 +228,24 @@
 
         <div class="method-description">
           
-          <p>GET/pages/login</p>
+          <p>POST/pages/missing_translation</p>
           
 
           
-          <div class="method-source-code" id="login-source">
-            <pre><span class="ruby-comment"># File app/controllers/pages_controller.rb, line 23</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">login</span>
-  <span class="ruby-ivar">@bootstrap</span> = <span class="ruby-identifier">bootstrap</span>
+          <div class="method-source-code" id="missing_translation-source">
+            <pre><span class="ruby-comment"># File app/controllers/pages_controller.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">missing_translation</span>
+  <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">fatal</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:missing</span>]
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@response</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- login-source -->
+          </div><!-- missing_translation-source -->
           
         </div>
 
         
 
         
-      </div><!-- login-method -->
+      </div><!-- missing_translation-method -->
 
     
       <div id="method-i-plans" class="method-detail ">
@@ -281,9 +264,8 @@
 
           
           <div class="method-source-code" id="plans-source">
-            <pre><span class="ruby-comment"># File app/controllers/pages_controller.rb, line 28</span>
+            <pre><span class="ruby-comment"># File app/controllers/pages_controller.rb, line 20</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">plans</span>
-  <span class="ruby-ivar">@plans</span> = <span class="ruby-constant">Plan</span>.<span class="ruby-identifier">order</span>(<span class="ruby-string">&quot;price&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
           </div><!-- plans-source -->
           
@@ -311,9 +293,10 @@
 
           
           <div class="method-source-code" id="register-source">
-            <pre><span class="ruby-comment"># File app/controllers/pages_controller.rb, line 33</span>
+            <pre><span class="ruby-comment"># File app/controllers/pages_controller.rb, line 24</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">register</span>
-  <span class="ruby-ivar">@bootstrap</span> = <span class="ruby-identifier">bootstrap</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@plan_id</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:plan</span>].<span class="ruby-identifier">to_i</span>
+  <span class="ruby-identifier">redirect_to</span> <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:plans</span> <span class="ruby-keyword">unless</span> (<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>).<span class="ruby-identifier">member?</span>(<span class="ruby-ivar">@plan_id</span>.<span class="ruby-identifier">to_i</span>)
 <span class="ruby-keyword">end</span></pre>
           </div><!-- register-source -->
           

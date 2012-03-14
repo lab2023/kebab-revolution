@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
-<title>class PasswordsController - Rails Application Documentation</title>
+<title>class OsController - Rails Application Documentation</title>
 
 <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
@@ -47,7 +47,7 @@
     <nav id="file-list-section" class="section">
   <h3 class="section-header">Defined In</h3>
   <ul>
-    <li>app/controllers/passwords_controller.rb
+    <li>app/controllers/os_controller.rb
   </ul>
 </nav>
 
@@ -70,9 +70,13 @@
 
   <ul class="link-list">
     
-    <li><a href="#method-i-create">#create</a>
+    <li><a href="#method-i-app_runner">#app_runner</a>
     
-    <li><a href="#method-i-update">#update</a>
+    <li><a href="#method-i-desktop">#desktop</a>
+    
+    <li><a href="#method-i-login">#login</a>
+    
+    <li><a href="#method-i-missing_translation">#missing_translation</a>
     
   </ul>
 </nav>
@@ -146,11 +150,23 @@
 </nav>
 
 <div id="documentation">
-  <h1 class="class">class PasswordsController</h1>
+  <h1 class="class">class OsController</h1>
 
   <div id="description" class="description">
     
-<p>Password Controller</p>
+<p><a href="Kebab.html">Kebab</a> 2.0 - Server Ror</p>
+<dl class="rdoc-list note-list"><dt>Author
+<dd>
+<p>Onur Özgür ÖZKAN &lt;lab2023 at onur.ozgur.ozkan.com&gt;</p>
+</dd><dt>Copyright
+<dd>
+<p>Copyright © 2011 lab2023 - internet technologies</p>
+</dd><dt>License
+<dd>
+<p>Distributes under MIT</p>
+</dd></dl>
+
+<p>Os Controller</p>
 
   </div><!-- description -->
 
@@ -172,10 +188,10 @@
       <h3 class="section-header">Public Instance Methods</h3>
 
     
-      <div id="method-i-create" class="method-detail ">
+      <div id="method-i-app_runner" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">create</span><span
+          <span class="method-name">app_runner</span><span
             class="method-args">()</span>
           <span class="method-click-advice">click to toggle source</span>
         </div>
@@ -183,40 +199,29 @@
 
         <div class="method-description">
           
-          <p>POST/passwords KBBTODO #62 send activation for forget password</p>
+          <p>GET/os/app_runner</p>
           
 
           
-          <div class="method-source-code" id="create-source">
-            <pre><span class="ruby-comment"># File app/controllers/passwords_controller.rb, line 14</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
-  <span class="ruby-ivar">@user</span> = <span class="ruby-ivar">@current_tenant</span>.<span class="ruby-identifier">users</span>.<span class="ruby-identifier">find_by_email</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:email</span>])
-  <span class="ruby-identifier">new_password</span> = <span class="ruby-identifier">rand</span>(<span class="ruby-value">10000000000000</span>).<span class="ruby-identifier">floor</span>.<span class="ruby-identifier">to_s</span>(<span class="ruby-value">36</span>)
-  <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">password</span> = <span class="ruby-identifier">new_password</span>
-  <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">password_confirmation</span> = <span class="ruby-identifier">new_password</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">save</span>
-    <span class="ruby-constant">UserMailer</span>.<span class="ruby-identifier">forget_password</span>(<span class="ruby-ivar">@user</span>).<span class="ruby-identifier">deliver</span>
-  <span class="ruby-keyword">else</span>
-    <span class="ruby-ivar">@response</span>[<span class="ruby-value">:success</span>] = <span class="ruby-keyword">false</span>
-    <span class="ruby-ivar">@status</span> = <span class="ruby-value">:unprocessable_entity</span>
-  <span class="ruby-keyword">end</span>
-
-  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@response</span>, <span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@status</span>
+          <div class="method-source-code" id="app_runner-source">
+            <pre><span class="ruby-comment"># File app/controllers/os_controller.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">app_runner</span>
+  <span class="ruby-ivar">@bootstrap</span> = <span class="ruby-identifier">bootstrap</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- create-source -->
+          </div><!-- app_runner-source -->
           
         </div>
 
         
 
         
-      </div><!-- create-method -->
+      </div><!-- app_runner-method -->
 
     
-      <div id="method-i-update" class="method-detail ">
+      <div id="method-i-desktop" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">update</span><span
+          <span class="method-name">desktop</span><span
             class="method-args">()</span>
           <span class="method-click-advice">click to toggle source</span>
         </div>
@@ -224,28 +229,86 @@
 
         <div class="method-description">
           
-          <p>PUT/passwords</p>
+          <p>GET/os/desktop</p>
           
 
           
-          <div class="method-source-code" id="update-source">
-            <pre><span class="ruby-comment"># File app/controllers/passwords_controller.rb, line 30</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>
-  <span class="ruby-ivar">@user</span> = <span class="ruby-ivar">@current_tenant</span>.<span class="ruby-identifier">users</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>])
-  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">authenticate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:password</span>])         <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">update_attributes</span>({<span class="ruby-identifier">password</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:new_password</span>], <span class="ruby-identifier">password_confirmation</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:new_password_confirmation</span>]})
-    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@response</span>
-  <span class="ruby-keyword">else</span>
-    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">success</span><span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>}
-  <span class="ruby-keyword">end</span>
+          <div class="method-source-code" id="desktop-source">
+            <pre><span class="ruby-comment"># File app/controllers/os_controller.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">desktop</span>
+  <span class="ruby-identifier">session</span>[<span class="ruby-value">:locale</span>] = <span class="ruby-identifier">params</span>[<span class="ruby-value">:locale</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:locale</span>]
+  <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">session</span>[<span class="ruby-value">:locale</span>]
+  <span class="ruby-ivar">@bootstrap</span> = <span class="ruby-identifier">bootstrap</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- update-source -->
+          </div><!-- desktop-source -->
           
         </div>
 
         
 
         
-      </div><!-- update-method -->
+      </div><!-- desktop-method -->
+
+    
+      <div id="method-i-login" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">login</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>GET/os/login</p>
+          
+
+          
+          <div class="method-source-code" id="login-source">
+            <pre><span class="ruby-comment"># File app/controllers/os_controller.rb, line 20</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">login</span>
+  <span class="ruby-ivar">@bootstrap</span> = <span class="ruby-identifier">bootstrap</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- login-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- login-method -->
+
+    
+      <div id="method-i-missing_translation" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">missing_translation</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>POST/pages/missing_translation</p>
+          
+
+          
+          <div class="method-source-code" id="missing_translation-source">
+            <pre><span class="ruby-comment"># File app/controllers/os_controller.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">missing_translation</span>
+  <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">fatal</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:missing</span>]
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@response</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- missing_translation-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- missing_translation-method -->
 
     
     </section><!-- public-instance-method-details -->

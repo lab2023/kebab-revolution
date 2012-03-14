@@ -97,11 +97,11 @@
   
     <li><a href="./ApplicationController.html">ApplicationController</a>
   
-    <li><a href="./FeedbackController.html">FeedbackController</a>
-  
     <li><a href="./Kebab.html">Kebab</a>
   
     <li><a href="./NotifierMailer.html">NotifierMailer</a>
+  
+    <li><a href="./OsController.html">OsController</a>
   
     <li><a href="./PagesController.html">PagesController</a>
   
@@ -121,11 +121,13 @@
   
     <li><a href="./Subscription.html">Subscription</a>
   
+    <li><a href="./SubscriptionsController.html">SubscriptionsController</a>
+  
     <li><a href="./Tenant.html">Tenant</a>
   
     <li><a href="./TenantMailer.html">TenantMailer</a>
   
-    <li><a href="./TenantScopedModel.html">TenantScopedModel</a>
+    <li><a href="./TenantObserver.html">TenantObserver</a>
   
     <li><a href="./TenantsController.html">TenantsController</a>
   
@@ -172,7 +174,7 @@
         
         <div class="method-heading">
           <span class="method-name">create_tenant</span><span
-            class="method-args">(user, tenant, subscription)</span>
+            class="method-args">(user, tenant, password)</span>
           <span class="method-click-advice">click to toggle source</span>
         </div>
         
@@ -188,13 +190,14 @@ of <a href="Subscription.html">Subscription</a></p>
 
           
           <div class="method-source-code" id="create_tenant-source">
-            <pre><span class="ruby-comment"># File app/mailers/tenant_mailer.rb, line 16</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">create_tenant</span> <span class="ruby-identifier">user</span>, <span class="ruby-identifier">tenant</span>, <span class="ruby-identifier">subscription</span>
-  <span class="ruby-ivar">@user</span>         = <span class="ruby-identifier">user</span>
-  <span class="ruby-ivar">@tenant</span>       = <span class="ruby-identifier">tenant</span>
-  <span class="ruby-ivar">@subscription</span> = <span class="ruby-identifier">subscription</span>
-  <span class="ruby-comment"># KBBTODO add i18n</span>
-  <span class="ruby-identifier">mail</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">email</span>, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Welcome Kebab Project&quot;</span>)
+            <pre><span class="ruby-comment"># File app/mailers/tenant_mailer.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">create_tenant</span> <span class="ruby-identifier">user</span>, <span class="ruby-identifier">tenant</span>, <span class="ruby-identifier">password</span>
+  <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">user</span>.<span class="ruby-identifier">locale</span>
+  <span class="ruby-ivar">@user</span> = <span class="ruby-identifier">user</span>
+  <span class="ruby-ivar">@password</span> = <span class="ruby-identifier">password</span>
+  <span class="ruby-ivar">@application_url</span> = <span class="ruby-string">&quot;http://&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">tenant</span>.<span class="ruby-identifier">subdomain</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.'</span> <span class="ruby-operator">+</span> <span class="ruby-constant">Kebab</span>.<span class="ruby-identifier">application_url</span>
+  <span class="ruby-identifier">email_with_name</span> = <span class="ruby-node">&quot;#{@user.name} &lt;#{@user.email}&gt;&quot;</span>
+  <span class="ruby-identifier">mail</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">email_with_name</span>, <span class="ruby-value">:bcc</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'info@kebab-project.com'</span>, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-string">'mail.subjects.register_tenant'</span>, <span class="ruby-value">:application_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Kebab</span>.<span class="ruby-identifier">application_name</span>) )
 <span class="ruby-keyword">end</span></pre>
           </div><!-- create_tenant-source -->
           

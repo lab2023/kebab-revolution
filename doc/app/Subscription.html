@@ -70,11 +70,23 @@
 
   <ul class="link-list">
     
+    <li><a href="#method-c-change_plan_type">::change_plan_type</a>
+    
+    <li><a href="#method-c-commercial_to_free">::commercial_to_free</a>
+    
+    <li><a href="#method-c-downgrade">::downgrade</a>
+    
     <li><a href="#method-c-find_finished_trials">::find_finished_trials</a>
+    
+    <li><a href="#method-c-find_payment">::find_payment</a>
     
     <li><a href="#method-c-find_payment_failures">::find_payment_failures</a>
     
     <li><a href="#method-c-find_trials_without_recurring_profile">::find_trials_without_recurring_profile</a>
+    
+    <li><a href="#method-c-free_to_commercial">::free_to_commercial</a>
+    
+    <li><a href="#method-c-upgrade">::upgrade</a>
     
   </ul>
 </nav>
@@ -101,11 +113,11 @@
   
     <li><a href="./ApplicationController.html">ApplicationController</a>
   
-    <li><a href="./FeedbackController.html">FeedbackController</a>
-  
     <li><a href="./Kebab.html">Kebab</a>
   
     <li><a href="./NotifierMailer.html">NotifierMailer</a>
+  
+    <li><a href="./OsController.html">OsController</a>
   
     <li><a href="./PagesController.html">PagesController</a>
   
@@ -125,11 +137,13 @@
   
     <li><a href="./Subscription.html">Subscription</a>
   
+    <li><a href="./SubscriptionsController.html">SubscriptionsController</a>
+  
     <li><a href="./Tenant.html">Tenant</a>
   
     <li><a href="./TenantMailer.html">TenantMailer</a>
   
-    <li><a href="./TenantScopedModel.html">TenantScopedModel</a>
+    <li><a href="./TenantObserver.html">TenantObserver</a>
   
     <li><a href="./TenantsController.html">TenantsController</a>
   
@@ -172,6 +186,154 @@
       <h3 class="section-header">Public Class Methods</h3>
 
     
+      <div id="method-c-change_plan_type" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">change_plan_type</span><span
+            class="method-args">(old_plan_id, new_plan_id)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Change plan type</p>
+
+<p>new_plan_id Integer old_plan_id Integer</p>
+
+<p>Return false or String</p>
+          
+
+          
+          <div class="method-source-code" id="change_plan_type-source">
+            <pre><span class="ruby-comment"># File app/models/subscription.rb, line 65</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">change_plan_type</span> <span class="ruby-identifier">old_plan_id</span>, <span class="ruby-identifier">new_plan_id</span>
+  <span class="ruby-comment"># KBBTODO refactor this code use switch</span>
+  <span class="ruby-identifier">change_plan_type</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">old_plan_id</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">new_plan_id</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+    <span class="ruby-identifier">change_plan_type</span> = <span class="ruby-string">'free_to_commercial'</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">old_plan_id</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">new_plan_id</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+    <span class="ruby-identifier">change_plan_type</span> = <span class="ruby-string">'commercial_to_free'</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">old_plan_id</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">new_plan_id</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">old_plan_id</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">new_plan_id</span>
+    <span class="ruby-identifier">change_plan_type</span> = <span class="ruby-string">'downgrade'</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">old_plan_id</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">new_plan_id</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">old_plan_id</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">new_plan_id</span>
+    <span class="ruby-identifier">change_plan_type</span> = <span class="ruby-string">'upgrade'</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- change_plan_type-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- change_plan_type-method -->
+
+    
+      <div id="method-c-commercial_to_free" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">commercial_to_free</span><span
+            class="method-args">(subscription)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Commercial to free</p>
+
+<p>We assume that first plan is free plan. We cancel the paypal recurring
+payment profile if there is a token at subscription table then update
+subscription table.</p>
+
+<p>Return boolean</p>
+          
+
+          
+          <div class="method-source-code" id="commercial_to_free-source">
+            <pre><span class="ruby-comment"># File app/models/subscription.rb, line 85</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">commercial_to_free</span> <span class="ruby-identifier">subscription</span>
+  <span class="ruby-ivar">@free_plan</span> = <span class="ruby-constant">Plan</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-ivar">@subscription</span> = <span class="ruby-identifier">subscription</span>
+
+  <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">paypal_payment_token</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">ppr</span> = <span class="ruby-constant">PayPal</span><span class="ruby-operator">::</span><span class="ruby-constant">Recurring</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:profile_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">paypal_payment_token</span>)
+    <span class="ruby-identifier">ppr</span>.<span class="ruby-identifier">cancel</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">plan_id</span> = <span class="ruby-ivar">@free_plan</span>.<span class="ruby-identifier">id</span>
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">price</span> = <span class="ruby-ivar">@free_plan</span>.<span class="ruby-identifier">price</span>
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">user_limit</span> = <span class="ruby-ivar">@free_plan</span>.<span class="ruby-identifier">user_limit</span>
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">paypal_token</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">paypal_customer_token</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">paypal_payment_token</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">next_payment_date</span> = <span class="ruby-keyword">nil</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">save</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">true</span> <span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- commercial_to_free-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- commercial_to_free-method -->
+
+    
+      <div id="method-c-downgrade" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">downgrade</span><span
+            class="method-args">(subscription, new_plan_id)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Downgrade</p>
+
+<p>new_plan_id Integer</p>
+
+<p>Return boolean</p>
+          
+
+          
+          <div class="method-source-code" id="downgrade-source">
+            <pre><span class="ruby-comment"># File app/models/subscription.rb, line 127</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">downgrade</span> <span class="ruby-identifier">subscription</span>, <span class="ruby-identifier">new_plan_id</span>
+  <span class="ruby-ivar">@new_plan</span> = <span class="ruby-constant">Plan</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">new_plan_id</span>)
+  <span class="ruby-ivar">@subscription</span> = <span class="ruby-identifier">subscription</span>
+
+  <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">paypal_payment_token</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">ppr</span> = <span class="ruby-constant">PayPal</span><span class="ruby-operator">::</span><span class="ruby-constant">Recurring</span>.<span class="ruby-identifier">new</span>({
+                                    <span class="ruby-value">:amount</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@new_plan</span>.<span class="ruby-identifier">price</span>,
+                                    <span class="ruby-value">:currency</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;USD&quot;</span>,
+                                    <span class="ruby-value">:profile_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">paypal_payment_token</span>,
+                                    <span class="ruby-value">:description</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{@new_plan.name}&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; - Monthly Subscription&quot;</span>,
+                                })
+
+    <span class="ruby-identifier">response</span> = <span class="ruby-identifier">ppr</span>.<span class="ruby-identifier">update_recurring_profile</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">plan_id</span> = <span class="ruby-ivar">@new_plan</span>.<span class="ruby-identifier">id</span>
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">price</span> = <span class="ruby-ivar">@new_plan</span>.<span class="ruby-identifier">price</span>
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">user_limit</span> = <span class="ruby-ivar">@new_plan</span>.<span class="ruby-identifier">user_limit</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">save</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">true</span> <span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- downgrade-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- downgrade-method -->
+
+    
       <div id="method-c-find_finished_trials" class="method-detail ">
         
         <div class="method-heading">
@@ -188,7 +350,7 @@
 
           
           <div class="method-source-code" id="find_finished_trials-source">
-            <pre><span class="ruby-comment"># File app/models/subscription.rb, line 37</span>
+            <pre><span class="ruby-comment"># File app/models/subscription.rb, line 41</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_finished_trials</span>
   <span class="ruby-identifier">notifier</span>.<span class="ruby-identifier">without_recurring_profile</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;next_payment_date &lt; ?&quot;</span>, <span class="ruby-value">1</span>.<span class="ruby-identifier">days</span>.<span class="ruby-identifier">ago</span>.<span class="ruby-identifier">end_of_day</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -200,6 +362,36 @@
 
         
       </div><!-- find_finished_trials-method -->
+
+    
+      <div id="method-c-find_payment" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_payment</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Find payments</p>
+          
+
+          
+          <div class="method-source-code" id="find_payment-source">
+            <pre><span class="ruby-comment"># File app/models/subscription.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_payment</span>
+  <span class="ruby-identifier">notifier</span>.<span class="ruby-identifier">with_recurring_profile</span>.<span class="ruby-identifier">select</span>(<span class="ruby-string">'subscriptions.payment_period, subscriptions.paypal_payment_token'</span>).<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;next_payment_date &lt; ?&quot;</span>, <span class="ruby-constant">Time</span>.<span class="ruby-identifier">zone</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">end_of_day</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- find_payment-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_payment-method -->
 
     
       <div id="method-c-find_payment_failures" class="method-detail ">
@@ -222,7 +414,7 @@
 
           
           <div class="method-source-code" id="find_payment_failures-source">
-            <pre><span class="ruby-comment"># File app/models/subscription.rb, line 46</span>
+            <pre><span class="ruby-comment"># File app/models/subscription.rb, line 55</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_payment_failures</span>(<span class="ruby-identifier">next_payment_date</span> = <span class="ruby-value">10</span>.<span class="ruby-identifier">days</span>.<span class="ruby-identifier">ago</span>)
   <span class="ruby-identifier">notifier</span>.<span class="ruby-identifier">with_recurring_profile</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;next_payment_date &lt; ?&quot;</span>, <span class="ruby-identifier">next_payment_date</span>.<span class="ruby-identifier">end_of_day</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -256,7 +448,7 @@
 
           
           <div class="method-source-code" id="find_trials_without_recurring_profile-source">
-            <pre><span class="ruby-comment"># File app/models/subscription.rb, line 32</span>
+            <pre><span class="ruby-comment"># File app/models/subscription.rb, line 36</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_trials_without_recurring_profile</span>(<span class="ruby-identifier">next_payment_date</span> = <span class="ruby-value">10</span>.<span class="ruby-identifier">days</span>.<span class="ruby-identifier">from_now</span>)
   <span class="ruby-identifier">notifier</span>.<span class="ruby-identifier">without_recurring_profile</span>.<span class="ruby-identifier">where</span>(<span class="ruby-string">&quot;next_payment_date &gt; ? AND next_payment_date &lt; ?&quot;</span>, <span class="ruby-identifier">next_payment_date</span>.<span class="ruby-identifier">beginning_of_day</span>, <span class="ruby-identifier">next_payment_date</span>.<span class="ruby-identifier">end_of_day</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -268,6 +460,98 @@
 
         
       </div><!-- find_trials_without_recurring_profile-method -->
+
+    
+      <div id="method-c-free_to_commercial" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">free_to_commercial</span><span
+            class="method-args">(subscription, new_plan_id)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Free to Commercial</p>
+
+<p>new_plan_id Integer</p>
+
+<p>Return boolean</p>
+          
+
+          
+          <div class="method-source-code" id="free_to_commercial-source">
+            <pre><span class="ruby-comment"># File app/models/subscription.rb, line 110</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">free_to_commercial</span> <span class="ruby-identifier">subscription</span>, <span class="ruby-identifier">new_plan_id</span>
+  <span class="ruby-ivar">@commercial_plan</span> = <span class="ruby-constant">Plan</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">new_plan_id</span>)
+
+  <span class="ruby-ivar">@subscription</span> = <span class="ruby-identifier">subscription</span>
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">plan</span> = <span class="ruby-ivar">@commercial_plan</span>
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">price</span> = <span class="ruby-ivar">@commercial_plan</span>.<span class="ruby-identifier">price</span>
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">user_limit</span> = <span class="ruby-ivar">@commercial_plan</span>.<span class="ruby-identifier">user_limit</span>
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">next_payment_date</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">zone</span>.<span class="ruby-identifier">now</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">save</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">true</span> <span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- free_to_commercial-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- free_to_commercial-method -->
+
+    
+      <div id="method-c-upgrade" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">upgrade</span><span
+            class="method-args">(subscription, new_plan_id)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Upgrade</p>
+
+<p>new_plan_id Integer</p>
+
+<p>Return boolean</p>
+          
+
+          
+          <div class="method-source-code" id="upgrade-source">
+            <pre><span class="ruby-comment"># File app/models/subscription.rb, line 154</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">upgrade</span> <span class="ruby-identifier">subscription</span>, <span class="ruby-identifier">new_plan_id</span>
+  <span class="ruby-ivar">@subscription</span> = <span class="ruby-identifier">subscription</span>
+  <span class="ruby-ivar">@new_plan</span> = <span class="ruby-constant">Plan</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">new_plan_id</span>)
+
+  <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">paypal_payment_token</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">ppr</span> = <span class="ruby-constant">PayPal</span><span class="ruby-operator">::</span><span class="ruby-constant">Recurring</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:profile_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">paypal_payment_token</span>)
+    <span class="ruby-identifier">ppr</span>.<span class="ruby-identifier">cancel</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">plan_id</span> = <span class="ruby-ivar">@new_plan</span>.<span class="ruby-identifier">id</span>
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">price</span> = <span class="ruby-ivar">@new_plan</span>.<span class="ruby-identifier">price</span>
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">user_limit</span> = <span class="ruby-ivar">@new_plan</span>.<span class="ruby-identifier">user_limit</span>
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">payment_period</span> = <span class="ruby-value">1</span>
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">paypal_token</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">paypal_customer_token</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">paypal_payment_token</span> = <span class="ruby-keyword">nil</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">save</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">true</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">errors</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- upgrade-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- upgrade-method -->
 
     
     </section><!-- public-class-method-details -->
