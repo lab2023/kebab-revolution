@@ -7,7 +7,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :password_digest
       t.string :time_zone
       t.string :locale
-      t.boolean :disabled, :default => true
+      t.boolean :disabled, :default => false
 
       t.timestamps
     end

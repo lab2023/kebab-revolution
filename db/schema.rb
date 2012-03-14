@@ -131,7 +131,7 @@ ActiveRecord::Schema.define(:version => 20120103013003) do
     t.string   "password_digest"
     t.string   "time_zone"
     t.string   "locale"
-    t.boolean  "disabled",        :default => true
+    t.boolean  "disabled",        :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
