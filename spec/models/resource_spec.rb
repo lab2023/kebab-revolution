@@ -6,10 +6,6 @@ describe Resource do
     @new_resource = Resource.new
   end
 
-  it "should be instance of Resource" do
-    @new_resource.should be_instance_of(Resource)
-  end
-
   describe "sys_name" do
     it "should be presence" do
       @new_resource.should be_invalid

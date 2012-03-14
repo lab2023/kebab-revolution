@@ -5,10 +5,6 @@ describe Tenant do
     @tenant = Factory(:tenant)
     @new_tenant = Tenant.new
   end
-  
-  it "can be instance of tenant" do
-    @tenant.should be_an_instance_of(Tenant)
-  end
 
   describe "Name" do
     it "should be presence" do
