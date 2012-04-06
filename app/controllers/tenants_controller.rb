@@ -113,10 +113,14 @@ class TenantsController < ApplicationController
 
   # GET/tenants/valid_subdomain?subdomain=subdomain
   def valid_subdomain
-    if Tenant.find_by_subdomain(params[:subdomain]) || Kebab.invalid_tenant_names.include?(params[:subdomain])
-      render json: {success: false}
-    else
+    subdomain_tenant = Tenant.new
+    subdomain_tenant.subdomain = params[:subdomain]
+    subdomain_tenant.valid?
+
+    if subdomain_tenant.errors[:subdomain].blank?
       render json: @response
+    else
+      render json: {success: false}
     end
   end
 end
