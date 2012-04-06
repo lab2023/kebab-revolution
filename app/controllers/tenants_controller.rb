@@ -27,8 +27,8 @@ class TenantsController < ApplicationController
         @user.name      = params[:user_name].strip
         @user.email     = params[:user_email].strip
         @user.password  = params[:user_password].strip
-        @user.locale    = params[:user_locale]
-        @user.time_zone = params[:user_time_zone]
+        @user.locale    = 'en'
+        @user.time_zone = 'UTC'
         @user.tenant    = @tenant
 
         admin = Role.create(name: 'Admin', tenant: @tenant)
