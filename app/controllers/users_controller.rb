@@ -25,7 +25,7 @@ class UsersController < ApplicationController
   def create
     user_hash = Hash.new
     user_hash[:email]     = params[:email].strip
-    user_hash[:name]      = params[:name.strip]
+    user_hash[:name]      = params[:name].strip
     user_hash[:locale]    = I18n.locale.to_s
     user_hash[:time_zone] = Time.zone.to_s.slice(12..-1)
     new_password = rand(10000000000000).floor.to_s(36)
