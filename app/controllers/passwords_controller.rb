@@ -1,4 +1,4 @@
-# Kebab 2.0 - Server Ror
+# Kebab 2.0
 #
 # Author::    Onur Özgür ÖZKAN <onur.ozgur.ozkan@lab2023.com>
 # Copyright:: Copyright (c) 2011 lab2023 - internet technologies
@@ -15,7 +15,6 @@ class PasswordsController < ApplicationController
     @user = @current_tenant.users.find_by_email(params[:email])
     new_password = rand(10000000000000).floor.to_s(36)
     @user.password = new_password
-    @user.password_confirmation = new_password
     if @user.save
       UserMailer.forget_password(@user).deliver
     else
@@ -29,8 +28,7 @@ class PasswordsController < ApplicationController
   # PUT/passwords
   def update
     @user = @current_tenant.users.find(session[:user_id])
-    if @user.authenticate(params[:password]) \
-       && @user.update_attributes({password: params[:new_password], password_confirmation: params[:new_password_confirmation]})
+    if @user.authenticate(params[:password]) && @user.update_attributes({password: params[:new_password]})
       render json: @response
     else
       render json: {success: false}

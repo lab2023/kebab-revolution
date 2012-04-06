@@ -1,4 +1,4 @@
-# Kebab 2.0 - Server Ror
+# Kebab 2.0
 #
 # Author::    Onur Özgür ÖZKAN <onur.ozgur.ozkan@lab2023.com>
 # Copyright:: Copyright (c) 2011 lab2023 - internet technologies
@@ -17,23 +17,19 @@ class TenantsController < ApplicationController
 
       @plan = Plan.find(params[:plan_id])
 
-      @tenant = Tenant.new
+      @tenant           = Tenant.new
       @tenant.subdomain = "#{params[:tenant_subdomain]}".downcase
-      @tenant.name = params[:tenant_name].strip
+      @tenant.name      = params[:tenant_name].strip
 
       if @tenant.save
 
-        Time.zone = params[:user_time_zone]
-        I18n.locale = params[:user_locale]
-
-        @user = User.new
-        @user.name = params[:user_name].strip
-        @user.email = params[:user_email].strip
-        @user.password = params[:user_password].strip
-        @user.password_confirmation = params[:user_password_confirmation].strip
-        @user.locale = params[:user_locale]
+        @user           = User.new
+        @user.name      = params[:user_name].strip
+        @user.email     = params[:user_email].strip
+        @user.password  = params[:user_password].strip
+        @user.locale    = params[:user_locale]
         @user.time_zone = params[:user_time_zone]
-        @user.tenant = @tenant
+        @user.tenant    = @tenant
 
         admin = Role.create(name: 'Admin', tenant: @tenant)
         admin.privileges << Privilege.all
@@ -76,7 +72,6 @@ class TenantsController < ApplicationController
     end
 
     if !@tenant.nil? && @tenant.invalid?
-      add_error 'tenant_name', @tenant.errors[:name] unless @tenant.errors[:name].blank?
       add_error 'tenant_subdomain', @tenant.errors[:subdomain] unless @tenant.errors[:subdomain].blank?
     end
 
@@ -84,8 +79,6 @@ class TenantsController < ApplicationController
       add_error 'user_name', @user.errors[:name] unless @user.errors[:name].blank?
       add_error 'user_email', @user.errors[:email] unless @user.errors[:email].blank?
       add_error 'user_password', @user.errors[:password] unless @user.errors[:password].blank?
-      add_error 'user_password_confirmation', @user.errors[:password_confirmation] unless @user.errors[:password_confirmation].blank?
-      add_error 'user_locale', @user.errors[:locale] unless @user.errors[:locale].blank?
     end
 
     render json: @response, status: status

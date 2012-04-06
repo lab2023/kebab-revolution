@@ -30,7 +30,6 @@ class UsersController < ApplicationController
     user_hash[:time_zone] = Time.zone.to_s.slice(12..-1)
     new_password = rand(10000000000000).floor.to_s(36)
     user_hash[:password]  = new_password
-    user_hash[:password_confirmation] = new_password
     user_hash[:tenant_id] = @current_tenant.id
 
     User.transaction do

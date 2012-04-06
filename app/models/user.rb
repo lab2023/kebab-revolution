@@ -21,8 +21,7 @@ class User < ActiveRecord::Base
   validates :name,      :presence => true
   validates :time_zone, :presence => true
   validates :locale,    :presence => true, :inclusion => {:in => %w(en tr ru)}, :length => {:is => 2}  # KBBTODO move all supported language one place
-  validates :password,  :presence => {:on => :create}, :confirmation => true
-  validates :password_confirmation, :presence => {:on => :create}
+  validates :password,  :presence => {:on => :create}
 
   scope :enable,  where("users.disabled = 0")
   scope :disable, where("users.disabled = 1")
