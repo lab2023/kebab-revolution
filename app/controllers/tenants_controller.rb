@@ -22,6 +22,7 @@ class TenantsController < ApplicationController
       @tenant.name      = params[:tenant_name].strip
 
       if @tenant.save
+        @current_tenant = @tenant
 
         @user           = User.new
         @user.name      = params[:user_name].strip
@@ -53,7 +54,8 @@ class TenantsController < ApplicationController
             # KBBTODO #75 use delay job for sending mail in future
             TenantMailer.create_tenant(@user, @tenant, params[:user_password]).deliver
             status = :created
-            @response[:tenant_host] = "http://" + @tenant.subdomain.to_s + '.' + Kebab.application_url.to_s
+            @response[:tenant_host] = "http://" + @tenant.subdomain.to_s + '.' + Kebab.application_url.to_s + '/desktop'
+            login @user, params[:user_password]
           else
             @tenant.delete
             @user.delete
@@ -117,10 +119,10 @@ class TenantsController < ApplicationController
     subdomain_tenant.subdomain = params[:subdomain]
     subdomain_tenant.valid?
 
-    if subdomain_tenant.errors[:subdomain].blank?
-      render json: @response
-    else
-      render json: {success: false}
+    unless @subdomain_tenant.invalid? && @subdomain_tenant.errors[:subdomain].blank?
+      add_error 'tenant_subdomain', @subdomain_tenant.errors[:subdomain] unless @subdomain_tenant.errors[:subdomain].blank?
+      @response[:success] = false
     end
+    render json: @response
   end
 end
