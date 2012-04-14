@@ -7,19 +7,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Kebab Web OS</title>
+  <meta charset="utf-8">
+  <title>Kebab Web OS</title>
 
-    <!-- include favicon here -->
-    <%= favicon_link_tag '/favicon.ico' %>
+  <meta name="Author" content="lab2023 Dev. Team: http://www.lab2023.com/"/>
+  <meta name="Author-Corporate" content="&copy; 2011 lab2023 Dev. Team: http://www.lab2023.com/"/>
+  <meta name="copyright" content="&copy; lab2023 Dev. Team: http://www.lab2023.com/"/>
 
-    <!-- include js and css files here -->
-    <script type="text/javascript" src="os/vendors/ext-4.1.0-beta-2/ext-all-debug.js"></script>
-    <script type="text/javascript" src="os/vendors/ext-4.1.0-beta-2/locale/ext-lang-<%=I18n.locale %>.js"></script>
-    <script type="text/javascript" src="os/locale/kebab-lang-<%=I18n.locale%>.js"></script>
-    <script type="text/javascript" src="os/kebab/kebab.js"></script>
+  <!-- include favicon here -->
+  <%= favicon_link_tag '/favicon.ico' %>
 
-    <%= csrf_meta_tags %>
+  <!-- include js and css files here -->
+  <%= stylesheet_link_tag "/os/vendors/extjs-4.1.0-rc2/resources/css/ext-all-gray",
+                          "/os/vendors/fatcow-icons/fatcow-icons",
+                          "/os/resources/css/kebab"
+  %>
+
+  <script type="text/javascript">
+      var BOOTSTRAP = <%= @bootstrap.to_json.html_safe %>;
+  </script>
+  <%= javascript_include_tag "/os/vendors/extjs-4.1.0-rc2/ext-all-debug",
+                             "/os/vendors/extjs-4.1.0-rc2/locale/ext-lang-#{I18n.locale}",
+                             "/os/locale/kebab-lang-#{I18n.locale}",
+                             "/os/kebab/kebab"
+  %>
+
+  <%= yield :head %>
+
+  <%= csrf_meta_tags %>
 </head>
 <body>
 <%= yield %>

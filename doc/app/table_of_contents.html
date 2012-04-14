@@ -46,14 +46,14 @@
     <li class="class">
     <a href="ApplicationController.html">ApplicationController</a>
   </li>
-    <li class="class">
-    <a href="FeedbackController.html">FeedbackController</a>
-  </li>
     <li class="module">
     <a href="Kebab.html">Kebab</a>
   </li>
     <li class="class">
     <a href="NotifierMailer.html">NotifierMailer</a>
+  </li>
+    <li class="class">
+    <a href="OsController.html">OsController</a>
   </li>
     <li class="class">
     <a href="PagesController.html">PagesController</a>
@@ -83,13 +83,16 @@
     <a href="Subscription.html">Subscription</a>
   </li>
     <li class="class">
+    <a href="SubscriptionsController.html">SubscriptionsController</a>
+  </li>
+    <li class="class">
     <a href="Tenant.html">Tenant</a>
   </li>
     <li class="class">
     <a href="TenantMailer.html">TenantMailer</a>
   </li>
     <li class="class">
-    <a href="TenantScopedModel.html">TenantScopedModel</a>
+    <a href="TenantObserver.html">TenantObserver</a>
   </li>
     <li class="class">
     <a href="TenantsController.html">TenantsController</a>
@@ -109,27 +112,35 @@
 <h2 id="methods">Methods</h2>
 <ul>
   
-    <li class="method"><a href="TenantScopedModel.html#method-c-build_default_scope">::build_default_scope &mdash; TenantScopedModel</a>
+    <li class="method"><a href="Subscription.html#method-c-change_plan_type">::change_plan_type &mdash; Subscription</a>
+  
+    <li class="method"><a href="Subscription.html#method-c-commercial_to_free">::commercial_to_free &mdash; Subscription</a>
   
     <li class="method"><a href="Kebab.html#method-c-configure">::configure &mdash; Kebab</a>
   
-    <li class="method"><a href="Tenant.html#method-c-current">::current &mdash; Tenant</a>
-  
-    <li class="method"><a href="Tenant.html#method-c-current-3D">::current= &mdash; Tenant</a>
+    <li class="method"><a href="Subscription.html#method-c-downgrade">::downgrade &mdash; Subscription</a>
   
     <li class="method"><a href="Subscription.html#method-c-find_finished_trials">::find_finished_trials &mdash; Subscription</a>
+  
+    <li class="method"><a href="Subscription.html#method-c-find_payment">::find_payment &mdash; Subscription</a>
   
     <li class="method"><a href="Subscription.html#method-c-find_payment_failures">::find_payment_failures &mdash; Subscription</a>
   
     <li class="method"><a href="Subscription.html#method-c-find_trials_without_recurring_profile">::find_trials_without_recurring_profile &mdash; Subscription</a>
   
-    <li class="method"><a href="ApplicationController.html#method-i-acl">#acl &mdash; ApplicationController</a>
+    <li class="method"><a href="Subscription.html#method-c-free_to_commercial">::free_to_commercial &mdash; Subscription</a>
   
-    <li class="method"><a href="UsersController.html#method-i-active">#active &mdash; UsersController</a>
+    <li class="method"><a href="Subscription.html#method-c-upgrade">::upgrade &mdash; Subscription</a>
+  
+    <li class="method"><a href="ApplicationController.html#method-i-acl">#acl &mdash; ApplicationController</a>
   
     <li class="method"><a href="ApplicationController.html#method-i-add_error">#add_error &mdash; ApplicationController</a>
   
     <li class="method"><a href="ApplicationController.html#method-i-add_notice">#add_notice &mdash; ApplicationController</a>
+  
+    <li class="method"><a href="TenantObserver.html#method-i-after_create">#after_create &mdash; TenantObserver</a>
+  
+    <li class="method"><a href="OsController.html#method-i-app_runner">#app_runner &mdash; OsController</a>
   
     <li class="method"><a href="ApplicationController.html#method-i-authenticate">#authenticate &mdash; ApplicationController</a>
   
@@ -137,31 +148,33 @@
   
     <li class="method"><a href="ApplicationController.html#method-i-bootstrap">#bootstrap &mdash; ApplicationController</a>
   
-    <li class="method"><a href="FeedbackController.html#method-i-create">#create &mdash; FeedbackController</a>
-  
     <li class="method"><a href="UsersController.html#method-i-create">#create &mdash; UsersController</a>
-  
-    <li class="method"><a href="PasswordsController.html#method-i-create">#create &mdash; PasswordsController</a>
   
     <li class="method"><a href="SessionsController.html#method-i-create">#create &mdash; SessionsController</a>
   
     <li class="method"><a href="TenantsController.html#method-i-create">#create &mdash; TenantsController</a>
   
+    <li class="method"><a href="PasswordsController.html#method-i-create">#create &mdash; PasswordsController</a>
+  
     <li class="method"><a href="TenantMailer.html#method-i-create_tenant">#create_tenant &mdash; TenantMailer</a>
   
-    <li class="method"><a href="PagesController.html#method-i-desktop">#desktop &mdash; PagesController</a>
-  
-    <li class="method"><a href="TenantsController.html#method-i-destroy">#destroy &mdash; TenantsController</a>
+    <li class="method"><a href="OsController.html#method-i-desktop">#desktop &mdash; OsController</a>
   
     <li class="method"><a href="SessionsController.html#method-i-destroy">#destroy &mdash; SessionsController</a>
   
+    <li class="method"><a href="TenantsController.html#method-i-destroy">#destroy &mdash; TenantsController</a>
+  
+    <li class="method"><a href="UserMailer.html#method-i-disable">#disable &mdash; UserMailer</a>
+  
+    <li class="method"><a href="UsersController.html#method-i-disable">#disable &mdash; UsersController</a>
+  
+    <li class="method"><a href="UserMailer.html#method-i-enable">#enable &mdash; UserMailer</a>
+  
+    <li class="method"><a href="UsersController.html#method-i-enable">#enable &mdash; UsersController</a>
+  
+    <li class="method"><a href="ApplicationController.html#method-i-filter">#filter &mdash; ApplicationController</a>
+  
     <li class="method"><a href="UserMailer.html#method-i-forget_password">#forget_password &mdash; UserMailer</a>
-  
-    <li class="method"><a href="User.html#method-i-get_applications">#get_applications &mdash; User</a>
-  
-    <li class="method"><a href="User.html#method-i-get_privileges">#get_privileges &mdash; User</a>
-  
-    <li class="method"><a href="User.html#method-i-get_resources">#get_resources &mdash; User</a>
   
     <li class="method"><a href="ApplicationController.html#method-i-i18n_locale">#i18n_locale &mdash; ApplicationController</a>
   
@@ -169,43 +182,63 @@
   
     <li class="method"><a href="ApplicationController.html#method-i-i18n_locale_from_session">#i18n_locale_from_session &mdash; ApplicationController</a>
   
-    <li class="method"><a href="PagesController.html#method-i-index">#index &mdash; PagesController</a>
-  
     <li class="method"><a href="UsersController.html#method-i-index">#index &mdash; UsersController</a>
+  
+    <li class="method"><a href="PagesController.html#method-i-index">#index &mdash; PagesController</a>
   
     <li class="method"><a href="UserMailer.html#method-i-invite">#invite &mdash; UserMailer</a>
   
     <li class="method"><a href="ApplicationController.html#method-i-is_owner">#is_owner &mdash; ApplicationController</a>
   
+    <li class="method"><a href="SubscriptionsController.html#method-i-limits">#limits &mdash; SubscriptionsController</a>
+  
+    <li class="method"><a href="ApplicationController.html#method-i-log_client_info">#log_client_info &mdash; ApplicationController</a>
+  
     <li class="method"><a href="ApplicationController.html#method-i-login">#login &mdash; ApplicationController</a>
   
-    <li class="method"><a href="PagesController.html#method-i-login">#login &mdash; PagesController</a>
+    <li class="method"><a href="OsController.html#method-i-login">#login &mdash; OsController</a>
   
     <li class="method"><a href="ApplicationController.html#method-i-logout">#logout &mdash; ApplicationController</a>
   
-    <li class="method"><a href="UsersController.html#method-i-passive">#passive &mdash; UsersController</a>
+    <li class="method"><a href="OsController.html#method-i-missing_translation">#missing_translation &mdash; OsController</a>
+  
+    <li class="method"><a href="PagesController.html#method-i-missing_translation">#missing_translation &mdash; PagesController</a>
+  
+    <li class="method"><a href="SubscriptionsController.html#method-i-next_subscription">#next_subscription &mdash; SubscriptionsController</a>
   
     <li class="method"><a href="NotifierMailer.html#method-i-payment_failures_5_days_ago">#payment_failures_5_days_ago &mdash; NotifierMailer</a>
   
     <li class="method"><a href="NotifierMailer.html#method-i-payment_failures_cancel_tenant">#payment_failures_cancel_tenant &mdash; NotifierMailer</a>
   
-    <li class="method"><a href="ApplicationController.html#method-i-paypal_credential">#paypal_credential &mdash; ApplicationController</a>
+    <li class="method"><a href="SubscriptionsController.html#method-i-payments">#payments &mdash; SubscriptionsController</a>
   
-    <li class="method"><a href="ApplicationController.html#method-i-paypal_recurring_payment">#paypal_recurring_payment &mdash; ApplicationController</a>
+    <li class="method"><a href="SubscriptionsController.html#method-i-paypal_credential">#paypal_credential &mdash; SubscriptionsController</a>
+  
+    <li class="method"><a href="SubscriptionsController.html#method-i-paypal_recurring_payment_failed">#paypal_recurring_payment_failed &mdash; SubscriptionsController</a>
+  
+    <li class="method"><a href="SubscriptionsController.html#method-i-paypal_recurring_payment_success">#paypal_recurring_payment_success &mdash; SubscriptionsController</a>
   
     <li class="method"><a href="PagesController.html#method-i-plans">#plans &mdash; PagesController</a>
+  
+    <li class="method"><a href="SubscriptionsController.html#method-i-plans">#plans &mdash; SubscriptionsController</a>
+  
+    <li class="method"><a href="ApplicationController.html#method-i-reach_plan_user_limit-3F">#reach_plan_user_limit? &mdash; ApplicationController</a>
   
     <li class="method"><a href="ApplicationController.html#method-i-reach_user_limit-3F">#reach_user_limit? &mdash; ApplicationController</a>
   
     <li class="method"><a href="PagesController.html#method-i-register">#register &mdash; PagesController</a>
   
-    <li class="method"><a href="UserMailer.html#method-i-send_feedback">#send_feedback &mdash; UserMailer</a>
-  
     <li class="method"><a href="Payment.html#method-i-set_invoice_no">#set_invoice_no &mdash; Payment</a>
+  
+    <li class="method"><a href="ApplicationController.html#method-i-set_response">#set_response &mdash; ApplicationController</a>
+  
+    <li class="method"><a href="ApplicationController.html#method-i-set_time_zone">#set_time_zone &mdash; ApplicationController</a>
+  
+    <li class="method"><a href="UsersController.html#method-i-show">#show &mdash; UsersController</a>
   
     <li class="method"><a href="TenantsController.html#method-i-show">#show &mdash; TenantsController</a>
   
-    <li class="method"><a href="UsersController.html#method-i-show">#show &mdash; UsersController</a>
+    <li class="method"><a href="ApplicationController.html#method-i-sort">#sort &mdash; ApplicationController</a>
   
     <li class="method"><a href="ApplicationController.html#method-i-tenant">#tenant &mdash; ApplicationController</a>
   
@@ -215,13 +248,13 @@
   
     <li class="method"><a href="NotifierMailer.html#method-i-trial_cancel_tenant">#trial_cancel_tenant &mdash; NotifierMailer</a>
   
-    <li class="method"><a href="UsersController.html#method-i-update">#update &mdash; UsersController</a>
+    <li class="method"><a href="SubscriptionsController.html#method-i-update">#update &mdash; SubscriptionsController</a>
   
     <li class="method"><a href="PasswordsController.html#method-i-update">#update &mdash; PasswordsController</a>
   
-    <li class="method"><a href="TenantsController.html#method-i-valid_host">#valid_host &mdash; TenantsController</a>
+    <li class="method"><a href="UsersController.html#method-i-update">#update &mdash; UsersController</a>
   
-    <li class="method"><a href="Tenant.html#method-i-with">#with &mdash; Tenant</a>
+    <li class="method"><a href="TenantsController.html#method-i-valid_subdomain">#valid_subdomain &mdash; TenantsController</a>
   
 </ul>
 

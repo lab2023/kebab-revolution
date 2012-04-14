@@ -47,6 +47,7 @@
     <nav id="file-list-section" class="section">
   <h3 class="section-header">Defined In</h3>
   <ul>
+    <li>lib/kebab/version.rb
     <li>lib/kebab.rb
   </ul>
 </nav>
@@ -91,11 +92,11 @@
   
     <li><a href="./ApplicationController.html">ApplicationController</a>
   
-    <li><a href="./FeedbackController.html">FeedbackController</a>
-  
     <li><a href="./Kebab.html">Kebab</a>
   
     <li><a href="./NotifierMailer.html">NotifierMailer</a>
+  
+    <li><a href="./OsController.html">OsController</a>
   
     <li><a href="./PagesController.html">PagesController</a>
   
@@ -115,11 +116,13 @@
   
     <li><a href="./Subscription.html">Subscription</a>
   
+    <li><a href="./SubscriptionsController.html">SubscriptionsController</a>
+  
     <li><a href="./Tenant.html">Tenant</a>
   
     <li><a href="./TenantMailer.html">TenantMailer</a>
   
-    <li><a href="./TenantScopedModel.html">TenantScopedModel</a>
+    <li><a href="./TenantObserver.html">TenantObserver</a>
   
     <li><a href="./TenantsController.html">TenantsController</a>
   
@@ -160,6 +163,19 @@
       <h3 class="section-header">Attributes</h3>
 
       
+      <div id="attribute-c-application_email" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">application_email</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
       <div id="attribute-c-application_name" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">application_name</span><span
@@ -173,9 +189,61 @@
         </div>
       </div>
       
+      <div id="attribute-c-application_support_email" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">application_support_email</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
       <div id="attribute-c-application_url" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">application_url</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-c-application_version" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">application_version</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-c-blowfish_password" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">blowfish_password</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-c-invalid_tenant_names" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">invalid_tenant_names</span><span
             class="attribute-access-type">[RW]</span>
         </div>
 
@@ -224,7 +292,7 @@
 
           
           <div class="method-source-code" id="configure-source">
-            <pre><span class="ruby-comment"># File lib/kebab.rb, line 12</span>
+            <pre><span class="ruby-comment"># File lib/kebab.rb, line 17</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">configure</span>(&amp;<span class="ruby-identifier">block</span>)
   <span class="ruby-keyword">yield</span> <span class="ruby-constant">Kebab</span>
 <span class="ruby-keyword">end</span></pre>

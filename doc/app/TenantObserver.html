@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 
-<title>class FeedbackController - Rails Application Documentation</title>
+<title>class TenantObserver - Rails Application Documentation</title>
 
 <link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
@@ -47,7 +47,7 @@
     <nav id="file-list-section" class="section">
   <h3 class="section-header">Defined In</h3>
   <ul>
-    <li>app/controllers/feedback_controller.rb
+    <li>app/models/tenant_observer.rb
   </ul>
 </nav>
 
@@ -59,7 +59,7 @@
     <nav id="parent-class-section" class="section">
   <h3 class="section-header">Parent</h3>
   
-  <p class="link"><a href="ApplicationController.html">ApplicationController</a>
+  <p class="link">ActiveRecord::Observer
   
 </nav>
 
@@ -70,7 +70,7 @@
 
   <ul class="link-list">
     
-    <li><a href="#method-i-create">#create</a>
+    <li><a href="#method-i-after_create">#after_create</a>
     
   </ul>
 </nav>
@@ -97,11 +97,11 @@
   
     <li><a href="./ApplicationController.html">ApplicationController</a>
   
-    <li><a href="./FeedbackController.html">FeedbackController</a>
-  
     <li><a href="./Kebab.html">Kebab</a>
   
     <li><a href="./NotifierMailer.html">NotifierMailer</a>
+  
+    <li><a href="./OsController.html">OsController</a>
   
     <li><a href="./PagesController.html">PagesController</a>
   
@@ -121,11 +121,13 @@
   
     <li><a href="./Subscription.html">Subscription</a>
   
+    <li><a href="./SubscriptionsController.html">SubscriptionsController</a>
+  
     <li><a href="./Tenant.html">Tenant</a>
   
     <li><a href="./TenantMailer.html">TenantMailer</a>
   
-    <li><a href="./TenantScopedModel.html">TenantScopedModel</a>
+    <li><a href="./TenantObserver.html">TenantObserver</a>
   
     <li><a href="./TenantsController.html">TenantsController</a>
   
@@ -142,12 +144,10 @@
 </nav>
 
 <div id="documentation">
-  <h1 class="class">class FeedbackController</h1>
+  <h1 class="class">class TenantObserver</h1>
 
   <div id="description" class="description">
     
-<p><a href="FeedbackController.html">FeedbackController</a></p>
-
   </div><!-- description -->
 
   
@@ -168,39 +168,47 @@
       <h3 class="section-header">Public Instance Methods</h3>
 
     
-      <div id="method-i-create" class="method-detail ">
+      <div id="method-i-after_create" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">create</span><span
-            class="method-args">()</span>
+          <span class="method-name">after_create</span><span
+            class="method-args">(tenant)</span>
           <span class="method-click-advice">click to toggle source</span>
         </div>
         
 
         <div class="method-description">
           
-          <p>POST/feedback</p>
+          
           
 
           
-          <div class="method-source-code" id="create-source">
-            <pre><span class="ruby-comment"># File app/controllers/feedback_controller.rb, line 12</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
-  <span class="ruby-identifier">subject</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:subject</span>]
-  <span class="ruby-identifier">body</span>    = <span class="ruby-identifier">params</span>[<span class="ruby-value">:body</span>]
-  <span class="ruby-identifier">user</span>    = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>])
-  <span class="ruby-comment"># KBBTODO #75 use delay jobs</span>
-  <span class="ruby-constant">UserMailer</span>.<span class="ruby-identifier">send_feedback</span>(<span class="ruby-identifier">user</span>, <span class="ruby-identifier">subject</span>, <span class="ruby-identifier">body</span>).<span class="ruby-identifier">deliver</span>
-  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>
-<span class="ruby-keyword">end</span></pre>
-          </div><!-- create-source -->
+          <div class="method-source-code" id="after_create-source">
+            <pre><span class="ruby-comment"># File app/models/tenant_observer.rb, line 2</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">after_create</span>(<span class="ruby-identifier">tenant</span>)
+  <span class="ruby-identifier">tenant</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-node">&quot;New tenant is created. #{tenant.as_json}&quot;</span>
+
+  <span class="ruby-comment"># Privileges</span>
+  <span class="ruby-comment">#invite_user       = Privilege.find_by_sys_name('InviteUser')</span>
+  <span class="ruby-comment">#passive_user      = Privilege.find_by_sys_name('PassiveUser')</span>
+  <span class="ruby-comment">#active_user       = Privilege.find_by_sys_name('ActiveUser')</span>
+  <span class="ruby-comment">#manage_account    = Privilege.find_by_sys_name('ManageAccount')</span>
+
+  <span class="ruby-comment"># User Role</span>
+  <span class="ruby-identifier">user_role</span> = <span class="ruby-constant">Role</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">user_role</span>.<span class="ruby-identifier">name</span> = <span class="ruby-string">'User'</span>
+  <span class="ruby-identifier">user_role</span>.<span class="ruby-identifier">tenant</span> = <span class="ruby-identifier">tenant</span>
+  <span class="ruby-comment">#user_role.privileges &lt;&lt; example_privileges</span>
+  <span class="ruby-identifier">user_role</span>.<span class="ruby-identifier">save</span>
+ <span class="ruby-keyword">end</span></pre>
+          </div><!-- after_create-source -->
           
         </div>
 
         
 
         
-      </div><!-- create-method -->
+      </div><!-- after_create-method -->
 
     
     </section><!-- public-instance-method-details -->

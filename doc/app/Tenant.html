@@ -64,21 +64,7 @@
 </nav>
 
     
-    <!-- Method Quickref -->
-<nav id="method-list-section" class="section">
-  <h3 class="section-header">Methods</h3>
-
-  <ul class="link-list">
     
-    <li><a href="#method-c-current">::current</a>
-    
-    <li><a href="#method-c-current-3D">::current=</a>
-    
-    <li><a href="#method-i-with">#with</a>
-    
-  </ul>
-</nav>
-
   </div>
 
   <div id="project-metadata">
@@ -101,11 +87,11 @@
   
     <li><a href="./ApplicationController.html">ApplicationController</a>
   
-    <li><a href="./FeedbackController.html">FeedbackController</a>
-  
     <li><a href="./Kebab.html">Kebab</a>
   
     <li><a href="./NotifierMailer.html">NotifierMailer</a>
+  
+    <li><a href="./OsController.html">OsController</a>
   
     <li><a href="./PagesController.html">PagesController</a>
   
@@ -125,11 +111,13 @@
   
     <li><a href="./Subscription.html">Subscription</a>
   
+    <li><a href="./SubscriptionsController.html">SubscriptionsController</a>
+  
     <li><a href="./Tenant.html">Tenant</a>
   
     <li><a href="./TenantMailer.html">TenantMailer</a>
   
-    <li><a href="./TenantScopedModel.html">TenantScopedModel</a>
+    <li><a href="./TenantObserver.html">TenantObserver</a>
   
     <li><a href="./TenantsController.html">TenantsController</a>
   
@@ -163,116 +151,24 @@
     
 
     
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="SUBDOMAIN">SUBDOMAIN
+        
+        <dd class="description"><p><a href="Tenant.html">Tenant</a> regex standard</p>
+        
+      
+      </dl>
+    </section>
+    
 
     
 
     <!-- Methods -->
     
-     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
-      <h3 class="section-header">Public Class Methods</h3>
-
-    
-      <div id="method-c-current" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">current</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Public: Return current tenant</p>
-          
-
-          
-          <div class="method-source-code" id="current-source">
-            <pre><span class="ruby-comment"># File app/models/tenant.rb, line 21</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">current</span>
-  <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-value">:tenant</span>]
-<span class="ruby-keyword">end</span></pre>
-          </div><!-- current-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- current-method -->
-
-    
-      <div id="method-c-current-3D" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">current=</span><span
-            class="method-args">(tenant)</span>
-          <span class="method-click-advice">click to toggle source</span>
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Public: Set current tenant</p>
-          
-
-          
-          <div class="method-source-code" id="current-3D-source">
-            <pre><span class="ruby-comment"># File app/models/tenant.rb, line 26</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">current=</span>(<span class="ruby-identifier">tenant</span>)
-  <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-value">:tenant</span>] = <span class="ruby-identifier">tenant</span>
-<span class="ruby-keyword">end</span></pre>
-          </div><!-- current-3D-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- current-3D-method -->
-
-    
-    </section><!-- public-class-method-details -->
-  
-     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
-      <h3 class="section-header">Public Instance Methods</h3>
-
-    
-      <div id="method-i-with" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">with</span><span
-            class="method-args">() { || ... }</span>
-          <span class="method-click-advice">click to toggle source</span>
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-
-          
-          <div class="method-source-code" id="with-source">
-            <pre><span class="ruby-comment"># File app/models/tenant.rb, line 31</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">with</span>
-  <span class="ruby-identifier">previous</span>, <span class="ruby-constant">Tenant</span>.<span class="ruby-identifier">current</span> = <span class="ruby-constant">Tenant</span>.<span class="ruby-identifier">current</span>, <span class="ruby-keyword">self</span>
-  <span class="ruby-keyword">yield</span>
-<span class="ruby-keyword">ensure</span>
-  <span class="ruby-constant">Tenant</span>.<span class="ruby-identifier">current</span> = <span class="ruby-identifier">previous</span>
-<span class="ruby-keyword">end</span></pre>
-          </div><!-- with-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- with-method -->
-
-    
-    </section><!-- public-instance-method-details -->
-  
   </section><!-- 5Buntitled-5D -->
 
 </div><!-- documentation -->

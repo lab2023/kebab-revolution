@@ -105,11 +105,11 @@
   
     <li><a href="./ApplicationController.html">ApplicationController</a>
   
-    <li><a href="./FeedbackController.html">FeedbackController</a>
-  
     <li><a href="./Kebab.html">Kebab</a>
   
     <li><a href="./NotifierMailer.html">NotifierMailer</a>
+  
+    <li><a href="./OsController.html">OsController</a>
   
     <li><a href="./PagesController.html">PagesController</a>
   
@@ -129,11 +129,13 @@
   
     <li><a href="./Subscription.html">Subscription</a>
   
+    <li><a href="./SubscriptionsController.html">SubscriptionsController</a>
+  
     <li><a href="./Tenant.html">Tenant</a>
   
     <li><a href="./TenantMailer.html">TenantMailer</a>
   
-    <li><a href="./TenantScopedModel.html">TenantScopedModel</a>
+    <li><a href="./TenantObserver.html">TenantObserver</a>
   
     <li><a href="./TenantsController.html">TenantsController</a>
   
@@ -194,10 +196,11 @@ Ozgur OZKAN”</p>
 
           
           <div class="method-source-code" id="payment_failures_5_days_ago-source">
-            <pre><span class="ruby-comment"># File app/mailers/notifier_mailer.rb, line 29</span>
+            <pre><span class="ruby-comment"># File app/mailers/notifier_mailer.rb, line 33</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">payment_failures_5_days_ago</span> <span class="ruby-identifier">subscription</span>
+  <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">subscription</span>.<span class="ruby-identifier">locale</span>
   <span class="ruby-ivar">@subscription</span> = <span class="ruby-identifier">subscription</span>
-  <span class="ruby-identifier">mail</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">email</span>, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Payment Failures&quot;</span>)
+  <span class="ruby-identifier">mail</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">email</span>, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-string">'mail.subjects.payment_failures_5_days_ago'</span>, <span class="ruby-value">:application_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Kebab</span>.<span class="ruby-identifier">application_name</span>))
 <span class="ruby-keyword">end</span></pre>
           </div><!-- payment_failures_5_days_ago-source -->
           
@@ -225,10 +228,11 @@ Ozgur OZKAN”</p>
 
           
           <div class="method-source-code" id="payment_failures_cancel_tenant-source">
-            <pre><span class="ruby-comment"># File app/mailers/notifier_mailer.rb, line 35</span>
+            <pre><span class="ruby-comment"># File app/mailers/notifier_mailer.rb, line 40</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">payment_failures_cancel_tenant</span> <span class="ruby-identifier">subscription</span>
+  <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">subscription</span>.<span class="ruby-identifier">locale</span>
   <span class="ruby-ivar">@subscription</span> = <span class="ruby-identifier">subscription</span>
-  <span class="ruby-identifier">mail</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">email</span>, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Cancel your account&quot;</span>)
+  <span class="ruby-identifier">mail</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">email</span>, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-string">'mail.subjects.payment_failures_cancel_tenant'</span>, <span class="ruby-value">:application_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Kebab</span>.<span class="ruby-identifier">application_name</span>))
 <span class="ruby-keyword">end</span></pre>
           </div><!-- payment_failures_cancel_tenant-source -->
           
@@ -256,10 +260,11 @@ Ozgur OZKAN”</p>
 
           
           <div class="method-source-code" id="trial_10_days_from_now-source">
-            <pre><span class="ruby-comment"># File app/mailers/notifier_mailer.rb, line 11</span>
+            <pre><span class="ruby-comment"># File app/mailers/notifier_mailer.rb, line 12</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">trial_10_days_from_now</span> <span class="ruby-identifier">subscription</span>
+  <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">subscription</span>.<span class="ruby-identifier">locale</span>
   <span class="ruby-ivar">@subscription</span> = <span class="ruby-identifier">subscription</span>
-  <span class="ruby-identifier">mail</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">email</span>, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Start your paypay recurring payment&quot;</span>)
+  <span class="ruby-identifier">mail</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">email</span>, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-string">'mail.subjects.trial_10_days_from_now'</span>, <span class="ruby-value">:application_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Kebab</span>.<span class="ruby-identifier">application_name</span>))
 <span class="ruby-keyword">end</span></pre>
           </div><!-- trial_10_days_from_now-source -->
           
@@ -287,10 +292,11 @@ Ozgur OZKAN”</p>
 
           
           <div class="method-source-code" id="trial_5_days_from_now-source">
-            <pre><span class="ruby-comment"># File app/mailers/notifier_mailer.rb, line 17</span>
+            <pre><span class="ruby-comment"># File app/mailers/notifier_mailer.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">trial_5_days_from_now</span> <span class="ruby-identifier">subscription</span>
+  <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">subscription</span>.<span class="ruby-identifier">locale</span>
   <span class="ruby-ivar">@subscription</span> = <span class="ruby-identifier">subscription</span>
-  <span class="ruby-identifier">mail</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">email</span>, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Start your paypay recurring payment&quot;</span>)
+  <span class="ruby-identifier">mail</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">email</span>, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-string">'mail.subjects.trial_5_days_from_now'</span>, <span class="ruby-value">:application_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Kebab</span>.<span class="ruby-identifier">application_name</span>))
 <span class="ruby-keyword">end</span></pre>
           </div><!-- trial_5_days_from_now-source -->
           
@@ -318,10 +324,11 @@ Ozgur OZKAN”</p>
 
           
           <div class="method-source-code" id="trial_cancel_tenant-source">
-            <pre><span class="ruby-comment"># File app/mailers/notifier_mailer.rb, line 23</span>
+            <pre><span class="ruby-comment"># File app/mailers/notifier_mailer.rb, line 26</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">trial_cancel_tenant</span> <span class="ruby-identifier">subscription</span>
+  <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">subscription</span>.<span class="ruby-identifier">locale</span>
   <span class="ruby-ivar">@subscription</span> = <span class="ruby-identifier">subscription</span>
-  <span class="ruby-identifier">mail</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">email</span>, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Cancel your trial account&quot;</span>)
+  <span class="ruby-identifier">mail</span>(<span class="ruby-value">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">email</span>, <span class="ruby-value">:subject</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-string">'mail.subjects.trial_cancel_tenant'</span>, <span class="ruby-value">:application_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Kebab</span>.<span class="ruby-identifier">application_name</span>))
 <span class="ruby-keyword">end</span></pre>
           </div><!-- trial_cancel_tenant-source -->
           

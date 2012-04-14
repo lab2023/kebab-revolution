@@ -76,7 +76,7 @@
     
     <li><a href="#method-i-show">#show</a>
     
-    <li><a href="#method-i-valid_host">#valid_host</a>
+    <li><a href="#method-i-valid_subdomain">#valid_subdomain</a>
     
   </ul>
 </nav>
@@ -103,11 +103,11 @@
   
     <li><a href="./ApplicationController.html">ApplicationController</a>
   
-    <li><a href="./FeedbackController.html">FeedbackController</a>
-  
     <li><a href="./Kebab.html">Kebab</a>
   
     <li><a href="./NotifierMailer.html">NotifierMailer</a>
+  
+    <li><a href="./OsController.html">OsController</a>
   
     <li><a href="./PagesController.html">PagesController</a>
   
@@ -127,11 +127,13 @@
   
     <li><a href="./Subscription.html">Subscription</a>
   
+    <li><a href="./SubscriptionsController.html">SubscriptionsController</a>
+  
     <li><a href="./Tenant.html">Tenant</a>
   
     <li><a href="./TenantMailer.html">TenantMailer</a>
   
-    <li><a href="./TenantScopedModel.html">TenantScopedModel</a>
+    <li><a href="./TenantObserver.html">TenantObserver</a>
   
     <li><a href="./TenantsController.html">TenantsController</a>
   
@@ -195,59 +197,80 @@
 
   <span class="ruby-constant">Tenant</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
 
-    <span class="ruby-ivar">@plan</span> = <span class="ruby-constant">Plan</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:plan</span>][<span class="ruby-value">:id</span>])
-    <span class="ruby-ivar">@tenant</span> = <span class="ruby-constant">Tenant</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:tenant</span>])
+    <span class="ruby-ivar">@plan</span> = <span class="ruby-constant">Plan</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:plan_id</span>])
+
+    <span class="ruby-ivar">@tenant</span> = <span class="ruby-constant">Tenant</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@tenant</span>.<span class="ruby-identifier">subdomain</span> = <span class="ruby-node">&quot;#{params[:tenant_subdomain]}&quot;</span>.<span class="ruby-identifier">downcase</span>
+    <span class="ruby-ivar">@tenant</span>.<span class="ruby-identifier">name</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:tenant_name</span>].<span class="ruby-identifier">strip</span>
 
     <span class="ruby-keyword">if</span> <span class="ruby-ivar">@tenant</span>.<span class="ruby-identifier">save</span>
 
-      <span class="ruby-constant">Tenant</span>.<span class="ruby-identifier">current</span> = <span class="ruby-ivar">@tenant</span>
-      <span class="ruby-constant">Time</span>.<span class="ruby-identifier">zone</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:user</span>][<span class="ruby-value">:time_zone</span>]
-      <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:user</span>][<span class="ruby-value">:locale</span>]
+      <span class="ruby-constant">Time</span>.<span class="ruby-identifier">zone</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:user_time_zone</span>]
+      <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:user_locale</span>]
 
-      <span class="ruby-ivar">@user</span>   = <span class="ruby-constant">User</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:user</span>])
-      <span class="ruby-identifier">admin</span> = <span class="ruby-constant">Role</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Admin'</span>)
+      <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">new</span>
+      <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">name</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:user_name</span>].<span class="ruby-identifier">strip</span>
+      <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">email</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:user_email</span>].<span class="ruby-identifier">strip</span>
+      <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">password</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:user_password</span>].<span class="ruby-identifier">strip</span>
+      <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">password_confirmation</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:user_password_confirmation</span>].<span class="ruby-identifier">strip</span>
+      <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:user_locale</span>]
+      <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">time_zone</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:user_time_zone</span>]
+      <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">tenant</span> = <span class="ruby-ivar">@tenant</span>
+
+      <span class="ruby-identifier">admin</span> = <span class="ruby-constant">Role</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">'Admin'</span>, <span class="ruby-identifier">tenant</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@tenant</span>)
       <span class="ruby-identifier">admin</span>.<span class="ruby-identifier">privileges</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Privilege</span>.<span class="ruby-identifier">all</span>
       <span class="ruby-identifier">admin</span>.<span class="ruby-identifier">save</span>
-      <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">tenant</span> = <span class="ruby-ivar">@tenant</span>
+
       <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">roles</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">admin</span>
-      <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">save</span>
 
       <span class="ruby-keyword">if</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">save</span>
 
         <span class="ruby-comment"># KBBTODO Refactor this ugly code</span>
-        <span class="ruby-ivar">@subscription</span> = <span class="ruby-constant">Subscription</span>.<span class="ruby-identifier">new</span>
-        <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">user</span>    = <span class="ruby-ivar">@user</span>
-        <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">tenant</span>  = <span class="ruby-ivar">@tenant</span>
-        <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">plan</span>    = <span class="ruby-ivar">@plan</span>
-        <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">price</span>   = <span class="ruby-ivar">@plan</span>.<span class="ruby-identifier">price</span>
-        <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">payment_period</span> = <span class="ruby-value">0</span>
+        <span class="ruby-ivar">@subscription</span>                   = <span class="ruby-constant">Subscription</span>.<span class="ruby-identifier">new</span>
+        <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">user</span>              = <span class="ruby-ivar">@user</span>
+        <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">tenant</span>            = <span class="ruby-ivar">@tenant</span>
+        <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">plan</span>              = <span class="ruby-ivar">@plan</span>
+        <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">price</span>             = <span class="ruby-ivar">@plan</span>.<span class="ruby-identifier">price</span>
+        <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">user_limit</span>        = <span class="ruby-ivar">@plan</span>.<span class="ruby-identifier">user_limit</span>
+        <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">payment_period</span>    = <span class="ruby-value">1</span>
         <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">next_payment_date</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">zone</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>.<span class="ruby-identifier">months</span>
 
         <span class="ruby-keyword">if</span> <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">save</span>
           <span class="ruby-comment"># KBBTODO #75 use delay job for sending mail in future</span>
-          <span class="ruby-constant">TenantMailer</span>.<span class="ruby-identifier">create_tenant</span>(<span class="ruby-ivar">@user</span>, <span class="ruby-ivar">@tenant</span>, <span class="ruby-ivar">@subscription</span>).<span class="ruby-identifier">deliver</span>
-          <span class="ruby-identifier">login</span> <span class="ruby-ivar">@user</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:user</span>][<span class="ruby-value">:password</span>]
+          <span class="ruby-constant">TenantMailer</span>.<span class="ruby-identifier">create_tenant</span>(<span class="ruby-ivar">@user</span>, <span class="ruby-ivar">@tenant</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:user_password</span>]).<span class="ruby-identifier">deliver</span>
           <span class="ruby-identifier">status</span> = <span class="ruby-value">:created</span>
+          <span class="ruby-ivar">@response</span>[<span class="ruby-value">:tenant_host</span>] = <span class="ruby-string">&quot;http://&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@tenant</span>.<span class="ruby-identifier">subdomain</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'.'</span> <span class="ruby-operator">+</span> <span class="ruby-constant">Kebab</span>.<span class="ruby-identifier">application_url</span>.<span class="ruby-identifier">to_s</span>
         <span class="ruby-keyword">else</span>
           <span class="ruby-ivar">@tenant</span>.<span class="ruby-identifier">delete</span>
           <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">delete</span>
           <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">valid?</span>
-          <span class="ruby-ivar">@subscription</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span>, <span class="ruby-identifier">m</span><span class="ruby-operator">|</span> <span class="ruby-identifier">add_error</span> <span class="ruby-identifier">a</span>, <span class="ruby-identifier">m</span>}
           <span class="ruby-identifier">status</span> = <span class="ruby-value">:unprocessable_entity</span>
         <span class="ruby-keyword">end</span>
 
       <span class="ruby-keyword">else</span>
         <span class="ruby-ivar">@tenant</span>.<span class="ruby-identifier">delete</span>
         <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">delete</span>
-        <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span>, <span class="ruby-identifier">m</span><span class="ruby-operator">|</span> <span class="ruby-identifier">add_error</span> <span class="ruby-identifier">a</span>, <span class="ruby-identifier">m</span>}
         <span class="ruby-identifier">status</span> = <span class="ruby-value">:unprocessable_entity</span>
       <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">else</span>
-      <span class="ruby-ivar">@tenant</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span>, <span class="ruby-identifier">m</span><span class="ruby-operator">|</span> <span class="ruby-identifier">add_error</span> <span class="ruby-identifier">a</span>, <span class="ruby-identifier">m</span>}
       <span class="ruby-identifier">status</span> = <span class="ruby-value">:unprocessable_entity</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>, <span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-identifier">status</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@tenant</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@tenant</span>.<span class="ruby-identifier">invalid?</span>
+    <span class="ruby-identifier">add_error</span> <span class="ruby-string">'tenant_name'</span>, <span class="ruby-ivar">@tenant</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:name</span>] <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@tenant</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:name</span>].<span class="ruby-identifier">blank?</span>
+    <span class="ruby-identifier">add_error</span> <span class="ruby-string">'tenant_subdomain'</span>, <span class="ruby-ivar">@tenant</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:subdomain</span>] <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@tenant</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:subdomain</span>].<span class="ruby-identifier">blank?</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@user</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">invalid?</span>
+    <span class="ruby-identifier">add_error</span> <span class="ruby-string">'user_name'</span>, <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:name</span>] <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:name</span>].<span class="ruby-identifier">blank?</span>
+    <span class="ruby-identifier">add_error</span> <span class="ruby-string">'user_email'</span>, <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:email</span>] <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:email</span>].<span class="ruby-identifier">blank?</span>
+    <span class="ruby-identifier">add_error</span> <span class="ruby-string">'user_password'</span>, <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:password</span>] <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:password</span>].<span class="ruby-identifier">blank?</span>
+    <span class="ruby-identifier">add_error</span> <span class="ruby-string">'user_password_confirmation'</span>, <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:password_confirmation</span>] <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:password_confirmation</span>].<span class="ruby-identifier">blank?</span>
+    <span class="ruby-identifier">add_error</span> <span class="ruby-string">'user_locale'</span>, <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:locale</span>] <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:locale</span>].<span class="ruby-identifier">blank?</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@response</span>, <span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-identifier">status</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- create-source -->
           
@@ -276,13 +299,17 @@ method</p>
 
           
           <div class="method-source-code" id="destroy-source">
-            <pre><span class="ruby-comment"># File app/controllers/tenants_controller.rb, line 84</span>
+            <pre><span class="ruby-comment"># File app/controllers/tenants_controller.rb, line 105</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_owner</span> <span class="ruby-identifier">session</span>[<span class="ruby-value">:user_id</span>]
-    <span class="ruby-ivar">@current_tenant</span>.<span class="ruby-identifier">passive_at</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">zone</span>.<span class="ruby-identifier">now</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@current_tenant</span>.<span class="ruby-identifier">subscription</span>.<span class="ruby-identifier">paypal_payment_token</span>
+      <span class="ruby-identifier">ppr</span> = <span class="ruby-constant">PayPal</span><span class="ruby-operator">::</span><span class="ruby-constant">Recurring</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:profile_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@current_tenant</span>.<span class="ruby-identifier">subscription</span>.<span class="ruby-identifier">paypal_payment_token</span>)
+      <span class="ruby-identifier">ppr</span>.<span class="ruby-identifier">cancel</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-ivar">@current_tenant</span>.<span class="ruby-identifier">active</span> = <span class="ruby-keyword">false</span>
     <span class="ruby-ivar">@current_tenant</span>.<span class="ruby-identifier">save</span>
     <span class="ruby-identifier">logout</span>
-    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@response</span>
   <span class="ruby-keyword">else</span>
     <span class="ruby-identifier">add_notice</span> <span class="ruby-string">'ERR'</span>, <span class="ruby-string">'only owner can delete the account'</span>
     <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">success</span><span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>}
@@ -314,13 +341,13 @@ method</p>
 
           
           <div class="method-source-code" id="show-source">
-            <pre><span class="ruby-comment"># File app/controllers/tenants_controller.rb, line 74</span>
+            <pre><span class="ruby-comment"># File app/controllers/tenants_controller.rb, line 95</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">show</span>
-  <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:data</span>] = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
-  <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:data</span>][<span class="ruby-value">:next</span>] = <span class="ruby-ivar">@current_tenant</span>.<span class="ruby-identifier">subscription</span>
-  <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:data</span>][<span class="ruby-value">:older</span>] = <span class="ruby-ivar">@current_tenant</span>.<span class="ruby-identifier">subscription</span>.<span class="ruby-identifier">payments</span>
+  <span class="ruby-ivar">@response</span>[<span class="ruby-value">:data</span>]         = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@response</span>[<span class="ruby-value">:data</span>][<span class="ruby-value">:next</span>]  = <span class="ruby-ivar">@current_tenant</span>.<span class="ruby-identifier">subscription</span>
+  <span class="ruby-ivar">@response</span>[<span class="ruby-value">:data</span>][<span class="ruby-value">:older</span>] = <span class="ruby-ivar">@current_tenant</span>.<span class="ruby-identifier">subscription</span>.<span class="ruby-identifier">payments</span>
 
-  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@response</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- show-source -->
           
@@ -332,10 +359,10 @@ method</p>
       </div><!-- show-method -->
 
     
-      <div id="method-i-valid_host" class="method-detail ">
+      <div id="method-i-valid_subdomain" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">valid_host</span><span
+          <span class="method-name">valid_subdomain</span><span
             class="method-args">()</span>
           <span class="method-click-advice">click to toggle source</span>
         </div>
@@ -343,28 +370,27 @@ method</p>
 
         <div class="method-description">
           
-          <p>GET/tenants/valid_host?host=host_name KBBTODO #64 set invalid tenant from
-one place</p>
+          <p>GET/tenants/valid_subdomain?subdomain=subdomain</p>
           
 
           
-          <div class="method-source-code" id="valid_host-source">
-            <pre><span class="ruby-comment"># File app/controllers/tenants_controller.rb, line 98</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">valid_host</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-constant">Tenant</span>.<span class="ruby-identifier">find_by_host</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:host</span>]) <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>         <span class="ruby-operator">||</span> <span class="ruby-node">%w(www help support api apps status blog lab2023 static)</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:host</span>].<span class="ruby-identifier">split</span>(<span class="ruby-string">'.'</span>).<span class="ruby-identifier">first</span>)         <span class="ruby-operator">||</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:host</span>].<span class="ruby-identifier">split</span>(<span class="ruby-string">'.'</span>).<span class="ruby-identifier">count</span> <span class="ruby-operator">!=</span> <span class="ruby-value">3</span>
+          <div class="method-source-code" id="valid_subdomain-source">
+            <pre><span class="ruby-comment"># File app/controllers/tenants_controller.rb, line 122</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">valid_subdomain</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">Tenant</span>.<span class="ruby-identifier">find_by_subdomain</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:subdomain</span>]) <span class="ruby-operator">||</span> <span class="ruby-constant">Kebab</span>.<span class="ruby-identifier">invalid_tenant_names</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:subdomain</span>])
     <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">success</span><span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>}
   <span class="ruby-keyword">else</span>
-    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@response</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- valid_host-source -->
+          </div><!-- valid_subdomain-source -->
           
         </div>
 
         
 
         
-      </div><!-- valid_host-method -->
+      </div><!-- valid_subdomain-method -->
 
     
     </section><!-- public-instance-method-details -->

@@ -99,11 +99,11 @@
   
     <li><a href="./ApplicationController.html">ApplicationController</a>
   
-    <li><a href="./FeedbackController.html">FeedbackController</a>
-  
     <li><a href="./Kebab.html">Kebab</a>
   
     <li><a href="./NotifierMailer.html">NotifierMailer</a>
+  
+    <li><a href="./OsController.html">OsController</a>
   
     <li><a href="./PagesController.html">PagesController</a>
   
@@ -123,11 +123,13 @@
   
     <li><a href="./Subscription.html">Subscription</a>
   
+    <li><a href="./SubscriptionsController.html">SubscriptionsController</a>
+  
     <li><a href="./Tenant.html">Tenant</a>
   
     <li><a href="./TenantMailer.html">TenantMailer</a>
   
-    <li><a href="./TenantScopedModel.html">TenantScopedModel</a>
+    <li><a href="./TenantObserver.html">TenantObserver</a>
   
     <li><a href="./TenantsController.html">TenantsController</a>
   
@@ -188,13 +190,12 @@
           <div class="method-source-code" id="create-source">
             <pre><span class="ruby-comment"># File app/controllers/sessions_controller.rb, line 13</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">create</span>
-  <span class="ruby-identifier">user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_by_email</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:email</span>])
+  <span class="ruby-identifier">user</span> = <span class="ruby-ivar">@current_tenant</span>.<span class="ruby-identifier">users</span>.<span class="ruby-identifier">find_by_email</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:email</span>])
   <span class="ruby-keyword">unless</span> <span class="ruby-identifier">login</span> <span class="ruby-identifier">user</span>, <span class="ruby-identifier">params</span>[<span class="ruby-value">:password</span>]
-    <span class="ruby-identifier">@@response</span>[<span class="ruby-value">:success</span>] = <span class="ruby-keyword">false</span>
-    <span class="ruby-identifier">@@status</span> = <span class="ruby-value">:unauthorized</span>
+    <span class="ruby-ivar">@response</span>[<span class="ruby-value">:success</span>] = <span class="ruby-keyword">false</span>
   <span class="ruby-keyword">end</span>
 
-  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>, <span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@status</span>
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@response</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- create-source -->
           
@@ -222,10 +223,10 @@
 
           
           <div class="method-source-code" id="destroy-source">
-            <pre><span class="ruby-comment"># File app/controllers/sessions_controller.rb, line 24</span>
+            <pre><span class="ruby-comment"># File app/controllers/sessions_controller.rb, line 23</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
   <span class="ruby-identifier">logout</span>
-  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-identifier">@@response</span>
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@response</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- destroy-source -->
           

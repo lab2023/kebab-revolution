@@ -97,11 +97,11 @@
   
     <li><a href="./ApplicationController.html">ApplicationController</a>
   
-    <li><a href="./FeedbackController.html">FeedbackController</a>
-  
     <li><a href="./Kebab.html">Kebab</a>
   
     <li><a href="./NotifierMailer.html">NotifierMailer</a>
+  
+    <li><a href="./OsController.html">OsController</a>
   
     <li><a href="./PagesController.html">PagesController</a>
   
@@ -121,11 +121,13 @@
   
     <li><a href="./Subscription.html">Subscription</a>
   
+    <li><a href="./SubscriptionsController.html">SubscriptionsController</a>
+  
     <li><a href="./Tenant.html">Tenant</a>
   
     <li><a href="./TenantMailer.html">TenantMailer</a>
   
-    <li><a href="./TenantScopedModel.html">TenantScopedModel</a>
+    <li><a href="./TenantObserver.html">TenantObserver</a>
   
     <li><a href="./TenantsController.html">TenantsController</a>
   
@@ -184,7 +186,7 @@
 
           
           <div class="method-source-code" id="set_invoice_no-source">
-            <pre><span class="ruby-comment"># File app/models/payment.rb, line 20</span>
+            <pre><span class="ruby-comment"># File app/models/payment.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">set_invoice_no</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">invoice_no</span> = <span class="ruby-constant">Payment</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-constant">Kebab</span>.<span class="ruby-identifier">invoice_no</span> <span class="ruby-operator">:</span> <span class="ruby-constant">Payment</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">invoice_no</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
 <span class="ruby-keyword">end</span></pre>

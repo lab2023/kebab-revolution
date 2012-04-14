@@ -78,7 +78,7 @@ class ApplicationController < ActionController::Base
   #
   # Returns void, Json
   def authorize
-    unless session[:acl].include?(params[:controller].to_s + '.' + params[:action].to_s)
+    unless session[:acl][:resources].include?(params[:controller].to_s + '.' + params[:action].to_s)
       logger.warn "401 Authorize" + log_client_info
       if request.xhr?
         render json: {success: false}, status: 401
@@ -190,22 +190,29 @@ class ApplicationController < ActionController::Base
   # Examples
   #
   #   acl
-  #   #=> {
+  #   #=> resources => {
   #   #=>  'sessions/create',
   #   #=>  'sessions/destroy'
   #   #=> }
   #
   # Returns Acl hash
   def acl
-    acl_array = Array.new
 
     user_resources_raw = session[:user_id].nil? ? Array.new : @current_tenant.users.find(session[:user_id]).resources
+    resources_array = Array.new
     user_resources_raw.each do |resource|
-      acl_array << resource.sys_name
+      resources_array << resource.sys_name
     end
 
-    acl_array
+    user_privileges_raw = session[:user_id].nil? ? Array.new : @current_tenant.users.find(session[:user_id]).privileges
+    privileges_array = Array.new
+    user_privileges_raw.each do |privilege|
+      privileges_array << privilege.sys_name
+    end
+
+    {:resources => resources_array, :privileges => privileges_array}
   end
+
 
   # Protected: login
   #

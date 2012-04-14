@@ -70,11 +70,13 @@
 
   <ul class="link-list">
     
+    <li><a href="#method-i-disable">#disable</a>
+    
+    <li><a href="#method-i-enable">#enable</a>
+    
     <li><a href="#method-i-forget_password">#forget_password</a>
     
     <li><a href="#method-i-invite">#invite</a>
-    
-    <li><a href="#method-i-send_feedback">#send_feedback</a>
     
   </ul>
 </nav>
@@ -101,11 +103,11 @@
   
     <li><a href="./ApplicationController.html">ApplicationController</a>
   
-    <li><a href="./FeedbackController.html">FeedbackController</a>
-  
     <li><a href="./Kebab.html">Kebab</a>
   
     <li><a href="./NotifierMailer.html">NotifierMailer</a>
+  
+    <li><a href="./OsController.html">OsController</a>
   
     <li><a href="./PagesController.html">PagesController</a>
   
@@ -125,11 +127,13 @@
   
     <li><a href="./Subscription.html">Subscription</a>
   
+    <li><a href="./SubscriptionsController.html">SubscriptionsController</a>
+  
     <li><a href="./Tenant.html">Tenant</a>
   
     <li><a href="./TenantMailer.html">TenantMailer</a>
   
-    <li><a href="./TenantScopedModel.html">TenantScopedModel</a>
+    <li><a href="./TenantObserver.html">TenantObserver</a>
   
     <li><a href="./TenantsController.html">TenantsController</a>
   
@@ -172,6 +176,72 @@
       <h3 class="section-header">Public Instance Methods</h3>
 
     
+      <div id="method-i-disable" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">disable</span><span
+            class="method-args">(user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="disable-source">
+            <pre><span class="ruby-comment"># File app/mailers/user_mailer.rb, line 42</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">disable</span> <span class="ruby-identifier">user</span>
+  <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">user</span>.<span class="ruby-identifier">locale</span>
+  <span class="ruby-ivar">@user</span> = <span class="ruby-identifier">user</span>
+  <span class="ruby-identifier">email_with_name</span> = <span class="ruby-node">&quot;#{@user.name} &lt;#{@user.email}&gt;&quot;</span>
+  <span class="ruby-identifier">mail</span>(<span class="ruby-identifier">to</span><span class="ruby-operator">:</span> <span class="ruby-identifier">email_with_name</span>, <span class="ruby-identifier">subject</span><span class="ruby-operator">:</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-string">'mail.subjects.disable_user'</span>, <span class="ruby-value">:application_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Kebab</span>.<span class="ruby-identifier">application_name</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- disable-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- disable-method -->
+
+    
+      <div id="method-i-enable" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">enable</span><span
+            class="method-args">(user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="enable-source">
+            <pre><span class="ruby-comment"># File app/mailers/user_mailer.rb, line 35</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">enable</span> <span class="ruby-identifier">user</span>
+  <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">user</span>.<span class="ruby-identifier">locale</span>
+  <span class="ruby-ivar">@user</span> = <span class="ruby-identifier">user</span>
+  <span class="ruby-identifier">email_with_name</span> = <span class="ruby-node">&quot;#{@user.name} &lt;#{@user.email}&gt;&quot;</span>
+  <span class="ruby-identifier">mail</span>(<span class="ruby-identifier">to</span><span class="ruby-operator">:</span> <span class="ruby-identifier">email_with_name</span>, <span class="ruby-identifier">subject</span><span class="ruby-operator">:</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-string">'mail.subjects.enable_user'</span>, <span class="ruby-value">:application_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Kebab</span>.<span class="ruby-identifier">application_name</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- enable-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- enable-method -->
+
+    
       <div id="method-i-forget_password" class="method-detail ">
         
         <div class="method-heading">
@@ -190,12 +260,14 @@
 
           
           <div class="method-source-code" id="forget_password-source">
-            <pre><span class="ruby-comment"># File app/mailers/user_mailer.rb, line 14</span>
+            <pre><span class="ruby-comment"># File app/mailers/user_mailer.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">forget_password</span> <span class="ruby-identifier">user</span>
+  <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">user</span>.<span class="ruby-identifier">locale</span>
   <span class="ruby-ivar">@user</span> = <span class="ruby-identifier">user</span>
   <span class="ruby-ivar">@new_password</span> = <span class="ruby-identifier">user</span>.<span class="ruby-identifier">password</span>
-  <span class="ruby-comment"># KBBTODO add i18n</span>
-  <span class="ruby-identifier">mail</span>(<span class="ruby-identifier">to</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">email</span>, <span class="ruby-identifier">subject</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;Forget Password&quot;</span>)
+  <span class="ruby-ivar">@application_name</span> = <span class="ruby-constant">Kebab</span>.<span class="ruby-identifier">application_name</span>
+  <span class="ruby-identifier">email_with_name</span> = <span class="ruby-node">&quot;#{@user.name} &lt;#{@user.email}&gt;&quot;</span>
+  <span class="ruby-identifier">mail</span>(<span class="ruby-identifier">to</span><span class="ruby-operator">:</span> <span class="ruby-identifier">email_with_name</span>, <span class="ruby-identifier">subject</span><span class="ruby-operator">:</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-string">'mail.subjects.forget_password'</span>, <span class="ruby-value">:application_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Kebab</span>.<span class="ruby-identifier">application_name</span>))
 <span class="ruby-keyword">end</span></pre>
           </div><!-- forget_password-source -->
           
@@ -211,7 +283,7 @@
         
         <div class="method-heading">
           <span class="method-name">invite</span><span
-            class="method-args">(user)</span>
+            class="method-args">(user, subdomain)</span>
           <span class="method-click-advice">click to toggle source</span>
         </div>
         
@@ -220,15 +292,18 @@
           
           <p>Public: Invite</p>
 
-<p>user    - object - <a href="User.html">User</a> Model</p>
+<p>user - object - <a href="User.html">User</a> Model</p>
           
 
           
           <div class="method-source-code" id="invite-source">
-            <pre><span class="ruby-comment"># File app/mailers/user_mailer.rb, line 35</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">invite</span>  <span class="ruby-identifier">user</span>
+            <pre><span class="ruby-comment"># File app/mailers/user_mailer.rb, line 27</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">invite</span> <span class="ruby-identifier">user</span>, <span class="ruby-identifier">subdomain</span>
+  <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">user</span>.<span class="ruby-identifier">locale</span>
   <span class="ruby-ivar">@user</span>   = <span class="ruby-identifier">user</span>
-  <span class="ruby-identifier">mail</span>(<span class="ruby-identifier">to</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">email</span>, <span class="ruby-identifier">subject</span><span class="ruby-operator">:</span> <span class="ruby-string">'Welcome to Kebab Project'</span>)
+  <span class="ruby-ivar">@application_url</span> = <span class="ruby-string">&quot;http://&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">subdomain</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;.&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-constant">Kebab</span>.<span class="ruby-identifier">application_url</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-identifier">email_with_name</span> = <span class="ruby-node">&quot;#{@user.name} &lt;#{@user.email}&gt;&quot;</span>
+  <span class="ruby-identifier">mail</span>(<span class="ruby-identifier">to</span><span class="ruby-operator">:</span> <span class="ruby-identifier">email_with_name</span>, <span class="ruby-identifier">subject</span><span class="ruby-operator">:</span> <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">t</span>(<span class="ruby-string">'mail.subjects.invite_user'</span>, <span class="ruby-value">:application_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Kebab</span>.<span class="ruby-identifier">application_name</span>))
 <span class="ruby-keyword">end</span></pre>
           </div><!-- invite-source -->
           
@@ -238,41 +313,6 @@
 
         
       </div><!-- invite-method -->
-
-    
-      <div id="method-i-send_feedback" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">send_feedback</span><span
-            class="method-args">(user, subject, message)</span>
-          <span class="method-click-advice">click to toggle source</span>
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Public: Send feedback</p>
-
-<p>subject - string body    - text user    - object - <a
-href="User.html">User</a> Model</p>
-          
-
-          
-          <div class="method-source-code" id="send_feedback-source">
-            <pre><span class="ruby-comment"># File app/mailers/user_mailer.rb, line 26</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">send_feedback</span>  <span class="ruby-identifier">user</span>, <span class="ruby-identifier">subject</span>, <span class="ruby-identifier">message</span>
-  <span class="ruby-ivar">@user</span>   = <span class="ruby-identifier">user</span>
-  <span class="ruby-ivar">@message</span> = <span class="ruby-identifier">message</span>
-  <span class="ruby-identifier">mail</span>(<span class="ruby-identifier">to</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;onur.ozgur.ozkan@lab2023.com&quot;</span>, <span class="ruby-identifier">subject</span><span class="ruby-operator">:</span> <span class="ruby-node">&quot;#{@user.name}&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">subject</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div><!-- send_feedback-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- send_feedback-method -->
 
     
     </section><!-- public-instance-method-details -->
