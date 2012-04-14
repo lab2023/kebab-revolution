@@ -12,12 +12,11 @@ tr:
     attribures:
       tenant:
         name: "isim"
-        host: "adres"
+        subdomain: "subdomain"
       user:
         tenant: "kiracı"
         email: "elektronik posta"
         password: "şifre"
-        password_confirmation: "şifre onayı"
         name: "isim"
         locale: "dil"
         time_zone: "zaman dilimi"
@@ -57,40 +56,51 @@ tr:
 
   notice:
     invalid_tenant: "Geçersiz hesap"
+    subscriptions:
+      too_many_active_user_for_downgrade_plan: "Planınızı alt pakete geçirmek için çok fazla aktif kullanıcınız var."
 
   mail:
     subjects:
-      forget_password: "%{application_name} Forget Password "
-      invite_user: "Welcome %{application_name} "
-      register_tenant: "Welcome %{application_name} "
-      trial_10_days_from_now: "%{application_name} Trial Account Reminder "
-      trial_5_days_from_now: "%{application_name} Trial Account Reminder "
-      trial_cancel_tenant: "%{application_name} Trial Account Canceled "
-      payment_failures_5_days_ago: "%{application_name} Payment Reminder"
-      payment_failures_cancel_tenant: "%{application_name} Payment Reminder "
+      forget_password: "%{application_name} Şifre Hatırlatma"
+      invite_user: "%{application_name}'a Hoşgeldiniz "
+      disable_user: "%{application_name} hesabınız pasif edildi"
+      enable_user: "%{application_name} hesabınız aktifleştirildi"
+      register_tenant: "%{application_name}'a Hoşgeldiniz "
+      trial_10_days_from_now: "%{application_name} Deneme Sürümü Hatırlatıcısı"
+      trial_5_days_from_now: "%{application_name} Deneme Sürümü Hatırlatıcısı"
+      trial_cancel_tenant: "%{application_name} Deneme sürümünüz iptal edilmiştir. "
+      payment_failures_5_days_ago: "%{application_name} Ödeme Hatırlatıcısı"
+      payment_failures_cancel_tenant: "%{application_name} Ödeme Hatırlatıcısı"
     common:
       dear_user_name: "Sayın %{user_name}"
       best_regards: "İyi Çalışmalar"
       ask_question: "Her türlü sorunuzu %{application_email} adresine mail atarak sorabilirsiniz."
     user:
       forget_password:
-        p1: "%{application_name} yeni şifreniz %{new_password} dir. Daha iyi bir hafıza için daha fazla balık tüketiniz."
+        p1: "%{application_name} yeni şifreniz <b>%{new_password}</b> dir. Daha iyi bir hafıza için daha fazla balık tüketiniz."
       invite:
         p1: "%{application_name} programı hesabınız açılmıştır. Programa %{application_url} adresinden girebilirsiniz."
-        p2: "Şifreniz: %{user_password}"
+        p2: "Email: %{user_email}"
+        p3: "Şifreniz: %{user_password}"
+      enable:
+        p1: "Hesabınız admin tarafından aktif edildi."
+      disable:
+        p1: "Hesabınız admin tarafından pasif edildi."
     tenant:
       create:
-        p1: "Thanks for preferring %{application_name}. You can access the program at this address %{application_url}"
+        p1: "%{application_name} tercih ettiğiniz için teşekkür ederiz. %{application_url} adresten programa erişebilirsiniz."
+        p2: "Elektronik Postanız: %{email}"
+        p3: "Şifreniz: %{password}"
     notifier:
       trial_10_days_from_now:
         p1: "10 gün içerisinde %{application_name} deneme sürümünüz bitecektir. Lütfen hesabınızın devam etmesi için öncelikle %{application_name}'ya oturum açmanız sonra hesap yönetimi uygulamasından Paypal düzenli ödemesini aktive etmeniz gerekmektedir."
       trial_5_days_from_now:
         p1: "10 gün içerisinde %{application_name} deneme sürümünüz bitecektir. Lütfen hesabınızın devam etmesi için öncelikle %{application_name}'ya oturum açmanız sonra hesap yönetimi uygulamasından Paypal düzenli ödemesini aktive etmeniz gerekmektedir."
-        p2: "NOT: Bu size attığımız ikinci maildir ve başka uyarı maili atılmayacaktır. 5 gün sonra %{application_name} hesabımız pasif edilecektir.."
+        p2: "NOT: Bu size gönderdiğimiz ikinci maildir ve başka uyarı maili atılmayacaktır. 5 gün sonra %{application_name} hesabımız pasif edilecektir.."
       trial_cancel_tenant:
-        p1: "%{application_name} deneme sürümünüz bitmiştir ve Paypal otomatik ödemeyi aktive etmediğiniz için kebab hesabınız pasif edilmiştir."
+        p1: "%{application_name} deneme sürümünüz bitmiştir ve Paypal otomatik ödemeyi aktive etmediğiniz için coNinja hesabınız pasif edilmiştir."
       payment_failures_5_days_ago:
         p1: "%{subscription_next_payment_date} tarihindeki %{subscription_amount} USD tutarında ki %{application_name} ödemeniz maalesef başarısız olmuştur. Lütfen Paypal hesabınızı kontrol ediniz."
         p2: "Ödeme 5 gün içerisinde gerçekleşmezse  %{application_name} hesabınız pasif edilecektir."
       payment_failures_cancel_tenant:
-        p1: "Your %{application_name}  account was deactivated because of failing your paypal payment %{subscription_next_payment_date} dated,  %{subscription_amount} USD amount."
+        p1: "%{subscription_next_payment_date} tarihinde ki %{subscription_amount} USD tutarındaki ödemeniz başarısız olduğundan %{application_name} hesabınız pasif edilmiştir."
