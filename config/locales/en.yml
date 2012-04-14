@@ -57,7 +57,7 @@ en:
   notice:
     invalid_tenant: "Invalid account"
     subscriptions:
-     too_many_active_user_for_downgrade_plan: "There are too many active user to downgrade your plan.""
+     too_many_active_user_for_downgrade_plan: "There are too many active user to downgrade your plan."
 
   mail:
     subjects:

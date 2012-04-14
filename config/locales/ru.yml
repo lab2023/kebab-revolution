@@ -77,9 +77,9 @@ ru:
       ask_question: "Вы можете задать любой вопрос по отправке почты на %{application_email}"
     user:
       forget_password:
-        p1: "Ваш новый пароль %{application_name}  является <b>%{new_password}</b>,, потребляют больше рыбы, чтобы иметь лучшую память".
+        p1: "Ваш новый пароль %{application_name}  является <b>%{new_password}</b>,, потребляют больше рыбы, чтобы иметь лучшую память."
       invite:
-        p1: "Ваш %{application_name} был открыт счет. Вы можете получить доступ к программе% %{application_url}".
+        p1: "Ваш %{application_name} был открыт счет. Вы можете получить доступ к программе% %{application_url}."
         p2: "Email: %{user_email}"
         p3: "пароль: %{user_password}"
       enable:
