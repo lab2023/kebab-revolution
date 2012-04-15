@@ -12,12 +12,11 @@ en:
     attributes:
       tenant:
         name: "name"
-        host: "host"
+        subdomain: "subdomain"
       user:
         tenant: "tenant"
         email: "email"
         password: "password"
-        password_confirmation: "password confirmation"
         name: "name"
         locale: "language"
         time_zone: "time zone"
@@ -57,11 +56,15 @@ en:
 
   notice:
     invalid_tenant: "Invalid account"
+    subscriptions:
+     too_many_active_user_for_downgrade_plan: "There are too many active user to downgrade your plan."
 
   mail:
     subjects:
       forget_password: "%{application_name} Forget Password "
       invite_user: "Welcome %{application_name} "
+      disable_user: "Your %{application_name} Account Disable"
+      enable_user: "Your %{application_name} Account Enable"
       register_tenant: "Welcome %{application_name} "
       trial_10_days_from_now: "%{application_name} Trial Account Reminder "
       trial_5_days_from_now: "%{application_name} Trial Account Reminder "
@@ -74,13 +77,20 @@ en:
       ask_question: "You can ask any question via sending mail at %{application_email}"
     user:
       forget_password:
-        p1: "Your new %{application_name} password is %{new_password}, consume more fish to have better memory."
+        p1: "Your new %{application_name} password is <b>%{new_password}</b>, consume more fish to have better memory."
       invite:
         p1: "Your %{application_name} account was opened. You can access the program at %{application_url}."
-        p2: "Password: %{user_password}"
+        p2: "Email: %{user_email}"
+        p3: "Password: %{user_password}"
+      enable:
+        p1: "Your account is enabled by admin."
+      disable:
+        p1: "Your account is disabled by admin."
     tenant:
       create:
         p1: "Thanks for preferring %{application_name}. You can access the program at this address %{application_url}"
+        p2: "Email: %{email}"
+        p3: "Password: %{password}"
     notifier:
       trial_10_days_from_now:
         p1: "%{application_name} trial edition will be end in 10 days. If you want to continue using  %{application_name}, Please Firstly sign-in at %{application_name} and activate Paypal recurring payment at account setting."
@@ -94,3 +104,4 @@ en:
         p2: "Your %{application_name} account will be deactivated unless your payment doesn't made in 5 days."
       payment_failures_cancel_tenant:
         p1: "Your %{application_name} account was deactivated because of failing your paypal payment %{subscription_next_payment_date} dated,  USD%{subscription_amount} amount."
+

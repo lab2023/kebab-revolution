@@ -6,22 +6,21 @@ ru:
       role: роль
       privilege: привилегия
       application: применение
-      subscription: Subscription
-      plan: Plan
-      payment: Payment
+      subscription: подписка
+      plan: план
+      payment: оплата
     attribures:
       tenant:
         name: "имя"
-        host: "хозяин"
+        subdomain: "subdomain"
       user:
         tenant: "aрендатор"
         email: "электронная почта"
         password: "пароль"
-        password_confirmation: "подтверждение пароля"
         name: "имя"
         locale: "язык"
-        time_zone: "time zone"
-        passive_at: "passive at"
+        time_zone: "часовой пояс"
+        passive_at: "пассивным"
       role:
         tenant: "Aрендатор"
         name: "имя"
@@ -35,62 +34,73 @@ ru:
         sys_name: "имя системы"
         department: "отдел"
       subscription:
-        tenant: "tenant"
-        plan: "plan"
-        user: "user"
-        price: "price"
-        payment_period: "payment period"
-        next_payment_date: "next payment date"
-        paypal_customer_token: "paypal customer id"
-        paypal_payment_token: "paypal profile tokent"
+        tenant: "арендатор"
+        plan: "план"
+        user: "пользователь"
+        price: "цена"
+        payment_period: "срок платежа"
+        next_payment_date: "Следующая дата выплаты"
+        paypal_customer_token: "PayPal идентификатор клиента"
+        paypal_payment_token: "PayPal tokent профиля"
       plan:
-        name: "name"
-        price: "price"
-        user_limit: "user limit"
-        recommended: "recommended"
+        name: "имя"
+        price: "цена"
+        user_limit: "пользователь предел"
+        recommended: "рекомендованный"
       payment:
-        subscription: "subscription"
-        price: "price"
-        payment_date: "payment date"
-        invoice_no: "invoice no"
-        paypal_payment_token: "paypal profile token"
+        subscription: "подписка"
+        price: "цена"
+        payment_date: "дата платежа"
+        invoice_no: "счет-фактура не"
+        paypal_payment_token: "PayPal профиль маркера"
 
   notice:
     invalid_tenant: "Неверный счет"
+    subscriptions:
+      too_many_active_user_for_downgrade_plan: "Есть слишком много активных пользователей, чтобы понизить свой ​​план."
 
   mail:
     subjects:
-      forget_password: "%{application_name} Forget Password "
-      invite_user: "Welcome %{application_name} "
-      register_tenant: "Welcome %{application_name} "
-      trial_10_days_from_now: "%{application_name} Trial Account Reminder "
-      trial_5_days_from_now: "%{application_name} Trial Account Reminder "
-      trial_cancel_tenant: "%{application_name} Trial Account Canceled "
-      payment_failures_5_days_ago: "%{application_name} Payment Reminder"
-      payment_failures_cancel_tenant: "%{application_name} Payment Reminder "
+      forget_password: "%{application_name} Забыли пароль "
+      invite_user: "Добро пожаловать в  %{application_name} "
+      disable_user: "Ваш %{application_name} счета Отключить"
+      enable_user: "Ваш аккаунт %{application_name} Включить"
+      register_tenant: "добро пожаловать %{application_name} "
+      trial_10_days_from_now: "%{application_name} Напоминание судебных счета"
+      trial_5_days_from_now: "%{application_name} Напоминание судебных счета "
+      trial_cancel_tenant: "%{application_name} Пробный аккаунт отменен"
+      payment_failures_5_days_ago: "%{application_name} Оплата напоминание"
+      payment_failures_cancel_tenant: "%{application_name} Оплата напоминание "
     common:
-      dear_user_name: "Dear %{user_name}"
-      best_regards: "Best Regards"
-      ask_question: "You can ask any question via sending mail at %{application_email}"
+      dear_user_name: "Уважаемые %{user_name}"
+      best_regards: "С наилучшими пожеланиями"
+      ask_question: "Вы можете задать любой вопрос по отправке почты на %{application_email}"
     user:
       forget_password:
-        p1: "Your new %{application_name} password is %{new_password}, consume more fish to have better memory."
+        p1: "Ваш новый пароль %{application_name}  является <b>%{new_password}</b>,, потребляют больше рыбы, чтобы иметь лучшую память."
       invite:
-        p1: "Your %{application_name} account was opened. You can access the program at %{application_url}."
-        p2: "Password: %{user_password}"
+        p1: "Ваш %{application_name} был открыт счет. Вы можете получить доступ к программе% %{application_url}."
+        p2: "Email: %{user_email}"
+        p3: "пароль: %{user_password}"
+      enable:
+        p1: "Ваша учетная запись включена администратором."
+      disable:
+        p1: "Ваша учетная запись отключена администратором."
     tenant:
       create:
-        p1: "Thanks for preferring %{application_name}. You can access the program at this address %{application_url}"
+        p1: "Спасибо за предпочитая %{application_url}. Вы можете получить доступ к программе в этом %{application_url} адрес%"
+        p2: "Email: %{email}"
+        p3: "пароль: %{password}"
     notifier:
       trial_10_days_from_now:
-        p1: "%{application_name} trial edition will be end in 10 days. If you want to continue using  %{application_name}, Please Firstly sign-in at %{application_name} and activate Paypal recurring payment at account setting."
+        p1: "%{application_name}  пробная версия будет конца в течение 10 дней. Если вы хотите продолжать использовать %{application_name}, пожалуйста, во-первых зарегистрироваться по крайней %{application_name} и активировать Paypal периодических платежей в счет настройки."
       trial_5_days_from_now:
-        p1: "%{application_name} trial edition will be end in  5 days. If you want to continue using  %{application_name}, Please Firstly sign-in at %{application_name} and activate Paypal recurring payment at account setting."
-        p2: "ps. This mail is second mail we send you about finishing your %{application_name}’s trial period, You wont get another mail. Your %{application_name} account will be deactivated in 5 days."
+        p1: "%{application_name} пробная версия будет конца в течение 5 дней. Если вы хотите продолжать использовать %{application_name}, пожалуйста, во-первых зарегистрироваться по крайней %{application_name} и активировать Paypal периодических платежей в счет настройки."
+        p2: "пс. Эта почта является вторым почте мы вышлем Вам об окончании испытательного срока ваша %{application_name}, Ты не получите другую почту. Ваш %{application_name} счет будет отключена в течение 5 дней."
       trial_cancel_tenant:
-        p1: "Your %{application_name}’s trial period is end. Your %{application_name} account was deactivated in order to don’t activate Paypal recurring payment."
+        p1: "Испытательный срок вашего %{application_name}'s является конца. Ваш %{application_name} учетная запись была отключена, чтобы не активировать Paypal повторяющихся платежей."
       payment_failures_5_days_ago:
-        p1: "Your %{application_name} payment, %{subscription_next_payment_date} dated and USD%{subscription_amount} amount was failed, Please check you paypal payment."
-        p2: "Your %{application_name} account will be deactivated unless your payment doesn't made in 5 days."
+        p1: "Ваш %{application_name} оплаты, %{subscription_next_payment_date} от USD и %{subscription_amount}  сумма была не удалось, пожалуйста, проверить вас PayPal платежей."
+        p2: "Ваш %{application_name} счет будет отключена, если платеж не сделали за 5 дней."
       payment_failures_cancel_tenant:
-        p1: "Your %{application_name} account was deactivated because of failing your paypal payment %{subscription_next_payment_date} dated,  USD%{subscription_amount} amount."
+        p1: "Ваш  %{application_name} учетная запись была отключена из-за невыполнения ваших PayPal %{subscription_next_payment_date}  оплата от, USD USD%{subscription_amount} сумму."
