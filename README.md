@@ -10,7 +10,7 @@ Kebab Revolution is a saas system which supports
 * Authorization with Role Base
 * Subscription
 
-We use ExtJs 4.0 for client and Ror 3.1.3 for server.
+We use ExtJs 4.0 for client and Ror 3.2.3 for server.
 
 # Resource
 
@@ -19,8 +19,6 @@ We use ExtJs 4.0 for client and Ror 3.1.3 for server.
 * [Online IRC - Chat](http://webchat.freenode.net/?channels=kebabproject)
               
 # Credits
-
-![lab2023](http://lab2023.com/wp-content/uploads/2011/07/logo.png)
 
 Kebab Project is maintained and funded by [lab2023, inc](http://lab2023.com)
 
