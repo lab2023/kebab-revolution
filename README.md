@@ -1,7 +1,5 @@
 # Kebab Revolution
 
-[![Build Status](https://secure.travis-ci.org/kebab-project/kebab-revolution.png?branch=develop)](http://travis-ci.org/kebab-project/kebab-revolution)
-
 Kebab Revolution is a saas system which supports
 
 * Multitenant
